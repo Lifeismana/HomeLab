@@ -784,7 +784,7 @@ services:
 
   renderer:
     container_name: grafana-renderer
-    image: grafana/grafana-image-renderer:3.12.6
+    image: grafana/grafana-image-renderer:3.12.9
     environment:
       - ENABLE_METRICS=true
     healthcheck:
