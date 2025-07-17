@@ -973,7 +973,7 @@ services:
       - wud.tag.include=^\d+$$
 
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.10.2
+    image: ghcr.io/linkwarden/linkwarden:v2.11.4
     container_name: linkwarden
     restart: unless-stopped
     env_file:
