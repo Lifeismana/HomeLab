@@ -223,7 +223,7 @@ services:
     network_mode: host
 
   glances:
-    image: nicolargo/glances:4.3.1
+    image: nicolargo/glances:4.3.3
     container_name: glances
     restart: unless-stopped
     pid: host
