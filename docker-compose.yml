@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: docker.io/library/traefik:v3.4
+    image: docker.io/library/traefik:v3.5
     container_name: traefik
     env_file:
       - env/traefik.env
