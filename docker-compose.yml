@@ -399,7 +399,7 @@ services:
       - net-proxy
 
   whatsupdocker:
-    image: getwud/wud:8.0.1
+    image: getwud/wud:8.1.1
     container_name: whatsupdocker
     restart: unless-stopped
     volumes:
