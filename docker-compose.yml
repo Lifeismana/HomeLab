@@ -298,7 +298,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /.beszel:/extra-filesystems/disk1:ro
-      - /data_alt/.beszel:/extra-filesystems/disk2:ro
       - /data/.beszel:/extra-filesystems/disk3:ro
       - /docker_data/.beszel:/extra-filesystems/disk4:ro
     environment:
@@ -485,7 +484,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - /data_alt/postgres-14:/var/lib/postgresql/data
+      - /data/postgres-14:/var/lib/postgresql/data
       - /var/run/postgresql:/var/run/postgresql
     network_mode: none
     labels:
@@ -506,7 +505,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - /data_alt/postgres:/var/lib/postgresql/data
+      - /data/postgres:/var/lib/postgresql/data
     networks:
       - net-postgres
     labels:
@@ -550,8 +549,8 @@ services:
       - GITEA__SERVER__SSH_LISTEN_PORT=22
       - GITEA__SERVER__OFFLINE_MODE=false
     volumes:
-      - /data_alt/gitea/data:/var/lib/gitea
-      - /data_alt/gitea/config:/etc/gitea
+      - /data/gitea/data:/var/lib/gitea
+      - /data/gitea/config:/etc/gitea
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
@@ -584,7 +583,7 @@ services:
       retries: 5
       timeout: 3s
     volumes:
-      - /data_alt/redis:/data
+      - /data/redis:/data
     networks:
       - net-redis
     labels:
@@ -615,7 +614,7 @@ services:
       start_period: 30s
     user: 1000:1000
     volumes:
-      - /data_alt/prometheus:/prometheus
+      - /data/prometheus:/prometheus
       - ./prometheus/:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -647,7 +646,7 @@ services:
     image: influxdb:2.2
     container_name: influxdb
     volumes:
-      - '/data_alt/influxdb:/var/lib/influxdb2'
+      - '/data/influxdb:/var/lib/influxdb2'
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8086/health" ]
       interval: 30s
@@ -711,11 +710,11 @@ services:
     image: ghcr.io/lifeismana/docker-red-discordbot:full
     restart: unless-stopped
     volumes:
-      - /data_alt/redbot:/data
-      - /data_alt/.ssh/red_github/:/config/.ssh/
-      - /data_alt/.pylav-red/pylav.yaml:/config/pylav.yaml
+      - /data/redbot:/data
+      - /data/.ssh/red_github/:/config/.ssh/
+      - /data/.pylav-red/pylav.yaml:/config/pylav.yaml
       - /var/run/postgresql:/var/run/postgresql
-      - /data_alt/.pylav-red/PyLav:/config/.config/PyLav
+      - /data/.pylav-red/PyLav:/config/.config/PyLav
     environment:
       - CUSTOM_REDBOT_PACKAGE=git+https://github.com/Cog-Creators/Red-DiscordBot.git@V3/develop#egg=Red-DiscordBot
       - TZ=Europe/Paris
@@ -732,7 +731,7 @@ services:
     environment:
       - TZ=Europe/Paris
     volumes:
-      - /data_alt/red-dashboard:/data
+      - /data/red-dashboard:/data
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.reddash.rule=Host(`red-dashboard.${MAIN_DOMAIN}`)"
