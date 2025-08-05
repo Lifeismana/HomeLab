@@ -1005,13 +1005,13 @@ services:
       - net-meilisearch
 
   meilisearch:
-    image: getmeili/meilisearch:v1.16
+    image: getmeili/meilisearch:v1.16.0
     container_name: meilisearch
     restart: unless-stopped
     env_file:
       - env/meilisearch.env
     labels:
-      - wud.tag.include=^v\d+\.\d+$$
+      - wud.tag.include=^v\d+\.\d+.\d+$$
     volumes:
       - /data/meilisearch:/meili_data
     networks:
