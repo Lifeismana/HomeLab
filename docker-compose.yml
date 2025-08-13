@@ -369,7 +369,7 @@ services:
 
   watchtower:
     container_name: watchtower
-    image: ghcr.io/nicholas-fedor/watchtower:1.11.6
+    image: ghcr.io/nicholas-fedor/watchtower:1.11.7
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
