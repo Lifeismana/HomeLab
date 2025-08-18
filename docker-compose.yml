@@ -1116,12 +1116,12 @@ services:
     container_name: mazanoke
     image: ghcr.io/civilblur/mazanoke:v1.1.5
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD-SHELL", "wget -O - http://localhost:80 &>/dev/null" ]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+    # healthcheck:
+    #   test: [ "CMD-SHELL", "wget -O - http://localhost:80 &>/dev/null" ]
+    #   interval: 30s
+    #   timeout: 5s
+    #   retries: 5
+    #   start_period: 30s
     networks:
       - net-proxy
     labels:
