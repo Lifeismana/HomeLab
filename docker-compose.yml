@@ -1286,6 +1286,7 @@ services:
       - homepage.widget.type=authentik
       - homepage.widget.url=https://authentik.${MAIN_DOMAIN}
       - homepage.widget.key=${AUTHENTIK_TOKEN}
+      - wud.tag.include=^\d+\.\d+\.\d+$$
     depends_on:
       postgres:
         condition: service_healthy
@@ -1320,6 +1321,8 @@ services:
       - net-proxy
       - net-postgres
       - net-redis
+    labels:
+      - wud.tag.include=^\d+\.\d+\.\d+$$
 
   geoipupdate:
     container_name: geoipupdate
