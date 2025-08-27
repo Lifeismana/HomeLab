@@ -355,7 +355,7 @@ services:
 
   portainer_agent:
     container_name: portainer_agent
-    image: portainer/agent:2.33.0
+    image: portainer/agent:2.33.1
     restart: unless-stopped
     #ports:
     #  - 9001:9001
