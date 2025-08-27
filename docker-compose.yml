@@ -1005,7 +1005,7 @@ services:
       - net-meilisearch
 
   meilisearch:
-    image: getmeili/meilisearch:v1.19.0
+    image: getmeili/meilisearch:v1.19.1
     container_name: meilisearch
     restart: unless-stopped
     env_file:
