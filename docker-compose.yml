@@ -1018,7 +1018,7 @@ services:
       - net-meilisearch
 
   opengist:
-    image: ghcr.io/thomiceli/opengist:1.10
+    image: ghcr.io/thomiceli/opengist:1.11
     container_name: opengist
     restart: unless-stopped
     healthcheck:
