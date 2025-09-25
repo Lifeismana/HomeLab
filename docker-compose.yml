@@ -902,7 +902,7 @@ services:
       - net-redis
 
   freshrss:
-    image: freshrss/freshrss:1
+    image: freshrss/freshrss:7974
     container_name: freshrss
     restart: unless-stopped
     env_file:
