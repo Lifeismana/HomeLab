@@ -491,7 +491,7 @@ services:
       - wud.watch=false
 
   postgres:
-    image: postgres:17
+    image: postgres:18
     container_name: postgres
     restart: unless-stopped
     env_file:
