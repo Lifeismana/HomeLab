@@ -375,7 +375,7 @@ services:
     environment:
       TZ: Europe/Paris
       WATCHTOWER_CLEANUP: true
-      DOCKER_API_VERSION: 1.49
+      DOCKER_API_VERSION: 1.45
       WATCHTOWER_SCHEDULE: 0 0 5 * * *
       WATCHTOWER_TIMEOUT: 5m
       WATCHTOWER_HTTP_API_METRICS: true
