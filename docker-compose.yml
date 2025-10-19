@@ -26,7 +26,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /data/traefik:/data
-      - /home/cert-syno/cert:/syno:ro,uid=1001,gid=1001
       - ./traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
       - logs-traefik:/var/log/traefik
     command:
