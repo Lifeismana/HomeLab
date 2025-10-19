@@ -134,7 +134,7 @@ services:
     #ports:
     #  - '9000:9000'
     volumes:
-      - /data/portainer:/data:uid=1000,gid=994
+      - /data/portainer:/data
     networks:
       - net-proxy
     labels:
