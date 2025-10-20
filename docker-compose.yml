@@ -704,6 +704,24 @@ services:
       - net-proxy
       - net-influxdb
 
+  scrutiny-collector:
+    image: ghcr.io/analogj/scrutiny:master-collector
+    container_name: scrutiny-collector
+    cap_add:
+      - SYS_RAWIO
+    volumes:
+      - '/run/udev:/run/udev:ro'
+    environment:
+      COLLECTOR_API_ENDPOINT: 'https://scrutiny.internal.${MAIN_DOMAIN}'
+      COLLECTOR_HOST_ID: 'DockerMonster'
+    devices:
+      - "/dev/sda"
+      - "/dev/sdb"
+      - "/dev/sdc"
+      - "/dev/sdd"
+      - "/dev/nvme0n1"
+      - "/dev/nvme1n1"
+
   redbot:
     container_name: redbot
     image: ghcr.io/lifeismana/docker-red-discordbot:full
