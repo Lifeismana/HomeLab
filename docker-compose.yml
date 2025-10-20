@@ -709,6 +709,7 @@ services:
     container_name: scrutiny-collector
     cap_add:
       - SYS_RAWIO
+      - SYS_ADMIN
     volumes:
       - '/run/udev:/run/udev:ro'
     environment:
@@ -719,8 +720,8 @@ services:
       - "/dev/sdb"
       - "/dev/sdc"
       - "/dev/sdd"
-      - "/dev/nvme0n1"
-      - "/dev/nvme1n1"
+      - "/dev/nvme0"
+      - "/dev/nvme1"
 
   redbot:
     container_name: redbot
