@@ -285,7 +285,7 @@ services:
 
   beszel-agent:
     container_name: beszel-agent
-    image: ghcr.io/henrygd/beszel/beszel-agent:0.14.0
+    image: ghcr.io/henrygd/beszel/beszel-agent:0.14.1
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "/agent", "health" ]
