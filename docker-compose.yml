@@ -763,7 +763,7 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana:12.2.0
+    image: grafana/grafana:12.2.1
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:3000/api/health" ]
