@@ -716,12 +716,12 @@ services:
       COLLECTOR_API_ENDPOINT: 'https://scrutiny.internal.${MAIN_DOMAIN}'
       COLLECTOR_HOST_ID: 'DockerMonster'
     devices:
-      - "/dev/sda"
-      - "/dev/sdb"
-      - "/dev/sdc"
-      - "/dev/sdd"
-      - "/dev/nvme0"
-      - "/dev/nvme1"
+      - "/dev/sda:/dev/sda"
+      - "/dev/sdb:/dev/sdb"
+      - "/dev/sdc:/dev/sdc"
+      - "/dev/sdd:/dev/sdd"
+      - "/dev/nvme0:/dev/nvme0"
+      - "/dev/nvme1:/dev/nvme1"
 
   redbot:
     container_name: redbot
