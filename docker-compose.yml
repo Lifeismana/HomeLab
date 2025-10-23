@@ -21,8 +21,8 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /data/traefik:/data
@@ -272,8 +272,8 @@ services:
       - USER_CREATION=true
     networks:
       - net-proxy
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     volumes:
       - /data/beszel:/beszel_data
     labels:
@@ -432,10 +432,10 @@ services:
       - wud.tag.include=^\d+\.\d+\.\d+$$
     depends_on:
       traefik:
-        condition: service_started
+        condition: service_started #service_healthy
         restart: false
       authentik-server:
-        condition: service_healthy
+        condition: service_started #service_healthy
         restart: false
 
   monodocker:
@@ -611,7 +611,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-    user: 1000:1000
+    # user: "1000:1000"
     volumes:
       - /data/prometheus:/prometheus
       - ./prometheus/:/etc/prometheus/
@@ -623,8 +623,8 @@ services:
     networks:
       - net-proxy
       - net-prometheus
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.internal.${MAIN_DOMAIN}`)"
@@ -679,7 +679,7 @@ services:
       - env/scrutiny.env
     depends_on:
       influxdb:
-        condition: service_healthy
+        condition: service_started #service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/api/health" ]
       interval: 30s
@@ -757,7 +757,7 @@ services:
       - "traefik.http.routers.reddash.tls.certresolver=cloudflare_main"
       - "traefik.http.services.reddash.loadbalancer.server.port=42356"
       - "traefik.http.routers.reddash.middlewares=crowdsec"
-    network_mode: "service:redbot"
+    network_mode: "container:redbot"
     depends_on:
       - redbot
 
@@ -777,7 +777,7 @@ services:
       - GF_RENDERING_SERVER_URL=http://renderer:8081/render
       - GF_RENDERING_CALLBACK_URL=http://localhost:3000/
       - GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
-    user: 1000:1000
+    # user: "1000:1000"
     volumes:
       - /data/grafana:/var/lib/grafana
     labels:
@@ -813,7 +813,7 @@ services:
     restart: unless-stopped
     depends_on:
       - grafana
-    network_mode: "service:grafana"
+    network_mode: "container:grafana"
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
 
@@ -959,7 +959,7 @@ services:
   couchdb:
     image: couchdb:3
     container_name: obsidian-livesync
-    user: 1000:1000
+    # user: "1000:1000"
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:5984/_up" ]
       interval: 30s
@@ -1110,7 +1110,7 @@ services:
         condition: service_started
         restart: false
       authentik-server:
-        condition: service_healthy
+        condition: service_started #service_healthy
         restart: false
 
   it-tools:
@@ -1203,7 +1203,7 @@ services:
     image: quay.io/minio/minio:latest
     restart: unless-stopped
     command: minio server /data --console-address ":9001"
-    user: 1000:1000
+    # user: "1000:1000"
     env_file:
       - env/minio.env
     environment:
@@ -1307,9 +1307,9 @@ services:
       - wud.tag.include=^\d+\.\d+\.\d+$$
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_started #service_healthy
       redis:
-        condition: service_healthy
+        condition: service_started #service_healthy
     networks:
       - net-proxy
       - net-postgres
@@ -1332,9 +1332,9 @@ services:
       - geoip:/geoip
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_started #service_healthy
       redis:
-        condition: service_healthy
+        condition: service_started #service_healthy
     networks:
       - net-proxy
       - net-postgres
@@ -1356,29 +1356,23 @@ services:
 
 networks:
   net-proxy:
-    name: net-proxy
     driver: bridge
     ipam:
       config:
         - subnet: 172.25.0.0/16
   net-postgres:
-    name: net-postgres
     driver: bridge
     internal: true
   net-redis:
-    name: net-redis
     driver: bridge
     internal: true
   net-influxdb:
-    name: net-influxdb
     driver: bridge
     internal: true
   net-prometheus:
-    name: net-prometheus
     driver: bridge
     internal: true
   net-meilisearch:
-    name: net-meilisearch
     driver: bridge
     internal: true
 

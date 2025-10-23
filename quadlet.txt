@@ -1,0 +1,925 @@
+# traefik.container
+[Container]
+ContainerName=traefik
+Environment=TZ=Europe/Paris NAS_NAME=${MAIN_NAS}
+EnvironmentFile=env/traefik.env
+Exec='--api.dashboard=true' '--metrics.prometheus=true' '--ping=true' '--log.level=INFO' '--providers.docker=true' '--providers.docker.network=net-proxy' '--providers.docker.exposedbydefault=false' '--providers.docker.allowEmptyServices=true' '--providers.file.filename=/etc/traefik/traefik_dynamic.yaml' --accesslog '--accesslog.filepath=/var/log/traefik/access.log' '--entrypoints.web.address=:80' '--entrypoints.web.http.redirections.entryPoint.to=websecure' '--entrypoints.web.http.redirections.entryPoint.scheme=https' '--entrypoints.web.http.redirections.entryPoint.permanent=true' '--entrypoints.websecure.address=:443' '--entrypoints.websecure.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32' '--entrypoints.websecure.http.tls.certresolver=cloudflare_main' '--entrypoints.websecure.http.tls.domains[0].main=${MAIN_DOMAIN}' '--entrypoints.websecure.http.tls.domains[0].sans=*.${MAIN_DOMAIN}' '--entrypoints.websecure.http.tls.domains[1].main=*.internal.${MAIN_DOMAIN}' '--entrypoints.websecure.http.tls.domains[2].main=${SECONDARY_DOMAIN}' '--entrypoints.websecure.http.tls.domains[2].sans=*.${SECONDARY_DOMAIN}' '--certificatesResolvers.cloudflare_main.acme.email=${CLOUDFLARE_EMAIL}' '--certificatesResolvers.cloudflare_main.acme.storage=/data/acme/acme.json' '--certificatesResolvers.cloudflare_main.acme.dnsChallenge.provider=cloudflare' '--certificatesResolvers.cloudflare_main.acme.dnsChallenge.propagation.delayBeforeChecks=120' '--experimental.plugins.crowdsec.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin' '--experimental.plugins.crowdsec.version=v1.4.2'
+HealthCmd=["traefik","healthcheck","--ping"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=docker.io/library/traefik:v3.5
+Label=traefik.enable=true traefik.http.services.justAdummyService.loadbalancer.server.port=1337 "traefik.http.routers.traefik.rule=Host(`traefik.internal.${MAIN_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))" traefik.http.routers.traefik.entrypoints=websecure traefik.http.routers.traefik.tls.certresolver=cloudflare_main traefik.http.routers.traefik.tls.domains[0].main=internal.${MAIN_DOMAIN} traefik.http.routers.traefik.tls.domains[0].sans=*.internal.${MAIN_DOMAIN} traefik.http.routers.traefik.service=api@internal traefik.http.routers.traefik.middlewares=tailscaleAL "traefik.http.routers.github-redirect.rule=Host(`$SECONDARY_DOMAIN`) && PathRegexp(`^/?$`)" traefik.http.routers.github-redirect.entrypoints=websecure traefik.http.routers.github-redirect.tls.certresolver=cloudflare_main traefik.http.routers.github-redirect.priority=50000 traefik.http.routers.github-redirect.middlewares=github-redirect traefik.http.middlewares.github-redirect.redirectregex.regex=.* traefik.http.middlewares.github-redirect.redirectregex.replacement=https://github.com/Lifeismana traefik.http.middlewares.github-redirect.redirectregex.permanent=false traefik.http.middlewares.tailscaleAL.ipAllowList.sourcerange=100.64.0.0/10,fd7a:115c:a1e0::/96,172.16.0.0/12 traefik.http.middlewares.crowdsec.plugin.crowdsec.enabled=true traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecmode=stream traefik.http.middlewares.crowdsec.plugin.crowdsec.forwardedheaderstrustedips=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32 traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecAppsecEnabled=true traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecLapiKey=${CROWDSEC_LAPI_KEY} traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecappsechost=crowdsec:7422 traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscacheenabled=true traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscachehost=redis:6379 homepage.group=Main homepage.name=Traefik homepage.icon=traefik.png homepage.href=https://traefik.internal.${MAIN_DOMAIN} homepage.description=Traefik homepage.widget.type=traefik homepage.widget.url=https://traefik.internal.${MAIN_DOMAIN} wud.tag.include=^v\d+\.\d+$$
+Network=net-proxy:ip=172.25.0.254
+Network=net-prometheus
+Network=net-redis
+PublishPort=80:80
+PublishPort=443:443
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=/data/traefik:/data
+Volume=./traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
+Volume=logs-traefik:/var/log/traefik
+
+[Service]
+Restart=always
+
+---
+
+# logrotate.container
+[Container]
+ContainerName=traefik-logrotate
+Environment=TZ=Europe/Paris "CRON_SCHEDULE=0 * * * *"
+Image=vegardit/traefik-logrotate:latest
+Network=none
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=logs-traefik:/var/log/traefik
+
+---
+
+# homepage.container
+[Container]
+ContainerName=homepage
+Environment=HOMEPAGE_ALLOWED_HOSTS=home.${MAIN_DOMAIN}
+Image=ghcr.io/gethomepage/homepage:v1.5
+Label=traefik.enable=true traefik.http.routers.homepage.rule=Host(`home.${MAIN_DOMAIN}`) traefik.http.routers.homepage.entrypoints=websecure traefik.http.routers.homepage.tls.certresolver=cloudflare_main traefik.http.routers.homepage.middlewares=forwardAuth-authentik,crowdsec wud.tag.include=^v\d+\.\d+$$
+Network=net-proxy
+Volume=/data/homepage:/app/config
+Volume=/var/run/docker.sock:/var/run/docker.sock:ro
+
+[Service]
+Restart=always
+
+---
+
+# portainer.container
+[Container]
+ContainerName=portainer
+Image=portainer/portainer-ce:2.35.0
+Label=traefik.enable=true traefik.http.routers.portainer.rule=Host(`portainer.internal.${MAIN_DOMAIN}`) traefik.http.routers.portainer.entrypoints=websecure traefik.http.routers.portainer.tls.certresolver=cloudflare_main traefik.http.services.portainer.loadbalancer.server.port=9000 traefik.http.routers.portainer.middlewares=tailscaleAL homepage.group=Main homepage.name=Portainer homepage.icon=portainer.png homepage.description=Portainer homepage.href=https://portainer.internal.${MAIN_DOMAIN} homepage.widget.type=portainer homepage.widget.url=https://portainer.internal.${MAIN_DOMAIN} homepage.widget.env=3 homepage.widget.key=${PORTAINER_TOKEN} wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Volume=/data/portainer:/data
+
+[Service]
+Restart=always
+
+---
+
+# speedtest-tracker.container
+[Container]
+ContainerName=speedtest-tracker
+Environment=TZ=Europe/Paris DISPLAY_TIMEZONE=Europe/Paris PUID=1000 PGID=994 DB_CONNECTION=pgsql DB_HOST=postgres DB_DATABASE=speedtest_trackerdb DB_USERNAME=speedtest_tracker "SPEEDTEST_SCHEDULE="10 */2 * * *""
+EnvironmentFile=env/speedtest-tracker.env
+Image=lscr.io/linuxserver/speedtest-tracker:latest
+Label=traefik.enable=true traefik.http.routers.speedtest-tracker.rule=Host(`speedtest-tracker.internal.${MAIN_DOMAIN}`) traefik.http.routers.speedtest-tracker.entrypoints=websecure traefik.http.routers.speedtest-tracker.tls.certresolver=cloudflare_main traefik.http.services.speedtest-tracker.loadbalancer.server.port=80 traefik.http.routers.speedtest-tracker.middlewares=tailscaleAL homepage.group=Main "homepage.name=Speedtest Tracker" homepage.icon=librespeed.png "homepage.description=Speedtest Tracker" homepage.href=https://speedtest-tracker.internal.${MAIN_DOMAIN} homepage.widget.type=speedtest homepage.widget.url=https://speedtest-tracker.internal.${MAIN_DOMAIN}
+Network=net-proxy
+Network=net-postgres
+Volume=/data/speedtest-tracker:/config
+
+[Service]
+Restart=always
+
+---
+
+# netalertx.container
+[Container]
+ContainerName=NetAlertX
+Environment=TZ=Europe/Paris LISTEN_ADDR=172.17.0.1
+HostName=NetAlertX
+Image=ghcr.io/jokob-sk/netalertx:latest
+Label=traefik.enable=true traefik.http.routers.netalertx.rule=Host(`netalertx.internal.${MAIN_DOMAIN}`) traefik.http.routers.netalertx.entrypoints=websecure traefik.http.routers.netalertx.tls.certresolver=cloudflare_main traefik.http.services.netalertx.loadbalancer.server.port=20211 traefik.http.routers.netalertx.middlewares=tailscaleAL homepage.group=Main homepage.name=NetAlertX homepage.icon=netalertx.png homepage.description=NetAlertX homepage.href=https://netalertx.internal.${MAIN_DOMAIN} homepage.widget.type=netalertx homepage.widget.url=https://netalertx.internal.${MAIN_DOMAIN}
+Network=host
+PodmanArgs=--privileged
+Volume=/data/netalertx/db:/app/db
+Volume=/data/netalertx/config:/app/config
+
+[Service]
+Restart=always
+
+---
+
+# glances.container
+[Container]
+ContainerName=glances
+Environment=TZ=Europe/Paris GLANCES_OPT=-w
+HealthCmd=["curl","-f","http://localhost:61208/api/4/status"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=nicolargo/glances:4.3.3
+Label=traefik.enable=true traefik.http.routers.glances.rule=Host(`glances.internal.${MAIN_DOMAIN}`) traefik.http.routers.glances.entrypoints=websecure traefik.http.routers.glances.tls.certresolver=cloudflare_main traefik.http.services.glances.loadbalancer.server.port=61208 traefik.http.routers.glances.middlewares=tailscaleAL homepage.group=Main homepage.name=Glances homepage.icon=glances.png homepage.description=Glances homepage.href=https://glances.internal.${MAIN_DOMAIN} homepage.widget.type=glances homepage.widget.url=https://glances.internal.${MAIN_DOMAIN} homepage.widget.version=4 homepage.widget.metric=info wud.tag.include=^\d+\.\d+\.\d+$$
+Network=host
+PodmanArgs=--pid host --privileged
+Volume=/var/run/docker.sock:/var/run/docker.sock:ro
+
+[Service]
+Restart=always
+
+---
+
+# beszel.container
+[Container]
+ContainerName=beszel
+Environment=DISABLE_PASSWORD_AUTH=true USER_CREATION=true
+HealthCmd=["/beszel","health","--url","http://localhost:8090"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=5s
+HealthTimeout=5s
+Image=ghcr.io/henrygd/beszel/beszel:0.14.0
+Label=traefik.enable=true traefik.http.routers.beszel.rule=Host(`beszel.internal.${MAIN_DOMAIN}`) traefik.http.routers.beszel.entrypoints=websecure traefik.http.routers.beszel.tls.certresolver=cloudflare_main traefik.http.routers.beszel.middlewares=tailscaleAL
+Network=net-proxy
+Volume=/data/beszel:/beszel_data
+
+[Service]
+Restart=always
+
+---
+
+# beszel-agent.container
+[Container]
+ContainerName=beszel-agent
+Environment=LISTEN=45876
+EnvironmentFile=env/beszel-agent.env
+HealthCmd=["/agent","health"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=5s
+HealthTimeout=5s
+Image=ghcr.io/henrygd/beszel/beszel-agent:0.14.0
+Network=host
+Volume=/var/run/docker.sock:/var/run/docker.sock:ro
+Volume=/.beszel:/extra-filesystems/disk1:ro
+Volume=/data/.beszel:/extra-filesystems/disk3:ro
+Volume=/docker_data/.beszel:/extra-filesystems/disk4:ro
+
+[Service]
+Restart=always
+
+---
+
+# dozzle.container
+[Container]
+ContainerName=dozzle
+Environment=TZ=Europe/Paris DOZZLE_AUTH_PROVIDER=forward-proxy DOZZLE_ENABLE_SHELL=true DOZZLE_AUTH_HEADER_USER=X-authentik-username DOZZLE_AUTH_HEADER_EMAIL=X-authentik-email DOZZLE_AUTH_HEADER_NAME=X-authentik-name
+HealthCmd=["/dozzle","healthcheck"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=amir20/dozzle:v8
+Label=traefik.enable=true traefik.http.routers.dozzle.rule=Host(`dozzle.internal.${MAIN_DOMAIN}`) traefik.http.routers.dozzle.entrypoints=websecure traefik.http.routers.dozzle.tls.certresolver=cloudflare_main traefik.http.routers.dozzle.middlewares=tailscaleAL,forwardAuth-authentik wud.tag.include=^v\d+$$
+Network=net-proxy
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always
+
+---
+
+# endlessh.container
+[Container]
+ContainerName=endlessh
+Exec=-logtostderr '-v=1' '-geoip_supplier=max-mind-db' '-max_mind_db=/geo-data/GeoLite2-City.mmdb' -enable_prometheus
+Image=shizunge/endlessh-go:latest
+Network=net-proxy
+Network=net-prometheus
+PublishPort=222:222
+Volume=geoip.volume:/geo-data/:ro
+
+[Service]
+Restart=always
+
+---
+
+# portainer_agent.container
+[Container]
+ContainerName=portainer_agent
+Image=portainer/agent:2.35.0
+Label=wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=/docker_data/volumes:/var/lib/docker/volumes
+
+[Service]
+Restart=always
+
+---
+
+# watchtower.container
+[Container]
+ContainerName=watchtower
+Environment=TZ=Europe/Paris WATCHTOWER_CLEANUP=true DOCKER_API_VERSION=1.45 "WATCHTOWER_SCHEDULE=0 0 5 * * *" WATCHTOWER_TIMEOUT=5m WATCHTOWER_HTTP_API_METRICS=true WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_TOKEN}
+Image=ghcr.io/nicholas-fedor/watchtower:1.12.1
+Label=traefik.enable=true traefik.http.routers.watchtower.rule=Host(`watchtower.internal.${MAIN_DOMAIN}`) traefik.http.routers.watchtower.entrypoints=websecure traefik.http.routers.watchtower.tls.certresolver=cloudflare_main traefik.http.routers.watchtower.middlewares=tailscaleAL homepage.group=Main homepage.name=Watchtower homepage.icon=watchtower.png homepage.description=Watchtower homepage.widget.type=watchtower homepage.widget.url=https://watchtower.internal.${MAIN_DOMAIN} homepage.widget.key=${WATCHTOWER_TOKEN} wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always
+
+---
+
+# whatsupdocker.container
+[Unit]
+Requires=traefik.service authentik-server.service
+After=traefik.service authentik-server.service
+
+[Container]
+ContainerName=whatsupdocker
+Environment=TZ=Europe/Paris "WUD_WATCHER_LOCAL_CRON=0 6 * * *" WUD_WATCHER_LOCAL_WATCHALL=true WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true WUD_TRIGGER_COMMAND_TAGUPDATE_CMD=/wud/webhook-update.sh WUD_TRIGGER_COMMAND_TAGUPDATE_AUTO=true WUD_TRIGGER_COMMAND_TAGUPDATE_MODE=batch
+EnvironmentFile=env/whats-up-docker.env
+HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=10s
+HealthTimeout=5s
+Image=getwud/wud:8.1.1
+Label=traefik.enable=true traefik.http.routers.whatsupdocker.rule=Host(`whatsupdocker.internal.${MAIN_DOMAIN}`) traefik.http.routers.whatsupdocker.entrypoints=websecure traefik.http.routers.whatsupdocker.tls.certresolver=cloudflare_main traefik.http.routers.whatsupdocker.middlewares=tailscaleAL wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=whatsupdocker:/store
+Volume=./wud/webhook-update.sh:/wud/webhook-update.sh:ro
+
+[Service]
+Restart=always
+
+---
+
+# monodocker.container
+[Container]
+ContainerName=monodocker
+EnvironmentFile=env/monodocker.env
+Image=petersem/monocker
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always
+
+---
+
+# cloudflare-ddns.container
+[Container]
+ContainerName=cloudflare-ddns
+Environment=PUID=1000 PGID=994
+Image=timothyjmiller/cloudflare-ddns:latest
+Network=host
+NoNewPrivileges=true
+Volume=/data/cloudflareddns/config.json:/config.json
+
+[Service]
+Restart=always
+
+---
+
+# tailscale-cloudflare-dnssync.container
+[Container]
+ContainerName=tailscale-cloudflare-dnssync
+Environment=PUID=1000 PGID=994
+EnvironmentFile=env/tailscale-cloudflare-dnssync.env
+Image=ghcr.io/lifeismana/tailscale-cloudflare-dnssync:main
+
+[Service]
+Restart=always
+
+---
+
+# postgres-14.container
+[Container]
+ContainerName=postgres-14
+EnvironmentFile=env/postgres-14.env
+HealthCmd=pg_isready -U postgres
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=20s
+HealthTimeout=5s
+Image=postgres:14
+Label=wud.watch=false
+Network=none
+Volume=/data/postgres-14:/var/lib/postgresql/data
+Volume=/var/run/postgresql:/var/run/postgresql
+
+[Service]
+Restart=always
+
+---
+
+# postgres.container
+[Container]
+ContainerName=postgres
+EnvironmentFile=env/postgres.env
+HealthCmd=pg_isready -U postgres
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=20s
+HealthTimeout=5s
+Image=postgres:17
+Label=wud.tag.include=^\d+$$
+Network=net-postgres
+Volume=/data/postgres:/var/lib/postgresql/data
+
+[Service]
+Restart=always
+
+---
+
+# gitea.container
+[Unit]
+Requires=postgres.service redis.service
+After=postgres.service redis.service
+
+[Container]
+ContainerName=gitea
+Environment=USER_UID=103 USER_GID=113 GITEA__SERVICE__DISABLE_REGISTRATION=false GITEA__SERVICE__ENABLE_BASIC_AUTHENTICATION=false GITEA__SERVICE__ENABLE_PASSWORD_SIGNIN_FORM=false GITEA__SERVICE__ALLOW_ONLY_EXTERNAL_REGISTRATION=true GITEA__OAUTH2_CLIENT__ENABLE_AUTO_REGISTRATION=true GITEA__OPENID__ENABLE_OPENID_SIGNIN=false GITEA__SERVER__DOMAIN=git.${MAIN_DOMAIN} GITEA__SERVER__ROOT_URL=https://git.${MAIN_DOMAIN}/ GITEA__SERVER__LFS_START_SERVER=true GITEA__DATABASE__DB_TYPE=postgres GITEA__DATABASE__HOST=postgres:5432 GITEA__DATABASE__NAME=giteadb GITEA__DATABASE__USER=gitea GITEA__CACHE__ADAPTER=redis GITEA__CACHE__HOST=redis://redis:6379/0?pool_size=100&idle_timeout=180s GITEA__SESSION__PROVIDER=redis GITEA__SESSION__PROVIDER_CONFIG=redis://redis:6379/0?pool_size=100&idle_timeout=180s GITEA__SERVER__SSH_PORT=22 GITEA__SERVER__SSH_LISTEN_PORT=22 GITEA__SERVER__OFFLINE_MODE=false
+EnvironmentFile=env/gitea.env
+HealthCmd=["curl","-f","http://localhost:3000/api/healthz"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=gitea/gitea:1.24-rootless
+Label=traefik.enable=true traefik.http.routers.gitea.rule=Host(`git.${MAIN_DOMAIN}`) traefik.http.routers.gitea.entrypoints=websecure traefik.http.routers.gitea.tls.certresolver=cloudflare_main traefik.http.services.gitea.loadbalancer.server.port=3000 traefik.http.routers.gitea.middlewares=crowdsec crowdsec.enable=true crowdsec.labels.type=gitea wud.tag.include=^\d+\.\d+-rootless$$
+Network=net-proxy
+Network=net-postgres
+Network=net-redis
+PublishPort=22:22
+Volume=/data/gitea/data:/var/lib/gitea
+Volume=/data/gitea/config:/etc/gitea
+Volume=/etc/timezone:/etc/timezone:ro
+Volume=/etc/localtime:/etc/localtime:ro
+
+[Service]
+Restart=always
+
+---
+
+# redis.container
+[Container]
+ContainerName=redis
+Exec=--save 60 1 --loglevel warning
+HealthCmd=redis-cli ping | grep PONG
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=20s
+HealthTimeout=3s
+Image=docker.io/library/redis:8-alpine
+Label=wud.tag.include=^\d+-alpine$$
+Network=net-redis
+Volume=/data/redis:/data
+
+[Service]
+Restart=always
+
+---
+
+# redis-exporter.container
+[Container]
+ContainerName=redis-exporter
+Environment=REDIS_ADDR=redis:6379 REDIS_USER=null
+Image=ghcr.io/oliver006/redis_exporter:v1.79.0
+Network=net-redis
+Network=net-prometheus
+
+[Service]
+Restart=always
+
+---
+
+# prometheus.container
+[Container]
+ContainerName=prometheus
+Exec='--config.file=/etc/prometheus/prometheus.yml' '--storage.tsdb.path=/prometheus' '--web.console.libraries=/etc/prometheus/console_libraries' '--web.console.templates=/etc/prometheus/consoles'
+HealthCmd=wget -O - http://localhost:9090 &>/dev/null
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=quay.io/prometheus/prometheus:v3.7.1
+Label=traefik.enable=true traefik.http.routers.prometheus.rule=Host(`prometheus.internal.${MAIN_DOMAIN}`) traefik.http.routers.prometheus.entrypoints=websecure traefik.http.routers.prometheus.tls.certresolver=cloudflare_main traefik.http.services.prometheus.loadbalancer.server.port=9090 traefik.http.routers.prometheus.middlewares=tailscaleAL homepage.group=Main homepage.name=Prometheus homepage.icon=prometheus.png homepage.description=Prometheus homepage.href=https://prometheus.internal.${MAIN_DOMAIN} homepage.widget.type=prometheus homepage.widget.url=https://prometheus.internal.${MAIN_DOMAIN} wud.tag.include=^v\d+\.\d+\.\d+$$
+Network=net-proxy
+Network=net-prometheus
+Volume=/data/prometheus:/prometheus
+Volume=./prometheus/:/etc/prometheus/
+
+[Service]
+Restart=always
+
+---
+
+# influxdb.container
+[Container]
+ContainerName=influxdb
+HealthCmd=["curl","-f","http://localhost:8086/health"]
+HealthInterval=30s
+HealthRetries=5
+HealthTimeout=5s
+Image=influxdb:2.2
+Label=traefik.enable=true traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`) traefik.http.routers.influxdb.entrypoints=websecure traefik.http.routers.influxdb.tls.certresolver=cloudflare_main traefik.http.services.influxdb.loadbalancer.server.port=8086 traefik.http.routers.influxdb.middlewares=tailscaleAL wud.tag.include=^\d+\.\d+$$
+Network=net-proxy
+Network=net-influxdb
+Volume=/data/influxdb:/var/lib/influxdb2
+
+---
+
+# scrutiny-web.container
+[Unit]
+Requires=influxdb.service
+After=influxdb.service
+
+[Container]
+ContainerName=scrutiny-web
+Environment=SCRUTINY_WEB_INFLUXDB_HOST=influxdb
+EnvironmentFile=env/scrutiny.env
+HealthCmd=["curl","-f","http://localhost:8080/api/health"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=10s
+HealthTimeout=5s
+Image=ghcr.io/analogj/scrutiny:master-web
+Label=traefik.enable=true traefik.http.routers.scrutiny.rule=Host(`scrutiny.internal.${MAIN_DOMAIN}`) traefik.http.routers.scrutiny.entrypoints=websecure traefik.http.routers.scrutiny.tls.certresolver=cloudflare_main traefik.http.services.scrutiny.loadbalancer.server.port=8080 traefik.http.routers.scrutiny.middlewares=tailscaleAL homepage.group=Main homepage.name=Scrutiny homepage.icon=scrutiny.png homepage.href=https://scrutiny.internal.${MAIN_DOMAIN} homepage.description=Scrutiny homepage.widget.type=scrutiny homepage.widget.url=https://scrutiny.internal.${MAIN_DOMAIN}
+Network=net-proxy
+Network=net-influxdb
+Volume=/data/scrutiny:/opt/scrutiny/config
+
+---
+
+# redbot.container
+[Unit]
+Requires=postgres-14.service
+After=postgres-14.service
+
+[Container]
+ContainerName=redbot
+Environment=CUSTOM_REDBOT_PACKAGE=git+https://github.com/Cog-Creators/Red-DiscordBot.git@V3/develop#egg=Red-DiscordBot TZ=Europe/Paris "EXTRA_ARGS=--dev --rpc"
+Image=ghcr.io/lifeismana/docker-red-discordbot:full
+Network=net-proxy
+Volume=/data/redbot:/data
+Volume=/data/.ssh/red_github/:/config/.ssh/
+Volume=/data/.pylav-red/pylav.yaml:/config/pylav.yaml
+Volume=/var/run/postgresql:/var/run/postgresql
+Volume=/data/.pylav-red/PyLav:/config/.config/PyLav
+
+[Service]
+Restart=always
+
+---
+
+# red-dashboard.container
+[Unit]
+Requires=redbot.service
+After=redbot.service
+
+[Container]
+ContainerName=red-dashboard
+Environment=TZ=Europe/Paris
+Image=ghcr.io/phasecorex/red-dashboard:latest
+Label=traefik.enable=true traefik.http.routers.reddash.rule=Host(`red-dashboard.${MAIN_DOMAIN}`) traefik.http.routers.reddash.entrypoints=websecure traefik.http.routers.reddash.tls.certresolver=cloudflare_main traefik.http.services.reddash.loadbalancer.server.port=42356 traefik.http.routers.reddash.middlewares=crowdsec
+Network=container:redbot
+Volume=/data/red-dashboard:/data
+
+[Service]
+Restart=always
+
+---
+
+# grafana.container
+[Container]
+ContainerName=grafana
+Environment=GF_AUTH_ANONYMOUS_ENABLED=true GF_AUTH_ORG_NAME=Lifesismana GF_RENDERING_SERVER_URL=http://renderer:8081/render GF_RENDERING_CALLBACK_URL=http://localhost:3000/ GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
+HealthCmd=curl -f http://localhost:3000/api/health
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=grafana/grafana:12.2.0
+Label=traefik.enable=true traefik.http.routers.grafana.rule=Host(`grafana.internal.${MAIN_DOMAIN}`) traefik.http.routers.grafana.entrypoints=websecure traefik.http.routers.grafana.tls.certresolver=cloudflare_main traefik.http.services.grafana.loadbalancer.server.port=3000 traefik.http.routers.grafana.middlewares=tailscaleAL homepage.group=Main homepage.name=Grafana homepage.icon=grafana.png homepage.description=Grafana homepage.widget.type=grafana homepage.widget.url=https://grafana.internal.${MAIN_DOMAIN} homepage.widget.username=${GRAFANA_USER} homepage.widget.password=${GRAFANA_PASSWORD} wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Volume=/data/grafana:/var/lib/grafana
+
+[Service]
+Restart=always
+
+---
+
+# renderer.container
+[Unit]
+Requires=grafana.service
+After=grafana.service
+
+[Container]
+ContainerName=grafana-renderer
+Environment=ENABLE_METRICS=true
+HealthCmd=wget -O - http://localhost:8081 &>/dev/null
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=grafana/grafana-image-renderer:3.12.9
+Label=wud.tag.include=^\d+\.\d+\.\d+$$
+Network=container:grafana
+
+[Service]
+Restart=always
+
+---
+
+# asf.container
+[Container]
+ContainerName=asf
+Environment=TZ=Europe/Paris
+Exec=--cryptkey-file /app/config/key
+Image=ghcr.io/justarchinet/archisteamfarm:released
+Label=traefik.enable=true traefik.http.routers.asf.rule=Host(`asf.internal.${MAIN_DOMAIN}`) traefik.http.routers.asf.entrypoints=websecure traefik.http.routers.asf.tls.certresolver=cloudflare_main traefik.http.routers.asf.middlewares=tailscaleAL
+Network=net-proxy
+Volume=/data/asf/config:/app/config
+
+[Service]
+Restart=always
+
+---
+
+# steam-watcher.container
+[Container]
+ContainerName=steam-watcher
+Environment=TZ=Europe/Paris
+Image=ghcr.io/lifeismana/steam-watcher:latest
+Network=net-proxy
+Volume=/data/steam-watcher:/usr/src/app/config/
+
+[Service]
+Restart=always
+
+---
+
+# rss-forwarder.container
+[Container]
+ContainerName=rss-forwarder
+Environment=TZ=Europe/Paris
+Image=ghcr.io/morphy2k/rss-forwarder:latest
+Network=net-proxy
+Volume=/data/rss-forwarder:/data
+
+[Service]
+Restart=always
+
+---
+
+# zipline.container
+[Container]
+ContainerName=zipline
+Environment=DATASOURCE_TYPE=s3 DATASOURCE_S3_BUCKET=zipline DATASOURCE_S3_ENDPOINT=https://minio.${MAIN_DOMAIN} DATASOURCE_S3_FORCE_PATH_STYLE=true DATASOURCE_S3_REGION=eu-west-1
+EnvironmentFile=env/zipline.env
+Image=ghcr.io/diced/zipline:v4
+Label=traefik.enable=true traefik.http.routers.zipline.rule=Host(`${SECONDARY_DOMAIN}`) traefik.http.routers.zipline.entrypoints=websecure traefik.http.routers.zipline.tls.certresolver=cloudflare_main traefik.http.services.zipline.loadbalancer.server.port=3000 wud.tag.include=^v\d+$$
+Network=net-postgres
+Network=net-proxy
+
+[Service]
+Restart=always
+
+---
+
+# grist.container
+[Container]
+ContainerName=grist
+Environment=TZ=Europe/Paris APP_HOME_URL=https://grist.${MAIN_DOMAIN} GRIST_SANDBOX_FLAVOR=gvisor TYPEORM_TYPE=postgres TYPEORM_DATABASE=gristdb TYPEORM_USERNAME=grist TYPEORM_HOST=postgres REDIS_URL=redis://redis:6379 GRIST_OIDC_IDP_ISSUER=https://authentik.${MAIN_DOMAIN}/application/o/grist/.well-known/openid-configuration
+EnvironmentFile=env/grist.env
+Image=gristlabs/grist:latest
+Label=traefik.enable=true traefik.http.routers.grist.rule=Host(`grist.${MAIN_DOMAIN}`) traefik.http.routers.grist.entrypoints=websecure traefik.http.routers.grist.tls.certresolver=cloudflare_main
+Network=net-proxy
+Network=net-postgres
+Network=net-redis
+Volume=/data/grist:/persist
+
+[Service]
+Restart=always
+
+---
+
+# freshrss.container
+[Container]
+ContainerName=freshrss
+Environment=TZ=Europe/Paris BASE_URL=freshrss.${MAIN_DOMAIN} CRON_MIN=*/20 DB_TYPE=pgsql DB_HOST=postgres DB_USER=freshrss DB_BASE=freshrssdb TRUSTED_PROXIES=172.25.0.254 OIDC_ENABLED=1 OIDC_PROVIDER_METADATA_URL=https://authentik.${MAIN_DOMAIN}/application/o/freshrss/.well-known/openid-configuration "OIDC_X_FORWARDED_HEADERS=X-Forwarded-Proto X-Forwarded-Host" "OIDC_SCOPES=openid profile email"
+EnvironmentFile=env/freshrss.env
+Image=freshrss/freshrss:1
+Label=traefik.enable=true traefik.http.middlewares.freshrss-compress.compress=true traefik.http.middlewares.freshrss-headers.headers.browserXssFilter=true traefik.http.middlewares.freshrss-headers.headers.frameDeny=true traefik.http.middlewares.freshrss-headers.headers.referrerPolicy=no-referrer-when-downgrade traefik.http.routers.freshrss.rule=Host(`freshrss.${MAIN_DOMAIN}`) traefik.http.routers.freshrss.entrypoints=websecure traefik.http.routers.freshrss.tls.certresolver=cloudflare_main traefik.http.routers.freshrss.middlewares=crowdsec,freshrss-compress,freshrss-headers wud.tag.include=^\d+$$
+Network=net-proxy
+Network=net-postgres
+Volume=/data/freshrss/data:/var/www/FreshRSS/data
+Volume=/data/freshrss/extensions:/var/www/FreshRSS/extensions
+
+[Service]
+Restart=always
+
+---
+
+# couchdb.container
+[Container]
+ContainerName=obsidian-livesync
+EnvironmentFile=env/obsidian-livesync.env
+HealthCmd=curl -f http://localhost:5984/_up
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=couchdb:3
+Label=traefik.enable=true traefik.http.routers.obsidian-livesync.rule=Host(`obsidian-livesync.internal.${MAIN_DOMAIN}`) traefik.http.routers.obsidian-livesync.entrypoints=websecure traefik.http.routers.obsidian-livesync.tls.certresolver=cloudflare_main traefik.http.services.obsidian-livesync.loadbalancer.server.port=5984 traefik.http.routers.obsidian-livesync.middlewares=tailscaleAL traefik.http.middlewares.obsidiancors.headers.accesscontrolallowmethods=GET,PUT,POST,HEAD,DELETE traefik.http.middlewares.obsidiancors.headers.accesscontrolallowheaders=accept,authorization,content-type,origin,referer traefik.http.middlewares.obsidiancors.headers.accesscontrolalloworiginlist=app://obsidian.md,capacitor://localhost,http://localhost traefik.http.middlewares.obsidiancors.headers.accesscontrolmaxage=3600 traefik.http.middlewares.obsidiancors.headers.addvaryheader=true traefik.http.middlewares.obsidiancors.headers.accessControlAllowCredentials=true wud.tag.include=^\d+$$
+Network=net-proxy
+Volume=/data/obsidian-livesync/data:/opt/couchdb/data
+Volume=/data/obsidian-livesync/local.ini:/opt/couchdb/etc/local.ini
+
+[Service]
+Restart=always
+
+---
+
+# linkwarden.container
+[Unit]
+Requires=minio.service postgres.service meilisearch.service
+After=minio.service postgres.service meilisearch.service
+
+[Container]
+ContainerName=linkwarden
+Environment=TZ=Europe/Paris NEXTAUTH_URL=https://linkwarden.${MAIN_DOMAIN}/api/v1/auth NEXT_PUBLIC_CREDENTIALS_ENABLED=false SPACES_ENDPOINT=http://minio:9000/ SPACES_BUCKET_NAME=linkwarden SPACES_REGION=eu-west-1 SPACES_FORCE_PATH_STYLE=true NEXT_PUBLIC_AUTHENTIK_ENABLED=true AUTHENTIK_ISSUER=https://authentik.${MAIN_DOMAIN}/application/o/linkwarden MEILI_HOST=http://meilisearch:7700
+EnvironmentFile=env/linkwarden.env
+Image=ghcr.io/linkwarden/linkwarden:v2.13.1
+Label=traefik.enable=true traefik.http.routers.linkwarden.rule=Host(`linkwarden.${MAIN_DOMAIN}`) traefik.http.routers.linkwarden.entrypoints=websecure traefik.http.routers.linkwarden.tls.certresolver=cloudflare_main traefik.http.services.linkwarden.loadbalancer.server.port=3000 wud.tag.include=^v\d+\.\d+\.\d+$$
+Network=net-proxy
+Network=net-postgres
+Network=net-meilisearch
+
+[Service]
+Restart=always
+
+---
+
+# meilisearch.container
+[Container]
+ContainerName=meilisearch
+EnvironmentFile=env/meilisearch.env
+Image=getmeili/meilisearch:v1.19.1
+Label=wud.tag.include=^v\d+\.\d+.\d+$$
+Network=net-meilisearch
+Volume=/data/meilisearch:/meili_data
+
+[Service]
+Restart=always
+
+---
+
+# opengist.container
+[Container]
+ContainerName=opengist
+Environment=TZ=Europe/Paris OG_OIDC_DISCOVERY_URL=https://authentik.${MAIN_DOMAIN}/application/o/opengist/.well-known/openid-configuration OG_OIDC_PROVIDER_NAME=authentik OG_METRICS_ENABLED=true
+EnvironmentFile=env/opengist.env
+HealthCmd=curl -f http://localhost:6157/healthcheck
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=ghcr.io/thomiceli/opengist:1.11
+Label=traefik.enable=true "traefik.http.routers.opengist.rule=Host(`gist.${SECONDARY_DOMAIN}`) && !PathPrefix(`/metrics`)" traefik.http.routers.opengist.entrypoints=websecure traefik.http.routers.opengist.tls.certresolver=cloudflare_main traefik.http.services.opengist.loadbalancer.server.port=6157 wud.tag.include=^\d+\.\d+$$
+Network=net-proxy
+Network=net-postgres
+Network=net-prometheus
+Volume=/data/opengist:/opengist
+
+[Service]
+Restart=always
+
+---
+
+# stirling-pdf.container
+[Unit]
+Requires=traefik.service authentik-server.service
+After=traefik.service authentik-server.service
+
+[Container]
+ContainerName=stirling-pdf
+Environment=DOCKER_ENABLE_SECURITY=true SECURITY_ENABLELOGIN=true SECURITY_OAUTH2_ENABLED=true SECURITY_OAUTH2_AUTOCREATEUSER=true SECURITY_OAUTH2_BLOCKREGISTRATION=false "SECURITY_OAUTH2_SCOPES=openid, profile, email" SECURITY_OAUTH2_USEASUSERNAME=email SECURITY_OAUTH2_PROVIDER=authentik SECURITY_LOGINMETHOD=oauth2
+EnvironmentFile=env/stirling-pdf.env
+HealthCmd=curl -f http://localhost:8080/api/v1/info/status | grep -q 'UP'
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=ghcr.io/stirling-tools/stirling-pdf:1.5.0-fat
+Label=traefik.enable=true traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${MAIN_DOMAIN}`) traefik.http.routers.stirling-pdf.entrypoints=websecure traefik.http.routers.stirling-pdf.tls.certresolver=cloudflare_main traefik.http.services.stirling-pdf.loadbalancer.server.port=8080 traefik.http.routers.stirling-pdf.middlewares=crowdsec wud.tag.include=^\d+\.\d+\.\d+-fat$$
+Network=net-proxy
+Volume=/data/stirling-pdf/training-data:/usr/share/tessdata
+Volume=/data/stirling-pdf/extra-configs:/configs
+Volume=/data/stirling-pdf/custom-files:/customFiles
+Volume=/data/stirling-pdf/logs:/logs
+Volume=/data/stirling-pdf/pipeline:/pipeline
+
+[Service]
+Restart=always
+
+---
+
+# it-tools.container
+[Container]
+ContainerName=it-tools
+HealthCmd=curl -f http://localhost:80
+HealthInterval=30s
+HealthRetries=5
+HealthTimeout=10s
+Image=ghcr.io/corentinth/it-tools:latest
+Label=traefik.enable=true traefik.http.routers.it-tools.rule=Host(`it-tools.internal.${MAIN_DOMAIN}`) traefik.http.routers.it-tools.entrypoints=websecure traefik.http.routers.it-tools.tls.certresolver=cloudflare_main
+Network=net-proxy
+
+[Service]
+Restart=always
+
+---
+
+# mazanoke.container
+[Container]
+ContainerName=mazanoke
+Image=ghcr.io/civilblur/mazanoke:v1.1.5
+Label=traefik.enable=true traefik.http.routers.mazanoke.rule=Host(`mazanoke.internal.${MAIN_DOMAIN}`) traefik.http.routers.mazanoke.entrypoints=websecure traefik.http.routers.mazanoke.tls.certresolver=cloudflare_main
+Network=net-proxy
+
+[Service]
+Restart=always
+
+---
+
+# excalidraw.container
+[Container]
+ContainerName=excalidraw
+Image=excalidraw/excalidraw:latest
+Label=traefik.enable=true traefik.http.routers.excalidraw.rule=Host(`excalidraw.internal.${MAIN_DOMAIN}`) traefik.http.routers.excalidraw.entrypoints=websecure traefik.http.routers.excalidraw.tls.certresolver=cloudflare_main
+Network=net-proxy
+
+[Service]
+Restart=always
+
+---
+
+# hedgedoc.container
+[Container]
+ContainerName=hedgedoc
+Environment=CMD_DOMAIN=hedgedoc.${MAIN_DOMAIN} CMD_PROTOCOL_USESSL=true CMD_URL_ADDPORT=false CMD_DB_HOST=postgres CMD_DB_PORT=5432 CMD_DB_USERNAME=hedgedoc CMD_DB_DATABASE=hedgedocdb CMD_DB_DIALECT=postgres CMD_EMAIL=false CMD_ALLOW_EMAIL_REGISTER=false CMD_OAUTH2_PROVIDERNAME=authentik "CMD_OAUTH2_SCOPE=openid profile email" CMD_OAUTH2_USER_PROFILE_URL=https://authentik.${MAIN_DOMAIN}/application/o/userinfo/ CMD_OAUTH2_TOKEN_URL=https://authentik.${MAIN_DOMAIN}/application/o/token/ CMD_OAUTH2_AUTHORIZATION_URL=https://authentik.${MAIN_DOMAIN}/application/o/authorize/ CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email CMD_IMAGE_UPLOAD_TYPE=minio CMD_S3_BUCKET=hedgedoc CMD_MINIO_ENDPOINT=minio.${MAIN_DOMAIN} CMD_MINIO_SECURE=true
+EnvironmentFile=env/hedgedoc.env
+Image=quay.io/hedgedoc/hedgedoc:1.10.3
+Label=traefik.enable=true traefik.http.routers.hedgedoc.rule=Host(`hedgedoc.${MAIN_DOMAIN}`) traefik.http.routers.hedgedoc.entrypoints=websecure traefik.http.routers.hedgedoc.tls.certresolver=cloudflare_main
+Network=net-proxy
+Network=net-postgres
+
+[Service]
+Restart=always
+
+---
+
+# minio.container
+[Container]
+ContainerName=minio
+Environment=MINIO_ENABLE_COMPRESSION=on MINIO_BROWSER_REDIRECT_URL=https://minio.internal.${MAIN_DOMAIN} MINIO_IDENTITY_OPENID_CONFIG_URL=https://authentik.${MAIN_DOMAIN}/application/o/minio/.well-known/openid-configuration MINIO_IDENTITY_OPENID_SCOPES=openid,profile,email,minio
+EnvironmentFile=env/minio.env
+Exec=minio server /data --console-address :9001
+HealthCmd=["mc","ready","local"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=15s
+HealthTimeout=5s
+Image=quay.io/minio/minio:latest
+Label=traefik.enable=true traefik.http.routers.minio.rule=Host(`minio.${MAIN_DOMAIN}`) traefik.http.routers.minio.entrypoints=websecure traefik.http.routers.minio.tls.certresolver=cloudflare_main traefik.http.routers.minio.middlewares=crowdsec traefik.http.routers.minio.service=minio traefik.http.services.minio.loadbalancer.server.port=9000 traefik.http.routers.minio-console.rule=Host(`minio.internal.${MAIN_DOMAIN}`) traefik.http.routers.minio-console.entrypoints=websecure traefik.http.routers.minio-console.tls.certresolver=cloudflare_main traefik.http.routers.minio-console.middlewares=crowdsec traefik.http.routers.minio-console.service=minio-console traefik.http.services.minio-console.loadbalancer.server.port=9001
+Network=net-proxy
+Network=net-postgres
+Network=net-prometheus
+Volume=/data/minio:/data
+
+[Service]
+Restart=always
+
+---
+
+# crowdsec.container
+[Container]
+ContainerName=crowdsec
+Environment="COLLECTIONS=LePresidente/gitea crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/sshd" POSTOVERFLOWS=crowdsecurity/rdns CUSTOM_HOSTNAME=DockerMonster BOUNCER_KEY_TraefikBouncer=${CROWDSEC_LAPI_KEY} GID=1000
+HealthCmd=cscli lapi status
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=15s
+HealthTimeout=5s
+Image=ghcr.io/crowdsecurity/crowdsec:latest
+Network=net-proxy
+Network=net-prometheus
+PublishPort=127.0.0.1:8080:8080
+Volume=/data/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
+Volume=/data/crowdsec/db:/var/lib/crowdsec/data
+Volume=/data/crowdsec/config:/etc/crowdsec
+Volume=logs-traefik:/var/log/traefik:ro
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always
+
+---
+
+# authentik-server.container
+[Unit]
+Requires=postgres.service redis.service
+After=postgres.service redis.service
+
+[Container]
+ContainerName=authentik-server
+Environment=AUTHENTIK_REDIS__HOST=redis AUTHENTIK_POSTGRESQL__HOST=postgres AUTHENTIK_POSTGRESQL__USER=authentik AUTHENTIK_POSTGRESQL__NAME=authentikdb AUTHENTIK_COOKIE_DOMAIN=${MAIN_DOMAIN}
+EnvironmentFile=env/authentik.env
+Exec=server
+Image=ghcr.io/goauthentik/server:2025.8.4
+Label=traefik.enable=true "traefik.http.routers.authentik.rule=Host(`authentik.${MAIN_DOMAIN}`) || HostRegexp(`{subdomain:[a-z0-9-]+}.${MAIN_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)" traefik.http.routers.authentik.entrypoints=websecure traefik.http.routers.authentik.tls.certresolver=cloudflare_main traefik.http.routers.authentik.service=authentik traefik.http.routers.authentik.middlewares=crowdsec traefik.http.services.authentik.loadbalancer.server.port=9000 traefik.http.middlewares.forwardAuth-authentik.forwardauth.address=https://authentik.${MAIN_DOMAIN}/outpost.goauthentik.io/auth/traefik traefik.http.middlewares.forwardAuth-authentik.forwardauth.trustForwardHeader=true traefik.http.middlewares.forwardAuth-authentik.forwardauth.authResponseHeaders=X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version homepage.group=Main homepage.name=Authentik homepage.icon=authentik.png homepage.description=Authentik homepage.href=https://authentik.${MAIN_DOMAIN} homepage.widget.type=authentik homepage.widget.url=https://authentik.${MAIN_DOMAIN} homepage.widget.key=${AUTHENTIK_TOKEN} wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Network=net-postgres
+Network=net-redis
+Network=net-prometheus
+Volume=geoip.volume:/geoip
+
+[Service]
+Restart=always
+
+---
+
+# authentik-worker.container
+[Unit]
+Requires=postgres.service redis.service
+After=postgres.service redis.service
+
+[Container]
+ContainerName=authentik-worker
+Environment=AUTHENTIK_REDIS__HOST=redis AUTHENTIK_POSTGRESQL__HOST=postgres AUTHENTIK_POSTGRESQL__USER=authentik AUTHENTIK_POSTGRESQL__NAME=authentikdb
+EnvironmentFile=env/authentik.env
+Exec=worker
+Image=ghcr.io/goauthentik/server:2025.8.4
+Label=wud.tag.include=^\d+\.\d+\.\d+$$
+Network=net-proxy
+Network=net-postgres
+Network=net-redis
+Volume=geoip.volume:/geoip
+
+[Service]
+Restart=always
+
+---
+
+# geoipupdate.container
+[Container]
+ContainerName=geoipupdate
+Environment="GEOIPUPDATE_EDITION_IDS=GeoLite2-City GeoLite2-ASN GeoLite2-Country" GEOIPUPDATE_FREQUENCY=8
+EnvironmentFile=env/geoipupdate.env
+Image=ghcr.io/maxmind/geoipupdate:latest
+Volume=geoip.volume:/usr/share/GeoIP
+
+[Service]
+Restart=always
+
+---
+
+# net-proxy.network
+[Network]
+Driver=bridge
+Subnet=172.25.0.0/16
+
+---
+
+# net-postgres.network
+[Network]
+Driver=bridge
+Internal=true
+
+---
+
+# net-redis.network
+[Network]
+Driver=bridge
+Internal=true
+
+---
+
+# net-influxdb.network
+[Network]
+Driver=bridge
+Internal=true
+
+---
+
+# net-prometheus.network
+[Network]
+Driver=bridge
+Internal=true
+
+---
+
+# net-meilisearch.network
+[Network]
+Driver=bridge
+Internal=true
+
+---
+
+# geoip.volume
+[Volume]
+Driver=local
