@@ -127,7 +127,7 @@ HealthInterval=30s
 HealthRetries=5
 HealthStartPeriod=5s
 HealthTimeout=5s
-Image=ghcr.io/henrygd/beszel/beszel:0.14.0
+Image=ghcr.io/henrygd/beszel/beszel:0.14.1
 Label=traefik.enable=true traefik.http.routers.beszel.rule=Host(`beszel.internal.${MAIN_DOMAIN}`) traefik.http.routers.beszel.entrypoints=websecure traefik.http.routers.beszel.tls.certresolver=cloudflare_main traefik.http.routers.beszel.middlewares=tailscaleAL
 Network=net-proxy
 Volume=/data/beszel:/beszel_data
@@ -147,7 +147,7 @@ HealthInterval=30s
 HealthRetries=5
 HealthStartPeriod=5s
 HealthTimeout=5s
-Image=ghcr.io/henrygd/beszel/beszel-agent:0.14.0
+Image=ghcr.io/henrygd/beszel/beszel-agent:0.14.1
 Network=host
 Volume=/var/run/docker.sock:/var/run/docker.sock:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
@@ -444,6 +444,22 @@ Volume=/data/scrutiny:/opt/scrutiny/config
 
 ---
 
+# scrutiny-collector.container
+[Container]
+AddCapability=SYS_RAWIO SYS_ADMIN
+AddDevice=/dev/sda:/dev/sda
+AddDevice=/dev/sdb:/dev/sdb
+AddDevice=/dev/sdc:/dev/sdc
+AddDevice=/dev/sdd:/dev/sdd
+AddDevice=/dev/nvme0:/dev/nvme0
+AddDevice=/dev/nvme1:/dev/nvme1
+ContainerName=scrutiny-collector
+Environment=COLLECTOR_API_ENDPOINT=https://scrutiny.internal.${MAIN_DOMAIN} COLLECTOR_HOST_ID=DockerMonster
+Image=ghcr.io/analogj/scrutiny:master-collector
+Volume=/run/udev:/run/udev:ro
+
+---
+
 # redbot.container
 [Unit]
 Requires=postgres-14.service
@@ -492,7 +508,7 @@ HealthInterval=30s
 HealthRetries=5
 HealthStartPeriod=30s
 HealthTimeout=5s
-Image=grafana/grafana:12.2.0
+Image=grafana/grafana:12.2.1
 Label=traefik.enable=true traefik.http.routers.grafana.rule=Host(`grafana.internal.${MAIN_DOMAIN}`) traefik.http.routers.grafana.entrypoints=websecure traefik.http.routers.grafana.tls.certresolver=cloudflare_main traefik.http.services.grafana.loadbalancer.server.port=3000 traefik.http.routers.grafana.middlewares=tailscaleAL homepage.group=Main homepage.name=Grafana homepage.icon=grafana.png homepage.description=Grafana homepage.widget.type=grafana homepage.widget.url=https://grafana.internal.${MAIN_DOMAIN} homepage.widget.username=${GRAFANA_USER} homepage.widget.password=${GRAFANA_PASSWORD} wud.tag.include=^\d+\.\d+\.\d+$$
 Network=net-proxy
 Volume=/data/grafana:/var/lib/grafana
