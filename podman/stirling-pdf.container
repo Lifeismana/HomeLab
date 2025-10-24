@@ -15,7 +15,7 @@ Environment=SECURITY_OAUTH2_SCOPES="openid, profile, email"
 Environment=SECURITY_OAUTH2_USEASUSERNAME=email 
 Environment=SECURITY_OAUTH2_PROVIDER=authentik 
 Environment=SECURITY_LOGINMETHOD=oauth2
-EnvironmentFile=env/stirling-pdf.env
+EnvironmentFile=/etc/secc/env/stirling-pdf.env
 HealthCmd=curl -f http://localhost:8080/api/v1/info/status | grep -q 'UP'
 HealthInterval=30s
 HealthRetries=5

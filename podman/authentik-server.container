@@ -11,7 +11,7 @@ Environment=AUTHENTIK_POSTGRESQL__HOST=postgres
 Environment=AUTHENTIK_POSTGRESQL__USER=authentik 
 Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb 
 Environment=AUTHENTIK_COOKIE_DOMAIN=${MAIN_DOMAIN}
-EnvironmentFile=env/authentik.env
+EnvironmentFile=/etc/secc/env/authentik.env
 Exec=server
 Image=ghcr.io/goauthentik/server:2025.8.4
 Label=traefik.enable=true 

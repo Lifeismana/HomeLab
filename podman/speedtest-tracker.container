@@ -9,7 +9,7 @@ Environment=DB_HOST=postgres
 Environment=DB_DATABASE=speedtest_trackerdb 
 Environment=DB_USERNAME=speedtest_tracker 
 Environment=SPEEDTEST_SCHEDULE="10 */2 * * *"
-EnvironmentFile=env/speedtest-tracker.env
+EnvironmentFile=/etc/secc/env/speedtest-tracker.env
 Image=lscr.io/linuxserver/speedtest-tracker:latest
 Label=traefik.enable=true 
 Label=traefik.http.routers.speedtest-tracker.rule=Host(`speedtest-tracker.internal.${MAIN_DOMAIN}`) 

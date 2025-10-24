@@ -1,7 +1,7 @@
 [Container]
 ContainerName=traefik
 Environment=TZ=Europe/Paris NAS_NAME=${MAIN_NAS}
-EnvironmentFile=env/traefik.env
+EnvironmentFile=/etc/secc/env/traefik.env
 Exec=--api.dashboard=true \
      --metrics.prometheus=true \
      --ping=true \
@@ -78,7 +78,7 @@ PublishPort=80:80
 PublishPort=443:443
 Volume=/var/run/docker.sock:/var/run/docker.sock
 Volume=/data/traefik:/data
-Volume=./traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
+Volume=/etc/secc//traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
 Volume=logs-traefik:/var/log/traefik
 
 [Service]

@@ -4,7 +4,7 @@ Environment=MINIO_ENABLE_COMPRESSION=on
 Environment=MINIO_BROWSER_REDIRECT_URL=https://minio.internal.${MAIN_DOMAIN} 
 Environment=MINIO_IDENTITY_OPENID_CONFIG_URL=https://authentik.${MAIN_DOMAIN}/application/o/minio/.well-known/openid-configuration 
 Environment=MINIO_IDENTITY_OPENID_SCOPES=openid,profile,email,minio
-EnvironmentFile=env/minio.env
+EnvironmentFile=/etc/secc/env/minio.env
 Exec=minio server /data --console-address :9001
 HealthCmd=["mc","ready","local"]
 HealthInterval=30s

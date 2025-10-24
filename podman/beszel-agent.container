@@ -1,7 +1,7 @@
 [Container]
 ContainerName=beszel-agent
 Environment=LISTEN=45876
-EnvironmentFile=env/beszel-agent.env
+EnvironmentFile=/etc/secc/env/beszel-agent.env
 HealthCmd=["/agent","health"]
 HealthInterval=30s
 HealthRetries=5

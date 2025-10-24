@@ -13,7 +13,7 @@ Environment=WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true
 Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_CMD=/wud/webhook-update.sh 
 Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_AUTO=true 
 Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_MODE=batch
-EnvironmentFile=env/whats-up-docker.env
+EnvironmentFile=/etc/secc/env/whats-up-docker.env
 HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
 HealthInterval=30s
 HealthRetries=5
@@ -29,7 +29,7 @@ Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy
 Volume=/var/run/docker.sock:/var/run/docker.sock
 Volume=whatsupdocker:/store
-Volume=./wud/webhook-update.sh:/wud/webhook-update.sh:ro
+Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro
 
 [Service]
 Restart=always

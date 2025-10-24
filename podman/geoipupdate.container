@@ -2,7 +2,7 @@
 ContainerName=geoipupdate
 Environment="GEOIPUPDATE_EDITION_IDS=GeoLite2-City GeoLite2-ASN GeoLite2-Country" 
 Environment=GEOIPUPDATE_FREQUENCY=8
-EnvironmentFile=env/geoipupdate.env
+EnvironmentFile=/etc/secc/env/geoipupdate.env
 Image=ghcr.io/maxmind/geoipupdate:latest
 Volume=geoip.volume:/usr/share/GeoIP
 

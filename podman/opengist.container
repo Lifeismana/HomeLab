@@ -4,7 +4,7 @@ Environment=TZ=Europe/Paris
 Environment=OG_OIDC_DISCOVERY_URL=https://authentik.${MAIN_DOMAIN}/application/o/opengist/.well-known/openid-configuration 
 Environment=OG_OIDC_PROVIDER_NAME=authentik 
 Environment=OG_METRICS_ENABLED=true
-EnvironmentFile=env/opengist.env
+EnvironmentFile=/etc/secc/env/opengist.env
 HealthCmd=curl -f http://localhost:6157/healthcheck
 HealthInterval=30s
 HealthRetries=5

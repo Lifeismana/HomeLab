@@ -18,7 +18,7 @@ Environment=SPACES_FORCE_PATH_STYLE=true
 Environment=NEXT_PUBLIC_AUTHENTIK_ENABLED=true 
 Environment=AUTHENTIK_ISSUER=https://authentik.${MAIN_DOMAIN}/application/o/linkwarden 
 Environment=MEILI_HOST=http://meilisearch:7700
-EnvironmentFile=env/linkwarden.env
+EnvironmentFile=/etc/secc/env/linkwarden.env
 Image=ghcr.io/linkwarden/linkwarden:v2.13.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.linkwarden.rule=Host(`linkwarden.${MAIN_DOMAIN}`) 

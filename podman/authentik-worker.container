@@ -10,7 +10,7 @@ Environment=AUTHENTIK_REDIS__HOST=redis
 Environment=AUTHENTIK_POSTGRESQL__HOST=postgres 
 Environment=AUTHENTIK_POSTGRESQL__USER=authentik 
 Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
-EnvironmentFile=env/authentik.env
+EnvironmentFile=/etc/secc/env/authentik.env
 Exec=worker
 Image=ghcr.io/goauthentik/server:2025.8.4
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$

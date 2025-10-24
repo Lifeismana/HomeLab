@@ -5,7 +5,7 @@ Environment=DATASOURCE_S3_BUCKET=zipline
 Environment=DATASOURCE_S3_ENDPOINT=https://minio.${MAIN_DOMAIN} 
 Environment=DATASOURCE_S3_FORCE_PATH_STYLE=true 
 Environment=DATASOURCE_S3_REGION=eu-west-1
-EnvironmentFile=env/zipline.env
+EnvironmentFile=/etc/secc/env/zipline.env
 Image=ghcr.io/diced/zipline:v4
 Label=traefik.enable=true 
 Label=traefik.http.routers.zipline.rule=Host(`${SECONDARY_DOMAIN}`) 

@@ -28,7 +28,7 @@ Environment=GITEA__SESSION__PROVIDER_CONFIG=redis://redis:6379/0?pool_size=100&i
 Environment=GITEA__SERVER__SSH_PORT=22 
 Environment=GITEA__SERVER__SSH_LISTEN_PORT=22 
 Environment=GITEA__SERVER__OFFLINE_MODE=false
-EnvironmentFile=env/gitea.env
+EnvironmentFile=/etc/secc/env/gitea.env
 HealthCmd=["curl","-f","http://localhost:3000/api/healthz"]
 HealthInterval=30s
 HealthRetries=5

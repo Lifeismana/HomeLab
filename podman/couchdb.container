@@ -1,6 +1,6 @@
 [Container]
 ContainerName=obsidian-livesync
-EnvironmentFile=env/obsidian-livesync.env
+EnvironmentFile=/etc/secc/env/obsidian-livesync.env
 HealthCmd=curl -f http://localhost:5984/_up
 HealthInterval=30s
 HealthRetries=5

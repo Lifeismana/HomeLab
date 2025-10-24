@@ -1,6 +1,6 @@
 [Container]
 ContainerName=postgres
-EnvironmentFile=env/postgres.env
+EnvironmentFile=/etc/secc/env/postgres.env
 HealthCmd=pg_isready -U postgres
 HealthInterval=30s
 HealthRetries=5

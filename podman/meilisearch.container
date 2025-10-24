@@ -1,6 +1,6 @@
 [Container]
 ContainerName=meilisearch
-EnvironmentFile=env/meilisearch.env
+EnvironmentFile=/etc/secc/env/meilisearch.env
 Image=docker.io/getmeili/meilisearch:v1.19.1
 Label=wud.tag.include=^v\\d+\\.\\d+.\\d+$$
 Network=net-meilisearch
