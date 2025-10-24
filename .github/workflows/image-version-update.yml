@@ -38,13 +38,6 @@ jobs:
                     git config user.email github-actions@github.com
                     git checkout -b "$BRANCH_NAME"
 
-            -   name: Setup Node.js
-                uses: actions/setup-node@v6
-                with:
-                    node-version: 'lts/*'
-                    cache: 'npm'
-                    cache-dependency-path: '.github/tag-update/package-lock.json'
-
             -   name: Update Image Version
                 id: update_image_version
                 run: |
@@ -62,8 +55,10 @@ jobs:
                         echo "Required environment variables are not set. Exiting."
                         exit 1
                     fi
+                    
+                    find ./ -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
 
-                    git add docker-compose.yml
+                    git add .
                     git commit -m "Update '$IMAGE_NAME' from '$LOCAL_TAG' to '$REMOTE_TAG'"
                     git push -f origin "$BRANCH_NAME"
 
