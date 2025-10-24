@@ -1,0 +1,14 @@
+[Container]
+AddCapability=SYS_RAWIO 
+AddCapability=SYS_ADMIN
+AddDevice=/dev/sda:/dev/sda
+AddDevice=/dev/sdb:/dev/sdb
+AddDevice=/dev/sdc:/dev/sdc
+AddDevice=/dev/sdd:/dev/sdd
+AddDevice=/dev/nvme0:/dev/nvme0
+AddDevice=/dev/nvme1:/dev/nvme1
+ContainerName=scrutiny-collector
+Environment=COLLECTOR_API_ENDPOINT=https://scrutiny.internal.${MAIN_DOMAIN} 
+Environment=COLLECTOR_HOST_ID=DockerMonster
+Image=ghcr.io/analogj/scrutiny:master-collector
+Volume=/run/udev:/run/udev:ro

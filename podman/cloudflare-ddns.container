@@ -1,0 +1,11 @@
+[Container]
+ContainerName=cloudflare-ddns
+Environment=PUID=1000 
+Environment=PGID=994
+Image=docker.io/timothyjmiller/cloudflare-ddns:latest
+Network=host
+NoNewPrivileges=true
+Volume=/data/cloudflareddns/config.json:/config.json
+
+[Service]
+Restart=always

@@ -1,0 +1,11 @@
+[Container]
+ContainerName=excalidraw
+Image=docker.io/excalidraw/excalidraw:latest
+Label=traefik.enable=true 
+Label=traefik.http.routers.excalidraw.rule=Host(`excalidraw.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.excalidraw.entrypoints=websecure 
+Label=traefik.http.routers.excalidraw.tls.certresolver=cloudflare_main
+Network=net-proxy
+
+[Service]
+Restart=always

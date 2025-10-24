@@ -99,7 +99,7 @@ services:
 
   logrotate:
     container_name: traefik-logrotate
-    image: vegardit/traefik-logrotate:latest
+    image: ghcr.io/vegardit/traefik-logrotate:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:rw # required to send USR1 signal to Traefik after log rotation
       - logs-traefik:/var/log/traefik:rw

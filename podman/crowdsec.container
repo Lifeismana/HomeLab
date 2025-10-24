@@ -1,0 +1,24 @@
+[Container]
+ContainerName=crowdsec
+Environment=COLLECTIONS="LePresidente/gitea crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/sshd" 
+Environment=POSTOVERFLOWS=crowdsecurity/rdns 
+Environment=CUSTOM_HOSTNAME=DockerMonster 
+Environment=BOUNCER_KEY_TraefikBouncer=${CROWDSEC_LAPI_KEY} 
+Environment=GID=1000
+HealthCmd=cscli lapi status
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=15s
+HealthTimeout=5s
+Image=ghcr.io/crowdsecurity/crowdsec:latest
+Network=net-proxy
+Network=net-prometheus
+PublishPort=127.0.0.1:8080:8080
+Volume=/data/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
+Volume=/data/crowdsec/db:/var/lib/crowdsec/data
+Volume=/data/crowdsec/config:/etc/crowdsec
+Volume=logs-traefik:/var/log/traefik:ro
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always

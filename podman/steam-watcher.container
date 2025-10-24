@@ -1,0 +1,9 @@
+[Container]
+ContainerName=steam-watcher
+Environment=TZ=Europe/Paris
+Image=ghcr.io/lifeismana/steam-watcher:latest
+Network=net-proxy
+Volume=/data/steam-watcher:/usr/src/app/config/
+
+[Service]
+Restart=always

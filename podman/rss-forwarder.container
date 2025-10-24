@@ -1,0 +1,9 @@
+[Container]
+ContainerName=rss-forwarder
+Environment=TZ=Europe/Paris
+Image=ghcr.io/morphy2k/rss-forwarder:latest
+Network=net-proxy
+Volume=/data/rss-forwarder:/data
+
+[Service]
+Restart=always

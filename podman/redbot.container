@@ -1,0 +1,19 @@
+[Unit]
+Requires=postgres-14.service
+After=postgres-14.service
+
+[Container]
+ContainerName=redbot
+Environment=CUSTOM_REDBOT_PACKAGE=git+https://github.com/Cog-Creators/Red-DiscordBot.git@V3/develop#egg=Red-DiscordBot 
+Environment=TZ=Europe/Paris 
+Environment=EXTRA_ARGS="--dev --rpc"
+Image=ghcr.io/lifeismana/docker-red-discordbot:full
+Network=net-proxy
+Volume=/data/redbot:/data
+Volume=/data/.ssh/red_github/:/config/.ssh/
+Volume=/data/.pylav-red/pylav.yaml:/config/pylav.yaml
+Volume=/var/run/postgresql:/var/run/postgresql
+Volume=/data/.pylav-red/PyLav:/config/.config/PyLav
+
+[Service]
+Restart=always

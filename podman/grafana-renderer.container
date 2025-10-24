@@ -1,0 +1,18 @@
+[Unit]
+Requires=grafana.service
+After=grafana.service
+
+[Container]
+ContainerName=grafana-renderer
+Environment=ENABLE_METRICS=true
+HealthCmd=wget -O - http://localhost:8081 &>/dev/null
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=docker.io/grafana/grafana-image-renderer:3.12.9
+Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
+Network=container:grafana
+
+[Service]
+Restart=always
