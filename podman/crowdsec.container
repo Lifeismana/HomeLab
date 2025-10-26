@@ -18,7 +18,7 @@ Volume=/data/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
 Volume=/data/crowdsec/db:/var/lib/crowdsec/data
 Volume=/data/crowdsec/config:/etc/crowdsec
 Volume=logs-traefik:/var/log/traefik:ro
-Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 
 [Service]
 Restart=always

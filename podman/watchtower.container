@@ -22,7 +22,7 @@ Label=homepage.widget.url=https://watchtower.internal.${MAIN_DOMAIN}
 Label=homepage.widget.key=${WATCHTOWER_TOKEN} 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
-Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 
 [Service]
 Restart=always
