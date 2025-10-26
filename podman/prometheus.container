@@ -9,7 +9,7 @@ HealthInterval=30s
 HealthRetries=5
 HealthStartPeriod=30s
 HealthTimeout=5s
-Image=quay.io/prometheus/prometheus:v3.7.1
+Image=quay.io/prometheus/prometheus:v3.7.2
 Label=traefik.enable=true 
 Label=traefik.http.routers.prometheus.rule=Host(`prometheus.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.prometheus.entrypoints=websecure 
