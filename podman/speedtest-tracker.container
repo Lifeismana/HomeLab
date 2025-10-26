@@ -1,0 +1,32 @@
+[Container]
+ContainerName=speedtest-tracker
+Environment=TZ=Europe/Paris 
+Environment=DISPLAY_TIMEZONE=Europe/Paris 
+Environment=PUID=1000 
+Environment=PGID=994 
+Environment=DB_CONNECTION=pgsql 
+Environment=DB_HOST=postgres 
+Environment=DB_DATABASE=speedtest_trackerdb 
+Environment=DB_USERNAME=speedtest_tracker 
+Environment=SPEEDTEST_SCHEDULE="10 */2 * * *"
+EnvironmentFile=/etc/secc/env/speedtest-tracker.env
+Image=lscr.io/linuxserver/speedtest-tracker:latest
+Label=traefik.enable=true 
+Label=traefik.http.routers.speedtest-tracker.rule=Host(`speedtest-tracker.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.speedtest-tracker.entrypoints=websecure 
+Label=traefik.http.routers.speedtest-tracker.tls.certresolver=cloudflare_main 
+Label=traefik.http.services.speedtest-tracker.loadbalancer.server.port=80 
+Label=traefik.http.routers.speedtest-tracker.middlewares=tailscaleAL 
+Label=homepage.group=Main 
+Label=homepage.name="Speedtest Tracker"
+Label=homepage.icon=librespeed.png
+Label=homepage.description="Speedtest Tracker" 
+Label=homepage.href=https://speedtest-tracker.internal.${MAIN_DOMAIN} 
+Label=homepage.widget.type=speedtest 
+Label=homepage.widget.url=https://speedtest-tracker.internal.${MAIN_DOMAIN}
+Network=net-proxy
+Network=net-postgres
+Volume=/data/speedtest-tracker:/config
+
+[Service]
+Restart=always

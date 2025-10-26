@@ -1,0 +1,16 @@
+[Container]
+ContainerName=homepage
+Environment=HOMEPAGE_ALLOWED_HOSTS=home.${MAIN_DOMAIN}
+Image=ghcr.io/gethomepage/homepage:v1.5
+Label=traefik.enable=true 
+Label=traefik.http.routers.homepage.rule=Host(`home.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.homepage.entrypoints=websecure 
+Label=traefik.http.routers.homepage.tls.certresolver=cloudflare_main 
+Label=traefik.http.routers.homepage.middlewares=forwardAuth-authentik,crowdsec 
+Label=wud.tag.include=^v\\d+\\.\\d+$$
+Network=net-proxy
+Volume=/data/homepage:/app/config
+Volume=/var/run/docker.sock:/var/run/docker.sock:ro
+
+[Service]
+Restart=always

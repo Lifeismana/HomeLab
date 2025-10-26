@@ -1,0 +1,8 @@
+[Container]
+ContainerName=monodocker
+EnvironmentFile=/etc/secc/env/monodocker.env
+Image=docker.io/petersem/monocker
+Volume=/var/run/docker.sock:/var/run/docker.sock
+
+[Service]
+Restart=always

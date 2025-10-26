@@ -1,0 +1,15 @@
+[Container]
+ContainerName=asf
+Environment=TZ=Europe/Paris
+Exec=--cryptkey-file /app/config/key
+Image=ghcr.io/justarchinet/archisteamfarm:released
+Label=traefik.enable=true 
+Label=traefik.http.routers.asf.rule=Host(`asf.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.asf.entrypoints=websecure 
+Label=traefik.http.routers.asf.tls.certresolver=cloudflare_main 
+Label=traefik.http.routers.asf.middlewares=tailscaleAL
+Network=net-proxy
+Volume=/data/asf/config:/app/config
+
+[Service]
+Restart=always

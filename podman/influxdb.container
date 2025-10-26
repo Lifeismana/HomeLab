@@ -1,0 +1,17 @@
+[Container]
+ContainerName=influxdb
+HealthCmd=["curl","-f","http://localhost:8086/health"]
+HealthInterval=30s
+HealthRetries=5
+HealthTimeout=5s
+Image=docker.io/library/influxdb:2.2
+Label=traefik.enable=true 
+Label=traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.influxdb.entrypoints=websecure 
+Label=traefik.http.routers.influxdb.tls.certresolver=cloudflare_main 
+Label=traefik.http.services.influxdb.loadbalancer.server.port=8086 
+Label=traefik.http.routers.influxdb.middlewares=tailscaleAL 
+Label=wud.tag.include=^\\d+\\.\\d+$$
+Network=net-proxy
+Network=net-influxdb
+Volume=/data/influxdb:/var/lib/influxdb2

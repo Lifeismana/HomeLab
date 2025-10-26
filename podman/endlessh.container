@@ -1,0 +1,15 @@
+[Container]
+ContainerName=endlessh
+Exec=-logtostderr \
+     -v=1 \
+     -geoip_supplier=max-mind-db \
+     -max_mind_db=/geo-data/GeoLite2-City.mmdb \
+     -enable_prometheus
+Image=docker.io/shizunge/endlessh-go:latest
+Network=net-proxy
+Network=net-prometheus
+PublishPort=222:222
+Volume=geoip.volume:/geo-data/:ro
+
+[Service]
+Restart=always

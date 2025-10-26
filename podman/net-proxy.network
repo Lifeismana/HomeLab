@@ -1,0 +1,4 @@
+[Network]
+Driver=bridge
+Subnet=172.25.0.0/16
+IPv6=true

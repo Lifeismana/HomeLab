@@ -1,0 +1,33 @@
+[Container]
+ContainerName=freshrss
+Environment=TZ=Europe/Paris 
+Environment=BASE_URL=freshrss.${MAIN_DOMAIN} 
+Environment=CRON_MIN=*/20 
+Environment=DB_TYPE=pgsql 
+Environment=DB_HOST=postgres 
+Environment=DB_USER=freshrss 
+Environment=DB_BASE=freshrssdb 
+Environment=TRUSTED_PROXIES=172.25.0.254 
+Environment=OIDC_ENABLED=1 
+Environment=OIDC_PROVIDER_METADATA_URL=https://authentik.${MAIN_DOMAIN}/application/o/freshrss/.well-known/openid-configuration 
+Environment=OIDC_X_FORWARDED_HEADERS="X-Forwarded-Proto X-Forwarded-Host" 
+Environment=OIDC_SCOPES="openid profile email"
+EnvironmentFile=/etc/secc/env/freshrss.env
+Image=docker.io/freshrss/freshrss:1
+Label=traefik.enable=true 
+Label=traefik.http.middlewares.freshrss-compress.compress=true 
+Label=traefik.http.middlewares.freshrss-headers.headers.browserXssFilter=true 
+Label=traefik.http.middlewares.freshrss-headers.headers.frameDeny=true 
+Label=traefik.http.middlewares.freshrss-headers.headers.referrerPolicy=no-referrer-when-downgrade 
+Label=traefik.http.routers.freshrss.rule=Host(`freshrss.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.freshrss.entrypoints=websecure 
+Label=traefik.http.routers.freshrss.tls.certresolver=cloudflare_main 
+Label=traefik.http.routers.freshrss.middlewares=crowdsec,freshrss-compress,freshrss-headers 
+Label=wud.tag.include=^\\d+$$
+Network=net-proxy
+Network=net-postgres
+Volume=/data/freshrss/data:/var/www/FreshRSS/data
+Volume=/data/freshrss/extensions:/var/www/FreshRSS/extensions
+
+[Service]
+Restart=always

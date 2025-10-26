@@ -1,0 +1,10 @@
+[Container]
+ContainerName=meilisearch
+EnvironmentFile=/etc/secc/env/meilisearch.env
+Image=docker.io/getmeili/meilisearch:v1.19.1
+Label=wud.tag.include=^v\\d+\\.\\d+.\\d+$$
+Network=net-meilisearch
+Volume=/data/meilisearch:/meili_data
+
+[Service]
+Restart=always

@@ -1,0 +1,35 @@
+[Unit]
+Requires=traefik.service 
+Requires=authentik-server.service
+After=traefik.service 
+After=authentik-server.service
+
+[Container]
+ContainerName=whatsupdocker
+Environment=TZ=Europe/Paris 
+Environment=WUD_WATCHER_LOCAL_CRON="0 6 * * *" 
+Environment=WUD_WATCHER_LOCAL_WATCHALL=true 
+Environment=WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true 
+Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_CMD=/wud/webhook-update.sh 
+Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_AUTO=true 
+Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_MODE=batch
+EnvironmentFile=/etc/secc/env/whats-up-docker.env
+HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=10s
+HealthTimeout=5s
+Image=docker.io/getwud/wud:8.1.1
+Label=traefik.enable=true 
+Label=traefik.http.routers.whatsupdocker.rule=Host(`whatsupdocker.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.whatsupdocker.entrypoints=websecure 
+Label=traefik.http.routers.whatsupdocker.tls.certresolver=cloudflare_main 
+Label=traefik.http.routers.whatsupdocker.middlewares=tailscaleAL 
+Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
+Network=net-proxy
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=whatsupdocker:/store
+Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro
+
+[Service]
+Restart=always

@@ -1,0 +1,9 @@
+[Container]
+ContainerName=tailscale-cloudflare-dnssync
+Environment=PUID=1000 
+Environment=PGID=994
+EnvironmentFile=/etc/secc/env/tailscale-cloudflare-dnssync.env
+Image=ghcr.io/lifeismana/tailscale-cloudflare-dnssync:main
+
+[Service]
+Restart=always

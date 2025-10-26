@@ -1,0 +1,85 @@
+[Container]
+ContainerName=traefik
+Environment=TZ=Europe/Paris NAS_NAME=${MAIN_NAS}
+EnvironmentFile=/etc/secc/env/traefik.env
+Exec=--api.dashboard=true \
+     --metrics.prometheus=true \
+     --ping=true \
+     --log.level=INFO \
+     --providers.docker=true \
+     --providers.docker.network=net-proxy \
+     --providers.docker.exposedbydefault=false \
+     --providers.docker.allowEmptyServices=true \
+     --providers.file.filename=/etc/traefik/traefik_dynamic.yaml \
+     --accesslog \
+     --accesslog.filepath=/var/log/traefik/access.log \
+     --entrypoints.web.address=:80 \
+     --entrypoints.web.http.redirections.entryPoint.to=websecure \
+     --entrypoints.web.http.redirections.entryPoint.scheme=https \
+     --entrypoints.web.http.redirections.entryPoint.permanent=true \
+     --entrypoints.websecure.address=:443 \
+     --entrypoints.websecure.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32 \
+     --entrypoints.websecure.http.tls.certresolver=cloudflare_main \
+     --entrypoints.websecure.http.tls.domains[0].main=${MAIN_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[0].sans=*.${MAIN_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[1].main=*.internal.${MAIN_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[2].main=${SECONDARY_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[2].sans=*.${SECONDARY_DOMAIN} \
+     --certificatesResolvers.cloudflare_main.acme.email=${CLOUDFLARE_EMAIL} \
+     --certificatesResolvers.cloudflare_main.acme.storage=/data/acme/acme.json \
+     --certificatesResolvers.cloudflare_main.acme.dnsChallenge.provider=cloudflare \
+     --certificatesResolvers.cloudflare_main.acme.dnsChallenge.propagation.delayBeforeChecks=120 \
+     --experimental.plugins.crowdsec.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin \
+     --experimental.plugins.crowdsec.version=v1.4.2
+HealthCmd=["traefik","healthcheck","--ping"]
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=docker.io/library/traefik:v3.5
+Label=traefik.enable=true 
+Label=traefik.http.services.justAdummyService.loadbalancer.server.port=1337 
+Label="traefik.http.routers.traefik.rule=Host(`traefik.internal.${MAIN_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+Label=traefik.http.routers.traefik.entrypoints=websecure 
+Label=traefik.http.routers.traefik.tls.certresolver=cloudflare_main 
+Label="traefik.http.routers.traefik.tls.domains[0].main=internal.${MAIN_DOMAIN}"
+Label="traefik.http.routers.traefik.tls.domains[0].sans=*.internal.${MAIN_DOMAIN}"
+Label=traefik.http.routers.traefik.service=api@internal 
+Label=traefik.http.routers.traefik.middlewares=tailscaleAL 
+Label="traefik.http.routers.github-redirect.rule=Host(`$SECONDARY_DOMAIN`) && PathRegexp(`^/?$`)"
+Label=traefik.http.routers.github-redirect.entrypoints=websecure 
+Label=traefik.http.routers.github-redirect.tls.certresolver=cloudflare_main 
+Label=traefik.http.routers.github-redirect.priority=50000 
+Label=traefik.http.routers.github-redirect.middlewares=github-redirect
+Label=traefik.http.middlewares.github-redirect.redirectregex.regex=.* 
+Label=traefik.http.middlewares.github-redirect.redirectregex.replacement=https://github.com/Lifeismana 
+Label=traefik.http.middlewares.github-redirect.redirectregex.permanent=false 
+Label=traefik.http.middlewares.tailscaleAL.ipAllowList.sourcerange=100.64.0.0/10,fd7a:115c:a1e0::/96,172.16.0.0/12
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.enabled=true 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecmode=stream 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.forwardedheaderstrustedips=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/13,104.24.0.0/14,172.64.0.0/13,131.0.72.0/22,2400:cb00::/32,2606:4700::/32,2803:f800::/32,2405:b500::/32,2405:8100::/32,2a06:98c0::/29,2c0f:f248::/32 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecAppsecEnabled=true 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecLapiKey=${CROWDSEC_LAPI_KEY} 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecappsechost=crowdsec:7422 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscacheenabled=true 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscachehost=redis:6379 
+Label=homepage.group=Main 
+Label=homepage.name=Traefik 
+Label=homepage.icon=traefik.png 
+Label=homepage.href=https://traefik.internal.${MAIN_DOMAIN} 
+Label=homepage.description=Traefik 
+Label=homepage.widget.type=traefik 
+Label=homepage.widget.url=https://traefik.internal.${MAIN_DOMAIN} 
+Label=wud.tag.include=^v\\d+\\.\\d+$$
+Network=net-proxy:ip=172.25.0.254
+Network=net-prometheus
+Network=net-redis
+PublishPort=80:80
+PublishPort=443:443
+Volume=/var/run/docker.sock:/var/run/docker.sock
+Volume=/data/traefik:/data
+Volume=/etc/secc//traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
+Volume=logs-traefik:/var/log/traefik
+
+[Service]
+Restart=always

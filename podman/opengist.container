@@ -1,0 +1,26 @@
+[Container]
+ContainerName=opengist
+Environment=TZ=Europe/Paris 
+Environment=OG_OIDC_DISCOVERY_URL=https://authentik.${MAIN_DOMAIN}/application/o/opengist/.well-known/openid-configuration 
+Environment=OG_OIDC_PROVIDER_NAME=authentik 
+Environment=OG_METRICS_ENABLED=true
+EnvironmentFile=/etc/secc/env/opengist.env
+HealthCmd=curl -f http://localhost:6157/healthcheck
+HealthInterval=30s
+HealthRetries=5
+HealthStartPeriod=30s
+HealthTimeout=5s
+Image=ghcr.io/thomiceli/opengist:1.11
+Label=traefik.enable=true 
+Label=traefik.http.routers.opengist.rule="Host(`gist.${SECONDARY_DOMAIN}`) && !PathPrefix(`/metrics`)" 
+Label=traefik.http.routers.opengist.entrypoints=websecure 
+Label=traefik.http.routers.opengist.tls.certresolver=cloudflare_main 
+Label=traefik.http.services.opengist.loadbalancer.server.port=6157 
+Label=wud.tag.include=^\\d+\\.\\d+$$
+Network=net-proxy
+Network=net-postgres
+Network=net-prometheus
+Volume=/data/opengist:/opengist
+
+[Service]
+Restart=always
