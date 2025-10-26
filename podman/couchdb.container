@@ -20,7 +20,7 @@ Label=traefik.http.middlewares.obsidiancors.headers.accesscontrolmaxage=3600
 Label=traefik.http.middlewares.obsidiancors.headers.addvaryheader=true 
 Label=traefik.http.middlewares.obsidiancors.headers.accessControlAllowCredentials=true 
 Label=wud.tag.include=^\\d+$$
-Network=net-proxy
+Network=net-proxy.network
 UserNS=keep-id:uid=1000,gid=1000
 Volume=/data/obsidian-livesync/data:/opt/couchdb/data
 Volume=/data/obsidian-livesync/local.ini:/opt/couchdb/etc/local.ini

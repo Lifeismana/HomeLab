@@ -6,8 +6,8 @@ Exec=-logtostderr \
      -max_mind_db=/geo-data/GeoLite2-City.mmdb \
      -enable_prometheus
 Image=docker.io/shizunge/endlessh-go:latest
-Network=net-proxy
-Network=net-prometheus
+Network=net-proxy.network
+Network=net-prometheus.network
 PublishPort=222:222
 Volume=geoip.volume:/geo-data/:ro
 

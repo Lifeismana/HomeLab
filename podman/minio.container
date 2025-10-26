@@ -25,9 +25,9 @@ Label=traefik.http.routers.minio-console.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.minio-console.middlewares=crowdsec 
 Label=traefik.http.routers.minio-console.service=minio-console 
 Label=traefik.http.services.minio-console.loadbalancer.server.port=9001
-Network=net-proxy
-Network=net-postgres
-Network=net-prometheus
+Network=net-proxy.network
+Network=net-postgres.network
+Network=net-prometheus.network
 UserNS=keep-id:uid=1000,gid=1000
 Volume=/data/minio:/data
 

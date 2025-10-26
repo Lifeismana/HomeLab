@@ -3,8 +3,8 @@ ContainerName=redis-exporter
 Environment=REDIS_ADDR=redis:6379 
 Environment=REDIS_USER=null
 Image=ghcr.io/oliver006/redis_exporter:v1.79.0
-Network=net-redis
-Network=net-prometheus
+Network=net-redis.network
+Network=net-prometheus.network
 
 [Service]
 Restart=always

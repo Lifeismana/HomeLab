@@ -28,8 +28,8 @@ Label=traefik.enable=true
 Label=traefik.http.routers.hedgedoc.rule=Host(`hedgedoc.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.hedgedoc.entrypoints=websecure 
 Label=traefik.http.routers.hedgedoc.tls.certresolver=cloudflare_main
-Network=net-proxy
-Network=net-postgres
+Network=net-proxy.network
+Network=net-postgres.network
 
 [Service]
 Restart=always

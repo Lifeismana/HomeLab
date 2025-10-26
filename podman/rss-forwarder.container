@@ -2,7 +2,7 @@
 ContainerName=rss-forwarder
 Environment=TZ=Europe/Paris
 Image=ghcr.io/morphy2k/rss-forwarder:latest
-Network=net-proxy
+Network=net-proxy.network
 Volume=/data/rss-forwarder:/data
 
 [Service]

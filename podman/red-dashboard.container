@@ -12,7 +12,7 @@ Label=traefik.http.routers.reddash.entrypoints=websecure
 Label=traefik.http.routers.reddash.tls.certresolver=cloudflare_main 
 Label=traefik.http.services.reddash.loadbalancer.server.port=42356 
 Label=traefik.http.routers.reddash.middlewares=crowdsec
-Network=container:redbot
+Network=redbot.container
 Volume=/data/red-dashboard:/data
 
 [Service]

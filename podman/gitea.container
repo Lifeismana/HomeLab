@@ -44,9 +44,9 @@ Label=traefik.http.routers.gitea.middlewares=crowdsec
 Label=crowdsec.enable=true 
 Label=crowdsec.labels.type=gitea 
 Label=wud.tag.include=^\\d+\\.\\d+-rootless$$
-Network=net-proxy
-Network=net-postgres
-Network=net-redis
+Network=net-proxy.network
+Network=net-postgres.network
+Network=net-redis.network
 PublishPort=22:22
 Volume=/data/gitea/data:/var/lib/gitea
 Volume=/data/gitea/config:/etc/gitea

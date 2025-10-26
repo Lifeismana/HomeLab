@@ -26,7 +26,7 @@ Label=traefik.http.routers.whatsupdocker.entrypoints=websecure
 Label=traefik.http.routers.whatsupdocker.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.whatsupdocker.middlewares=tailscaleAL 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
+Network=net-proxy.network
 Volume=/var/run/docker.sock:/var/run/docker.sock
 Volume=whatsupdocker:/store
 Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro

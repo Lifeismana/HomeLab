@@ -13,7 +13,7 @@ Label=traefik.http.routers.beszel.rule=Host(`beszel.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.beszel.entrypoints=websecure 
 Label=traefik.http.routers.beszel.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.beszel.middlewares=tailscaleAL
-Network=net-proxy
+Network=net-proxy.network
 Volume=/data/beszel:/beszel_data
 
 [Service]

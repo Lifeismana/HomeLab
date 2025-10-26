@@ -29,7 +29,7 @@ Label=traefik.http.routers.stirling-pdf.tls.certresolver=cloudflare_main
 Label=traefik.http.services.stirling-pdf.loadbalancer.server.port=8080 
 Label=traefik.http.routers.stirling-pdf.middlewares=crowdsec 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+-fat$$
-Network=net-proxy
+Network=net-proxy.network
 Volume=/data/stirling-pdf/training-data:/usr/share/tessdata
 Volume=/data/stirling-pdf/extra-configs:/configs
 Volume=/data/stirling-pdf/custom-files:/customFiles

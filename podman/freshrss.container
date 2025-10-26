@@ -24,8 +24,8 @@ Label=traefik.http.routers.freshrss.entrypoints=websecure
 Label=traefik.http.routers.freshrss.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.freshrss.middlewares=crowdsec,freshrss-compress,freshrss-headers 
 Label=wud.tag.include=^\\d+$$
-Network=net-proxy
-Network=net-postgres
+Network=net-proxy.network
+Network=net-postgres.network
 Volume=/data/freshrss/data:/var/www/FreshRSS/data
 Volume=/data/freshrss/extensions:/var/www/FreshRSS/extensions
 

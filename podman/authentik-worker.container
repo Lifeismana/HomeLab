@@ -14,9 +14,9 @@ EnvironmentFile=/etc/secc/env/authentik.env
 Exec=worker
 Image=ghcr.io/goauthentik/server:2025.8.4
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
-Network=net-postgres
-Network=net-redis
+Network=net-proxy.network
+Network=net-postgres.network
+Network=net-redis.network
 Volume=geoip.volume:/geoip
 
 [Service]

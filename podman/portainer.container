@@ -17,7 +17,7 @@ Label=homepage.widget.url=https://portainer.internal.${MAIN_DOMAIN}
 Label=homepage.widget.env=3 
 Label=homepage.widget.key=${PORTAINER_TOKEN} 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
+Network=net-proxy.network
 Volume=/data/portainer:/data
 
 [Service]

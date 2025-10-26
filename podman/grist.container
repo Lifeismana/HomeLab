@@ -15,9 +15,9 @@ Label=traefik.enable=true
 Label=traefik.http.routers.grist.rule=Host(`grist.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.grist.entrypoints=websecure 
 Label=traefik.http.routers.grist.tls.certresolver=cloudflare_main
-Network=net-proxy
-Network=net-postgres
-Network=net-redis
+Network=net-proxy.network
+Network=net-postgres.network
+Network=net-redis.network
 Volume=/data/grist:/persist
 
 [Service]

@@ -12,6 +12,6 @@ Label=traefik.http.routers.influxdb.tls.certresolver=cloudflare_main
 Label=traefik.http.services.influxdb.loadbalancer.server.port=8086 
 Label=traefik.http.routers.influxdb.middlewares=tailscaleAL 
 Label=wud.tag.include=^\\d+\\.\\d+$$
-Network=net-proxy
-Network=net-influxdb
+Network=net-proxy.network
+Network=net-influxdb.network
 Volume=/data/influxdb:/var/lib/influxdb2

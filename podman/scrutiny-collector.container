@@ -12,3 +12,4 @@ Environment=COLLECTOR_API_ENDPOINT=https://scrutiny.internal.${MAIN_DOMAIN}
 Environment=COLLECTOR_HOST_ID=DockerMonster
 Image=ghcr.io/analogj/scrutiny:master-collector
 Volume=/run/udev:/run/udev:ro
+#TODO: make it hit localhost instead

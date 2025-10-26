@@ -33,10 +33,10 @@ Label=homepage.widget.type=authentik
 Label=homepage.widget.url=https://authentik.${MAIN_DOMAIN} 
 Label=homepage.widget.key=${AUTHENTIK_TOKEN} 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
-Network=net-postgres
-Network=net-redis
-Network=net-prometheus
+Network=net-proxy.network
+Network=net-postgres.network
+Network=net-redis.network
+Network=net-prometheus.network
 Volume=geoip.volume:/geoip
 
 [Service]

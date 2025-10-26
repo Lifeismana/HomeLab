@@ -71,9 +71,9 @@ Label=homepage.description=Traefik
 Label=homepage.widget.type=traefik 
 Label=homepage.widget.url=https://traefik.internal.${MAIN_DOMAIN} 
 Label=wud.tag.include=^v\\d+\\.\\d+$$
-Network=net-proxy:ip=172.25.0.254
-Network=net-prometheus
-Network=net-redis
+Network=net-proxy.network:ip=172.25.0.254
+Network=net-prometheus.network
+Network=net-redis.network
 PublishPort=80:80
 PublishPort=443:443
 Volume=/var/run/docker.sock:/var/run/docker.sock

@@ -24,8 +24,8 @@ Label=homepage.href=https://prometheus.internal.${MAIN_DOMAIN}
 Label=homepage.widget.type=prometheus 
 Label=homepage.widget.url=https://prometheus.internal.${MAIN_DOMAIN} 
 Label=wud.tag.include=^v\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
-Network=net-prometheus
+Network=net-proxy.network
+Network=net-prometheus.network
 UserNS=keep-id:uid=1000,gid=1000
 Volume=/data/prometheus:/prometheus
 Volume=/etc/secc/prometheus:/etc/prometheus

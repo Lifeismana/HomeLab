@@ -24,8 +24,8 @@ Label=homepage.description="Speedtest Tracker"
 Label=homepage.href=https://speedtest-tracker.internal.${MAIN_DOMAIN} 
 Label=homepage.widget.type=speedtest 
 Label=homepage.widget.url=https://speedtest-tracker.internal.${MAIN_DOMAIN}
-Network=net-proxy
-Network=net-postgres
+Network=net-proxy.network
+Network=net-postgres.network
 Volume=/data/speedtest-tracker:/config
 
 [Service]

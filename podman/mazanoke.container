@@ -5,7 +5,7 @@ Label=traefik.enable=true
 Label=traefik.http.routers.mazanoke.rule=Host(`mazanoke.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.mazanoke.entrypoints=websecure 
 Label=traefik.http.routers.mazanoke.tls.certresolver=cloudflare_main
-Network=net-proxy
+Network=net-proxy.network
 
 [Service]
 Restart=always

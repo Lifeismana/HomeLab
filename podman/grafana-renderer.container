@@ -12,7 +12,7 @@ HealthStartPeriod=30s
 HealthTimeout=5s
 Image=docker.io/grafana/grafana-image-renderer:3.12.9
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=container:grafana
+Network=grafana.container
 
 [Service]
 Restart=always

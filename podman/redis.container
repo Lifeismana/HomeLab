@@ -8,7 +8,7 @@ HealthStartPeriod=20s
 HealthTimeout=3s
 Image=docker.io/library/redis:8-alpine
 Label=wud.tag.include=^\\d+-alpine$$
-Network=net-redis
+Network=net-redis.network
 Volume=/data/redis:/data
 
 [Service]

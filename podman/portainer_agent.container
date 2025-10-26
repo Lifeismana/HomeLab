@@ -2,7 +2,7 @@
 ContainerName=portainer_agent
 Image=docker.io/portainer/agent:2.35.0
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
-Network=net-proxy
+Network=net-proxy.network
 Volume=/var/run/docker.sock:/var/run/docker.sock
 Volume=/docker_data/volumes:/var/lib/docker/volumes
 
