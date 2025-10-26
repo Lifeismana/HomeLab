@@ -4,6 +4,7 @@
     "config:recommended"
   ],
   "ignorePaths": [
-    "docker-compose.yml"
+    "docker-compose.yml",
+    "podman/*.container"
   ]
 }
