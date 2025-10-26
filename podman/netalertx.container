@@ -1,7 +1,7 @@
 [Container]
 ContainerName=NetAlertX
 Environment=TZ=Europe/Paris 
-Environment=LISTEN_ADDR=172.17.0.1
+Environment=LISTEN_ADDR=127.0.0.1
 HostName=NetAlertX
 Image=ghcr.io/jokob-sk/netalertx:latest
 Label=traefik.enable=true 
