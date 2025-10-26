@@ -28,7 +28,7 @@ Label=traefik.http.routers.whatsupdocker.middlewares=tailscaleAL
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
-Volume=whatsupdocker:/store
+Volume=whatsupdocker.volume:/store
 Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro
 
 [Service]
