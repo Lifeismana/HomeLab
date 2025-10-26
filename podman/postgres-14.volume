@@ -1,3 +1,3 @@
 [Volume]
-Driver=tmpfs
+Options=device=tmpfs,type=tmpfs,o=size=64m
 VolumeName=postgres-14
