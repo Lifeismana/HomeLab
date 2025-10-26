@@ -4,7 +4,7 @@ HealthCmd=["curl","-f","http://localhost:8086/health"]
 HealthInterval=30s
 HealthRetries=5
 HealthTimeout=5s
-Image=docker.io/library/influxdb:2.2
+Image=docker.io/library/influxdb:2.7
 Label=traefik.enable=true 
 Label=traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.influxdb.entrypoints=websecure 
