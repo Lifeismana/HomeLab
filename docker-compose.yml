@@ -601,7 +601,7 @@ services:
   # TODO: add thanos
   prometheus:
     container_name: prometheus
-    image: quay.io/prometheus/prometheus:v3.7.1
+    image: quay.io/prometheus/prometheus:v3.7.2
     restart: unless-stopped
     healthcheck:
       # not sure why the /healthy endpoint is not working as doc mentions
