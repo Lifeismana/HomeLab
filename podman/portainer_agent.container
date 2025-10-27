@@ -4,7 +4,7 @@ Image=docker.io/portainer/agent:2.35.0
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
-Volume=/docker_data/volumes:/var/lib/docker/volumes
+Volume=/podman_data/volumes:/var/lib/docker/volumes
 
 [Service]
 Restart=always
