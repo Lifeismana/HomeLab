@@ -5,6 +5,7 @@ After=postgres.service
 After=redis.service
 
 [Container]
+AddCapability=CAP_NET_BIND_SERVICE
 ContainerName=gitea
 Environment=USER_UID=103 
 Environment=USER_GID=113 
