@@ -46,7 +46,7 @@ Label="traefik.http.routers.traefik.tls.domains[0].main=internal.${MAIN_DOMAIN}"
 Label="traefik.http.routers.traefik.tls.domains[0].sans=*.internal.${MAIN_DOMAIN}"
 Label=traefik.http.routers.traefik.service=api@internal 
 Label=traefik.http.routers.traefik.middlewares=tailscaleAL 
-Label="traefik.http.routers.github-redirect.rule=Host(`$SECONDARY_DOMAIN`) && PathRegexp(`^/?$`)"
+Label="traefik.http.routers.github-redirect.rule=Host(`${SECONDARY_DOMAIN}`) && PathRegexp(`^/?$`)"
 Label=traefik.http.routers.github-redirect.entrypoints=websecure 
 Label=traefik.http.routers.github-redirect.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.github-redirect.priority=50000 
