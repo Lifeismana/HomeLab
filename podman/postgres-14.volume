@@ -1,3 +1,5 @@
 [Volume]
-Options=device=tmpfs,type=tmpfs,o=size=64m
+Device=tmpfs
+Options=size=64m
+Type=tmpfs
 VolumeName=postgres-14
