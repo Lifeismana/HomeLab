@@ -1,6 +1,6 @@
 [Unit]
-Requires=postgres-14.service
-After=postgres-14.service
+Requires=postgres14.service
+After=postgres14.service
 
 [Container]
 ContainerName=redbot
@@ -12,7 +12,7 @@ Network=net-proxy.network
 Volume=/data/redbot:/data
 Volume=/data/.ssh/red_github/:/config/.ssh/
 Volume=/data/.pylav-red/pylav.yaml:/config/pylav.yaml
-Volume=postgres-14.volume:/var/run/postgresql
+Volume=postgres14.volume:/var/run/postgresql
 Volume=/data/.pylav-red/PyLav:/config/.config/PyLav
 
 [Service]

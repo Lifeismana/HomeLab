@@ -10,7 +10,7 @@ Image=docker.io/library/postgres:14
 Label=wud.watch=false
 Network=none
 Volume=/data/postgres-14:/var/lib/postgresql/data
-Volume=postgres-14.volume:/var/run/postgresql
+Volume=postgres14.volume:/var/run/postgresql
 
 [Service]
 Restart=always
