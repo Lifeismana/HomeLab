@@ -38,13 +38,16 @@ jobs:
                     git config user.email github-actions@github.com
                     git checkout -b "$BRANCH_NAME"
 
-            -   name: Update Image Version
+            -   name: Check Image Version
                 id: update_image_version
                 run: |
-                    cd .github/tag-update
-                    npm ci
-                    ./update.mjs
-            -   name: Commit changes
+                    if [ "$LOCAL_TAG" != "$REMOTE_TAG" ]; then
+                        echo "changed=true\n" >> $GITHUB_OUTPUT
+                    else
+                        echo "changed=false\n" >> $GITHUB_OUTPUT
+                    fi
+                    
+            -   name: Update Image Version & Commit changes
                 if: steps.update_image_version.outputs.changed == 'true'
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,9 +59,9 @@ jobs:
                         exit 1
                     fi
                     
-                    find ./ -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
+                    find ./podman -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
 
-                    git add .
+                    git add -A
                     git commit -m "Update '$IMAGE_NAME' from '$LOCAL_TAG' to '$REMOTE_TAG'"
                     git push -f origin "$BRANCH_NAME"
 
