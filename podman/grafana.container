@@ -5,6 +5,7 @@ Environment=GF_AUTH_ORG_NAME=Lifesismana
 Environment=GF_RENDERING_SERVER_URL=http://localhost:8081/render 
 Environment=GF_RENDERING_CALLBACK_URL=http://localhost:3000/ 
 Environment=GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
+Group=1000
 HealthCmd=curl -f http://localhost:3000/api/health
 HealthInterval=30s
 HealthRetries=5
@@ -27,7 +28,7 @@ Label=homepage.widget.username=${GRAFANA_USER}
 Label=homepage.widget.password=${GRAFANA_PASSWORD} 
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
-UserNS=keep-id:uid=1000,gid=1000
+User=1000
 Volume=/data/grafana:/var/lib/grafana
 
 [Service]

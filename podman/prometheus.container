@@ -4,6 +4,7 @@ Exec=--config.file=/etc/prometheus/prometheus.yml \
      --storage.tsdb.path=/prometheus \
      --web.console.libraries=/etc/prometheus/console_libraries \
      --web.console.templates=/etc/prometheus/consoles'
+Group=1000
 HealthCmd=wget -O - http://localhost:9090 &>/dev/null
 HealthInterval=30s
 HealthRetries=5
@@ -26,7 +27,7 @@ Label=homepage.widget.url=https://prometheus.internal.${MAIN_DOMAIN}
 Label=wud.tag.include=^v\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Network=net-prometheus.network
-#UserNS=keep-id:uid=1000,gid=1000
+User=1000
 Volume=/data/prometheus:/prometheus
 Volume=/etc/secc/prometheus:/etc/prometheus
 
