@@ -37,15 +37,7 @@ jobs:
                     git config user.name github-actions
                     git config user.email github-actions@github.com
                     git checkout -b "$BRANCH_NAME"
-
-            -   name: Update Image Version
-                id: update_image_version
-                run: |
-                    cd .github/tag-update
-                    npm ci
-                    ./update.mjs
-            -   name: Commit changes
-                if: steps.update_image_version.outputs.changed == 'true'
+            -   name: Update Image Version & Commit changes
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
@@ -56,10 +48,10 @@ jobs:
                         exit 1
                     fi
                     
-                    find ./ -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
+                    find ./podman -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
 
-                    git add .
-                    git commit -m "Update '$IMAGE_NAME' from '$LOCAL_TAG' to '$REMOTE_TAG'"
+                    git add -A
+                    git commit -m "Update '$IMAGE_NAME' from '$LOCAL_TAG' to '$REMOTE_TAG'" || true
                     git push -f origin "$BRANCH_NAME"
 
                     PR_EXISTS=$(gh pr list --base main --head "$BRANCH_NAME" --json number --jq '.[].number')
