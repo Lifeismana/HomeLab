@@ -3,10 +3,7 @@ ContainerName=glances
 Environment=TZ=Europe/Paris 
 Environment=GLANCES_OPT=-w
 HealthCmd=["curl","-f","http://localhost:61208/api/4/status"]
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=docker.io/nicolargo/glances:4.3.3
 Label=traefik.enable=true 
 Label=traefik.http.routers.glances.rule=Host(`glances.internal.${MAIN_DOMAIN}`) 

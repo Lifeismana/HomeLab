@@ -6,10 +6,7 @@ Environment=OG_OIDC_PROVIDER_NAME=authentik
 Environment=OG_METRICS_ENABLED=true
 EnvironmentFile=/etc/secc/env/opengist.env
 HealthCmd=curl -f http://localhost:6157/healthcheck
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=ghcr.io/thomiceli/opengist:1.11
 Label=traefik.enable=true 
 Label=traefik.http.routers.opengist.rule="Host(`gist.${SECONDARY_DOMAIN}`) && !PathPrefix(`/metrics`)" 

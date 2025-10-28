@@ -2,10 +2,7 @@
 ContainerName=obsidian-livesync
 EnvironmentFile=/etc/secc/env/obsidian-livesync.env
 HealthCmd=curl -f http://localhost:5984/_up
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=docker.io/library/couchdb:3
 Label=traefik.enable=true 
 Label=traefik.http.routers.obsidian-livesync.rule=Host(`obsidian-livesync.internal.${MAIN_DOMAIN}`) 

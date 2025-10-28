@@ -6,10 +6,7 @@ Exec=--config.file=/etc/prometheus/prometheus.yml \
      --web.console.templates=/etc/prometheus/consoles'
 Group=1000
 HealthCmd=wget -O - http://localhost:9090 &>/dev/null
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=quay.io/prometheus/prometheus:v3.7.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.prometheus.rule=Host(`prometheus.internal.${MAIN_DOMAIN}`) 

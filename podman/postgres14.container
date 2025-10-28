@@ -2,10 +2,7 @@
 ContainerName=postgres-14
 EnvironmentFile=/etc/secc/env/postgres-14.env
 HealthCmd=pg_isready -U postgres
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=20s
-HealthTimeout=5s
 Image=docker.io/library/postgres:14
 Label=wud.watch=false
 Network=none

@@ -32,10 +32,7 @@ Exec=--api.dashboard=true \
      --experimental.plugins.crowdsec.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin \
      --experimental.plugins.crowdsec.version=v1.4.2
 HealthCmd=["traefik","healthcheck","--ping"]
-HealthInterval=30s
-HealthRetries=5
-HealthStartPeriod=30s
-HealthTimeout=5s
+#HealthStartPeriod=30s
 Image=docker.io/library/traefik:v3.5
 Label=traefik.enable=true 
 Label=traefik.http.services.justAdummyService.loadbalancer.server.port=1337 

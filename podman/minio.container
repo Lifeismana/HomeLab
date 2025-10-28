@@ -7,10 +7,7 @@ Environment=MINIO_IDENTITY_OPENID_SCOPES=openid,profile,email,minio
 EnvironmentFile=/etc/secc/env/minio.env
 Exec=minio server /data --console-address :9001
 HealthCmd=["mc","ready","local"]
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=15s
-HealthTimeout=5s
 Image=quay.io/minio/minio:latest
 Label=traefik.enable=true 
 Label=traefik.http.routers.minio.rule=Host(`minio.${MAIN_DOMAIN}`) 

@@ -7,10 +7,7 @@ ContainerName=scrutiny-web
 Environment=SCRUTINY_WEB_INFLUXDB_HOST=influxdb
 EnvironmentFile=/etc/secc/env/scrutiny.env
 HealthCmd=["curl","-f","http://localhost:8080/api/health"]
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=10s
-HealthTimeout=5s
 Image=ghcr.io/analogj/scrutiny:master-web
 Label=traefik.enable=true 
 Label=traefik.http.routers.scrutiny.rule=Host(`scrutiny.internal.${MAIN_DOMAIN}`) 

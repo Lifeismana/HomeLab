@@ -7,10 +7,7 @@ Environment=GF_RENDERING_CALLBACK_URL=http://localhost:3000/
 Environment=GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
 Group=1000
 HealthCmd=curl -f http://localhost:3000/api/health
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=docker.io/grafana/grafana:12.2.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.grafana.rule=Host(`grafana.internal.${MAIN_DOMAIN}`) 

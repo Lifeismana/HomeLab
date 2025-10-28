@@ -17,10 +17,7 @@ Environment=SECURITY_OAUTH2_PROVIDER=authentik
 Environment=SECURITY_LOGINMETHOD=oauth2
 EnvironmentFile=/etc/secc/env/stirling-pdf.env
 HealthCmd=curl -f http://localhost:8080/api/v1/info/status | grep -q 'UP'
-HealthInterval=30s
-HealthRetries=5
 HealthStartPeriod=30s
-HealthTimeout=5s
 Image=ghcr.io/stirling-tools/stirling-pdf:1.5.0-fat
 Label=traefik.enable=true 
 Label=traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${MAIN_DOMAIN}`) 
