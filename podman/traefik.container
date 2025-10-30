@@ -42,12 +42,19 @@ Label=traefik.http.routers.traefik.tls.certresolver=cloudflare_main
 Label="traefik.http.routers.traefik.tls.domains[0].main=internal.${MAIN_DOMAIN}"
 Label="traefik.http.routers.traefik.tls.domains[0].sans=*.internal.${MAIN_DOMAIN}"
 Label=traefik.http.routers.traefik.service=api@internal 
-Label=traefik.http.routers.traefik.middlewares=tailscaleAL 
+Label=traefik.http.routers.traefik.middlewares=tailscaleAL
+Label=traefik.http.services.cockpitHost.loadbalancer.server.url=http://host.containers.internal:9090
+Label=traefik.http.routers.cockpit.rule=Host(`cockpit.internal.${MAIN_DOMAIN}`) 
+Label=traefik.http.routers.cockpit.entrypoints=websecure 
+Label=traefik.http.routers.cockpit.tls.certresolver=cloudflare_main
+Label=traefik.http.routers.cockpit.service=cockpitHost
+Label=traefik.http.routers.cockpit.middlewares=tailscaleAL
 Label="traefik.http.routers.github-redirect.rule=Host(`${SECONDARY_DOMAIN}`) && PathRegexp(`^/?$`)"
 Label=traefik.http.routers.github-redirect.entrypoints=websecure 
 Label=traefik.http.routers.github-redirect.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.github-redirect.priority=50000 
 Label=traefik.http.routers.github-redirect.middlewares=github-redirect
+Label=traefik.http.routers.github-redirect.service=noop@internal
 Label=traefik.http.middlewares.github-redirect.redirectregex.regex=.* 
 Label=traefik.http.middlewares.github-redirect.redirectregex.replacement=https://github.com/Lifeismana 
 Label=traefik.http.middlewares.github-redirect.redirectregex.permanent=false 
@@ -58,8 +65,8 @@ Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.forwardedheaderstrustedi
 Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecAppsecEnabled=true 
 Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecLapiKey=${CROWDSEC_LAPI_KEY} 
 Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.crowdsecappsechost=crowdsec:7422 
-Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscacheenabled=true 
-Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscachehost=redis:6379 
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscacheenabled=true
+Label=traefik.http.middlewares.crowdsec.plugin.crowdsec.rediscachehost=redis:6379
 Label=homepage.group=Main 
 Label=homepage.name=Traefik 
 Label=homepage.icon=traefik.png 
