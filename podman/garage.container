@@ -1,6 +1,6 @@
 [Container]
 ContainerName=garage
-HealthCmd=curl -f http://localhost:3903/health
+#HealthCmd=curl -f http://localhost:3903/health
 Image=docker.io/dxflrs/garage:v2.1.0
 Label=traefik.enable=true
 Label=traefik.http.routers.garage.rule=Host(`garage.internal.${MAIN_DOMAIN}`)
