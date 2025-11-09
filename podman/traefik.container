@@ -30,7 +30,7 @@ Exec=--api.dashboard=true \
      --certificatesResolvers.cloudflare_main.acme.dnsChallenge.provider=cloudflare \
      --certificatesResolvers.cloudflare_main.acme.dnsChallenge.propagation.delayBeforeChecks=120 \
      --experimental.plugins.crowdsec.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin \
-     --experimental.plugins.crowdsec.version=v1.4.2
+     --experimental.plugins.crowdsec.version=v1.4.5
 HealthCmd=["traefik","healthcheck","--ping"]
 #HealthStartPeriod=30s
 Image=docker.io/library/traefik:v3.5
