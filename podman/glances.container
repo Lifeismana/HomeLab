@@ -4,7 +4,7 @@ Environment=TZ=Europe/Paris
 Environment=GLANCES_OPT=-w
 HealthCmd=["curl","-f","http://localhost:61208/api/4/status"]
 HealthStartPeriod=30s
-Image=docker.io/nicolargo/glances:4.3.3
+Image=docker.io/nicolargo/glances:4.4.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.glances.rule=Host(`glances.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.glances.entrypoints=websecure 
