@@ -59,7 +59,7 @@ jobs:
                         exit 1
                     fi
                     
-                    find ./podman -type f -exec sed -i -e 's/$OLD_IMAGE/$NEW_IMAGE/gi' {} \;
+                    find ./podman -type f -exec sed -i -e "s|$OLD_IMAGE|$NEW_IMAGE|gi" {} \;
 
                     git add -A
                     git commit -m "Update '$IMAGE_NAME' from '$LOCAL_TAG' to '$REMOTE_TAG'"
