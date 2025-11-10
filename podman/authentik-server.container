@@ -13,7 +13,7 @@ Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
 Environment=AUTHENTIK_COOKIE_DOMAIN=${MAIN_DOMAIN}
 EnvironmentFile=/etc/secc/env/authentik.env
 Exec=server
-Image=ghcr.io/goauthentik/server:2025.8.4
+Image=ghcr.io/goauthentik/server:2025.10.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.authentik.rule="Host(`authentik.${MAIN_DOMAIN}`) || HostRegexp(`{subdomain:[a-z0-9-]+}.${MAIN_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)" 
 Label=traefik.http.routers.authentik.entrypoints=websecure 
