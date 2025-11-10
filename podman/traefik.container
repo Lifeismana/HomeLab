@@ -33,7 +33,7 @@ Exec=--api.dashboard=true \
      --experimental.plugins.crowdsec.version=v1.4.5
 HealthCmd=["traefik","healthcheck","--ping"]
 #HealthStartPeriod=30s
-Image=docker.io/library/traefik:v3.5
+Image=docker.io/library/traefik:v3.6
 Label=traefik.enable=true 
 Label=traefik.http.services.justAdummyService.loadbalancer.server.port=1337 
 Label="traefik.http.routers.traefik.rule=Host(`traefik.internal.${MAIN_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
