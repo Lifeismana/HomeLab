@@ -15,6 +15,7 @@ Label=traefik.http.routers.s3.tls.certresolver=cloudflare_main
 Label=traefik.http.middlewares.compress.compress=true
 Label=traefik.http.routers.s3.service=s3
 Label=traefik.http.services.s3.loadbalancer.server.port=3900
+Label=wud.tag.include=^v\\d+.\\d+.\\d+$$
 Network=net-proxy.network
 Volume=/data/garage/garage.toml:/etc/garage.toml
 Volume=/data/garage/meta:/var/lib/garage/meta
