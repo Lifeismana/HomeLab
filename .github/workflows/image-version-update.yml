@@ -42,9 +42,9 @@ jobs:
                 id: update_image_version
                 run: |
                     if [ "$LOCAL_TAG" != "$REMOTE_TAG" ]; then
-                        echo "changed=true\n" >> $GITHUB_OUTPUT
+                        echo "changed=true" >> $GITHUB_OUTPUT
                     else
-                        echo "changed=false\n" >> $GITHUB_OUTPUT
+                        echo "changed=false" >> $GITHUB_OUTPUT
                     fi
                     
             -   name: Update Image Version & Commit changes
