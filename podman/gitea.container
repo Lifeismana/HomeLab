@@ -32,7 +32,7 @@ Environment=GITEA__SERVER__OFFLINE_MODE=false
 EnvironmentFile=/etc/secc/env/gitea.env
 HealthCmd=["curl","-f","http://localhost:3000/api/healthz"]
 HealthStartPeriod=30s
-Image=docker.io/gitea/gitea:1.24-rootless
+Image=docker.io/gitea/gitea:1.25-rootless
 Label=traefik.enable=true 
 Label=traefik.http.routers.gitea.rule=Host(`git.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.gitea.entrypoints=websecure 
