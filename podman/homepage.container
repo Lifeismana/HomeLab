@@ -1,7 +1,7 @@
 [Container]
 ContainerName=homepage
 Environment=HOMEPAGE_ALLOWED_HOSTS=home.${MAIN_DOMAIN}
-Image=ghcr.io/gethomepage/homepage:v1.5
+Image=ghcr.io/gethomepage/homepage:v1.6
 Label=traefik.enable=true 
 Label=traefik.http.routers.homepage.rule=Host(`home.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.homepage.entrypoints=websecure 
