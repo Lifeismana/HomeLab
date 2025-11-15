@@ -4,7 +4,7 @@ Environment=DISABLE_PASSWORD_AUTH=true
 Environment=USER_CREATION=true
 HealthCmd=["/beszel","health","--url","http://localhost:8090"]
 HealthStartPeriod=5s
-Image=ghcr.io/henrygd/beszel/beszel:0.15.4
+Image=ghcr.io/henrygd/beszel/beszel:0.16.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.beszel.rule=Host(`beszel.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.beszel.entrypoints=websecure 
