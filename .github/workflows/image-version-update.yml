@@ -20,7 +20,7 @@ jobs:
                 json: ${{ fromJSON(github.event.inputs.json) }}
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v5
+                uses: actions/checkout@v6
             
             -   name: Setup ENVs
                 env:
