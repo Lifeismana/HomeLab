@@ -9,9 +9,9 @@ fi
 
 echo "Deploying quadlets"
 
-rsync -r --delete --mkpath --force ./conf/ /etc/secc/
+rsync -rt --delete --mkpath --force ./conf/ /etc/secc/
 
-rsync -r --delete --mkpath --force ./podman/ /etc/containers/systemd/secc/
+rsync -rt --delete --mkpath --force ./podman/ /etc/containers/systemd/secc/
 
 echo "Reloading systemd"
 
