@@ -7,7 +7,7 @@ Exec=--config.file=/etc/prometheus/prometheus.yml \
 Group=1000
 HealthCmd=wget -O - http://localhost:9090 &>/dev/null
 HealthStartPeriod=30s
-Image=quay.io/prometheus/prometheus:v3.7.3
+Image=quay.io/prometheus/prometheus:v3.8.0
 Label=traefik.enable=true 
 Label=traefik.http.routers.prometheus.rule=Host(`prometheus.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.prometheus.entrypoints=websecure 
