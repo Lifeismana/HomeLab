@@ -4,7 +4,7 @@ Environment=LISTEN=45876
 EnvironmentFile=/etc/secc/env/beszel-agent.env
 HealthCmd=["/agent","health"]
 HealthStartPeriod=5s
-Image=ghcr.io/henrygd/beszel/beszel-agent:0.16.1
+Image=ghcr.io/henrygd/beszel/beszel-agent:0.17.0
 Network=host
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
