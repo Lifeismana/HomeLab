@@ -23,7 +23,7 @@ Environment=CMD_S3_BUCKET=hedgedoc
 Environment=CMD_MINIO_ENDPOINT=minio.${MAIN_DOMAIN} 
 Environment=CMD_MINIO_SECURE=true
 EnvironmentFile=/etc/secc/env/hedgedoc.env
-Image=quay.io/hedgedoc/hedgedoc:1.10.3
+Image=quay.io/hedgedoc/hedgedoc:1.10.5
 Label=traefik.enable=true 
 Label=traefik.http.routers.hedgedoc.rule=Host(`hedgedoc.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.hedgedoc.entrypoints=websecure 
