@@ -1,4 +1,11 @@
 [Container]
+AddCapability=SYS_RAWIO,SYS_ADMIN
+AddDevice=/dev/sda
+AddDevice=/dev/sdb
+AddDevice=/dev/sdc
+AddDevice=/dev/sdd
+AddDevice=/dev/nvme0
+AddDevice=/dev/nvme1
 ContainerName=beszel-agent
 Environment=LISTEN=45876
 EnvironmentFile=/etc/secc/env/beszel-agent.env
@@ -6,6 +13,7 @@ HealthCmd=["/agent","health"]
 HealthStartPeriod=5s
 Image=ghcr.io/henrygd/beszel/beszel-agent:0.17-alpine
 Network=host
+Volume=/data/beszel_agent:/var/lib/beszel-agent
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
 Volume=/data/.beszel:/extra-filesystems/disk3:ro
