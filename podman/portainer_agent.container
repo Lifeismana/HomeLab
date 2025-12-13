@@ -1,6 +1,6 @@
 [Container]
 ContainerName=portainer_agent
-Image=docker.io/portainer/agent:2.36.0
+Image=docker.io/portainer/agent:2.37.0
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
