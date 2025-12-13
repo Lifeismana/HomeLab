@@ -1,6 +1,6 @@
 [Container]
 ContainerName=portainer
-Image=docker.io/portainer/portainer-ce:2.36.0
+Image=docker.io/portainer/portainer-ce:2.37.0
 Label=traefik.enable=true 
 Label=traefik.http.routers.portainer.rule=Host(`portainer.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.portainer.entrypoints=websecure 
