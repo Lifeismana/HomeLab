@@ -4,12 +4,13 @@ Environment=DISABLE_PASSWORD_AUTH=true
 Environment=USER_CREATION=true
 HealthCmd=["/beszel","health","--url","http://localhost:8090"]
 HealthStartPeriod=5s
-Image=ghcr.io/henrygd/beszel/beszel:0.17.0
+Image=ghcr.io/henrygd/beszel/beszel:0.17
 Label=traefik.enable=true 
 Label=traefik.http.routers.beszel.rule=Host(`beszel.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.beszel.entrypoints=websecure 
 Label=traefik.http.routers.beszel.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.beszel.middlewares=tailscaleAL
+Label=wud.tag.include=^\\d+.\\d+$$
 Network=net-proxy.network
 Volume=/data/beszel:/beszel_data
 

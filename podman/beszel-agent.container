@@ -4,12 +4,13 @@ Environment=LISTEN=45876
 EnvironmentFile=/etc/secc/env/beszel-agent.env
 HealthCmd=["/agent","health"]
 HealthStartPeriod=5s
-Image=ghcr.io/henrygd/beszel/beszel-agent:0.17.0
+Image=ghcr.io/henrygd/beszel/beszel-agent:0.17-alpine
 Network=host
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
 Volume=/data/.beszel:/extra-filesystems/disk3:ro
 Volume=/docker_data/.beszel:/extra-filesystems/disk4:ro
+Label=wud.tag.include=^\\d+.\\d+-alpine$$
 
 [Service]
 Restart=always
