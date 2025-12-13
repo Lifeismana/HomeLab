@@ -3,7 +3,7 @@ ContainerName=postgres
 EnvironmentFile=/etc/secc/env/postgres.env
 HealthCmd=pg_isready -U postgres
 HealthStartPeriod=20s
-Image=docker.io/library/postgres:17
+Image=docker.io/library/postgres:18
 Label=wud.tag.include=^\\d+$$
 Network=net-postgres.network
 Volume=/data/postgres:/var/lib/postgresql/data
