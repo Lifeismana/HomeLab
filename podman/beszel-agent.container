@@ -17,7 +17,7 @@ Volume=/data/beszel_agent:/var/lib/beszel-agent
 Volume=/var/run/podman/podman.sock:/var/run/podman.sock:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
 Volume=/data/.beszel:/extra-filesystems/disk3:ro
-Volume=/docker_data/.beszel:/extra-filesystems/disk4:ro
+Volume=/podman_data/.beszel:/extra-filesystems/disk4:ro
 Label=wud.tag.include=^\\d+.\\d+-alpine$$
 
 [Service]
