@@ -8,7 +8,7 @@ Environment=GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
 Group=1000
 HealthCmd=curl -f http://localhost:3000/api/health
 HealthStartPeriod=30s
-Image=docker.io/grafana/grafana:12.3.0
+Image=docker.io/grafana/grafana:12.3.1
 Label=traefik.enable=true 
 Label=traefik.http.routers.grafana.rule=Host(`grafana.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.grafana.entrypoints=websecure 
