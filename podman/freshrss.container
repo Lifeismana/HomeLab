@@ -13,7 +13,7 @@ Environment=OIDC_PROVIDER_METADATA_URL=https://authentik.${MAIN_DOMAIN}/applicat
 Environment=OIDC_X_FORWARDED_HEADERS="X-Forwarded-Proto X-Forwarded-Host" 
 Environment=OIDC_SCOPES="openid profile email"
 EnvironmentFile=/etc/secc/env/freshrss.env
-Image=docker.io/freshrss/freshrss:1
+Image=docker.io/freshrss/freshrss:8392
 Label=traefik.enable=true 
 Label=traefik.http.middlewares.freshrss-compress.compress=true 
 Label=traefik.http.middlewares.freshrss-headers.headers.browserXssFilter=true 
