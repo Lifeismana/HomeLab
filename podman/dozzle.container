@@ -8,7 +8,7 @@ Environment=DOZZLE_AUTH_HEADER_EMAIL=X-authentik-email
 Environment=DOZZLE_AUTH_HEADER_NAME=X-authentik-name
 HealthCmd=["/dozzle","healthcheck"]
 HealthStartPeriod=30s
-Image=docker.io/amir20/dozzle:v8
+Image=docker.io/amir20/dozzle:v9
 Label=traefik.enable=true 
 Label=traefik.http.routers.dozzle.rule=Host(`dozzle.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.dozzle.entrypoints=websecure 
