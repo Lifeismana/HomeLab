@@ -19,7 +19,7 @@ Label=homepage.href=https://netalertx.internal.${MAIN_DOMAIN}
 Label=homepage.widget.type=netalertx 
 Label=homepage.widget.url=https://netalertx.internal.${MAIN_DOMAIN}
 Network=host
-Tmpfs=/tmp::uid=20211,gid=20211,mode=1700,rw,noexec,nosuid,nodev,async,noatime,nodiratime
+Tmpfs=/tmp:uid=20211,gid=20211,mode=1700,rw,noexec,nosuid,nodev,async,noatime,nodiratime
 Volume=/data/netalertx/:/data
 Volume=/etc/localtime:/etc/localtime:ro
 
