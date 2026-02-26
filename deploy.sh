@@ -13,7 +13,12 @@ rsync -rt --delete --mkpath --force ./conf/ /etc/secc/
 
 rsync -rt --delete --mkpath --force ./podman/ /etc/containers/systemd/secc/
 
+echo "Deploying systemd units"
+
+systemctl link /etc/secc/systemd/*
+
 echo "Reloading systemd"
 
 systemctl daemon-reload
 
+systemctl enable --now /etc/secc/systemd/*

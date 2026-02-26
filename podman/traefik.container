@@ -13,6 +13,7 @@ Exec=--api.dashboard=true \
      --providers.file.filename=/etc/traefik/traefik_dynamic.yaml \
      --accesslog \
      --accesslog.filepath=/var/log/traefik/access.log \
+     --entrypoints.traefik.address=:8080 \
      --entrypoints.web.address=:80 \
      --entrypoints.web.http.redirections.entryPoint.to=websecure \
      --entrypoints.web.http.redirections.entryPoint.scheme=https \
@@ -78,12 +79,11 @@ Label=wud.tag.include=^v\\d+\\.\\d+$$
 Network=net-proxy.network:ip=172.25.0.254
 Network=net-prometheus.network
 Network=net-redis.network
-PublishPort=80:80
-PublishPort=443:443
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=/data/traefik:/data
-Volume=/etc/secc//traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
+Volume=/etc/secc/traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml
 Volume=logs-traefik:/var/log/traefik
 
 [Service]
 Restart=always
+Sockets=traefik-web.socket traefik-websecure.socket

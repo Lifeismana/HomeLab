@@ -1,0 +1,12 @@
+[Unit]
+Description=Traefik Proxy Socket (Web)
+
+[Socket]
+ListenStream=80
+FileDescriptorName=web
+Service=traefik.service
+FreeBind=true
+BindIPv6Only=both
+
+[Install]
+WantedBy=sockets.target
