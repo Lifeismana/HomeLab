@@ -2,9 +2,9 @@
 ContainerName=zipline
 Environment=DATASOURCE_TYPE=s3 
 Environment=DATASOURCE_S3_BUCKET=zipline 
-Environment=DATASOURCE_S3_ENDPOINT=https://minio.${MAIN_DOMAIN} 
+Environment=DATASOURCE_S3_ENDPOINT=https://s3.${MAIN_DOMAIN} 
 Environment=DATASOURCE_S3_FORCE_PATH_STYLE=true 
-Environment=DATASOURCE_S3_REGION=eu-west-1
+Environment=DATASOURCE_S3_REGION=garage
 EnvironmentFile=/etc/secc/env/zipline.env
 Image=ghcr.io/diced/zipline:v4
 Label=traefik.enable=true 

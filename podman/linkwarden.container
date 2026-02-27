@@ -11,9 +11,9 @@ ContainerName=linkwarden
 Environment=TZ=Europe/Paris 
 Environment=NEXTAUTH_URL=https://linkwarden.${MAIN_DOMAIN}/api/v1/auth 
 Environment=NEXT_PUBLIC_CREDENTIALS_ENABLED=false 
-Environment=SPACES_ENDPOINT=http://minio:9000/ 
+Environment=SPACES_ENDPOINT=http://s3.${MAIN_DOMAIN}/ 
 Environment=SPACES_BUCKET_NAME=linkwarden 
-Environment=SPACES_REGION=eu-west-1 
+Environment=SPACES_REGION=garage 
 Environment=SPACES_FORCE_PATH_STYLE=true 
 Environment=NEXT_PUBLIC_AUTHENTIK_ENABLED=true 
 Environment=AUTHENTIK_ISSUER=https://authentik.${MAIN_DOMAIN}/application/o/linkwarden 

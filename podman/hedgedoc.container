@@ -18,10 +18,10 @@ Environment=CMD_OAUTH2_AUTHORIZATION_URL=https://authentik.${MAIN_DOMAIN}/applic
 Environment=CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR=preferred_username 
 Environment=CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR=name 
 Environment=CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR=email 
-Environment=CMD_IMAGE_UPLOAD_TYPE=minio 
+Environment=CMD_IMAGE_UPLOAD_TYPE=s3 
 Environment=CMD_S3_BUCKET=hedgedoc 
-Environment=CMD_MINIO_ENDPOINT=minio.${MAIN_DOMAIN} 
-Environment=CMD_MINIO_SECURE=true
+Environment=CMD_S3_REGION=garage 
+Environment=CMD_S3_ENDPOINT=s3.${MAIN_DOMAIN} 
 EnvironmentFile=/etc/secc/env/hedgedoc.env
 Image=quay.io/hedgedoc/hedgedoc:1.10.7
 Label=traefik.enable=true 
