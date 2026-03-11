@@ -8,8 +8,8 @@ AddDevice=/dev/sdd:/dev/sdd
 AddDevice=/dev/nvme0:/dev/nvme0
 AddDevice=/dev/nvme1:/dev/nvme1
 ContainerName=scrutiny-collector
-Environment=COLLECTOR_API_ENDPOINT=https://scrutiny.internal.${MAIN_DOMAIN} 
+Environment=COLLECTOR_API_ENDPOINT=http://localhost:8080 #https://scrutiny.internal.${MAIN_DOMAIN} 
 Environment=COLLECTOR_HOST_ID=DockerMonster
 Image=ghcr.io/analogj/scrutiny:master-collector
+Network=scrutiny-web.container
 Volume=/run/udev:/run/udev:ro
-#TODO: make it hit localhost instead
