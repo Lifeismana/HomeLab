@@ -1,5 +1,5 @@
 [Container]
-AddCapability=NET_RAW,NET_ADMIN,NET_BIND_SERVICE
+AddCapability=NET_RAW,NET_ADMIN,NET_BIND_SERVICE,CHOWN,SETUID,SETGID
 ContainerName=NetAlertX
 DropCapability=ALL
 Environment=LISTEN_ADDR=127.0.0.1
