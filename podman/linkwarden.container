@@ -1,8 +1,8 @@
 [Unit]
-Requires=minio.service 
+Requires=garage.service 
 Requires=postgres.service 
 Requires=meilisearch.service
-After=minio.service 
+After=garage.service 
 After=postgres.service 
 After=meilisearch.service
 
