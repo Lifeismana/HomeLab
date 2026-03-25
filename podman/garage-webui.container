@@ -1,3 +1,7 @@
+[Unit]
+Requires=garage.service
+After=garage.service
+
 [Container]
 ContainerName=garage-webui
 Image=docker.io/khairul169/garage-webui:1.1.0
