@@ -1,0 +1,7 @@
+{
+	"auths": {
+		"ghcr.io/steamtracking/steam-update-dispatcher": {
+			"auth": "…"
+		}
+	}
+}
