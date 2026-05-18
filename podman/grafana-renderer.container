@@ -5,6 +5,7 @@ After=grafana.service
 [Container]
 ContainerName=grafana-renderer
 Environment=ENABLE_METRICS=true
+EnvironmentFile=/etc/secc/env/grafana-renderer.env
 HealthCmd=wget -O - http://localhost:8081 &>/dev/null
 HealthStartPeriod=30s
 Image=docker.io/grafana/grafana-image-renderer:3.12.9

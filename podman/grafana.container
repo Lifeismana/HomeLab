@@ -4,7 +4,8 @@ Environment=GF_AUTH_ANONYMOUS_ENABLED=true
 Environment=GF_AUTH_ORG_NAME=Lifesismana 
 Environment=GF_RENDERING_SERVER_URL=http://localhost:8081/render 
 Environment=GF_RENDERING_CALLBACK_URL=http://localhost:3000/ 
-Environment=GF_INSTALL_PLUGINS=marcusolsson-calendar-panel
+Environment=GF_PLUGINS_PREINSTALL=marcusolsson-calendar-panel
+EnvironmentFile=/etc/secc/env/grafana.env
 Group=1000
 HealthCmd=curl -f http://localhost:3000/api/health
 HealthStartPeriod=30s
