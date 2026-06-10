@@ -1,0 +1,6 @@
+[Unit]
+Description=Steam Update Dispatcher Restart Service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl try-restart steam-update-dispatcher.service
