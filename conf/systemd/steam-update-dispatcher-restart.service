@@ -1,5 +1,6 @@
 [Unit]
 Description=Steam Update Dispatcher Restart Service
+RefuseManualStart=yes
 
 [Service]
 Type=oneshot
