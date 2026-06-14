@@ -1,3 +1,7 @@
+[Unit]
+After=podman.socket
+BindsTo=podman.socket
+
 [Container]
 ContainerName=monodocker
 EnvironmentFile=/etc/secc/env/monodocker.env

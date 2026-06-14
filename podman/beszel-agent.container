@@ -1,3 +1,7 @@
+[Unit]
+After=podman.socket
+BindsTo=podman.socket
+
 [Container]
 AddCapability=SYS_RAWIO,SYS_ADMIN
 AddDevice=/dev/sda

@@ -3,6 +3,8 @@ Requires=traefik.service
 Requires=authentik-server.service
 After=traefik.service 
 After=authentik-server.service
+After=podman.socket
+BindsTo=podman.socket
 
 [Container]
 ContainerName=whatsupdocker
