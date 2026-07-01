@@ -9,7 +9,7 @@ EnvironmentFile=/etc/secc/env/grafana.env
 Group=1000
 HealthCmd=curl -f http://localhost:3000/api/health
 HealthStartPeriod=30s
-Image=docker.io/grafana/grafana:13.0.1
+Image=docker.io/grafana/grafana:13.1.0
 Label=traefik.enable=true 
 Label=traefik.http.routers.grafana.rule=Host(`grafana.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.grafana.entrypoints=websecure 
