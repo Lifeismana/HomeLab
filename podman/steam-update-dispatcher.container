@@ -3,6 +3,7 @@ ContainerName=steam-update-dispatcher
 Environment=TZ=Europe/Paris
 EnvironmentFile=/etc/secc/env/steam-update-dispatcher.env
 Image=ghcr.io/steamtracking/steam-update-dispatcher:latest
+Label=wud.watch=false
 Volume=/data/steam-update-dispatcher:/var/cache/steam-update-dispatcher
 
 [Service]
