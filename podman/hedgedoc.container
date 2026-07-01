@@ -23,7 +23,7 @@ Environment=CMD_S3_BUCKET=hedgedoc
 Environment=CMD_S3_REGION=garage 
 Environment=CMD_S3_ENDPOINT=s3.${MAIN_DOMAIN} 
 EnvironmentFile=/etc/secc/env/hedgedoc.env
-Image=quay.io/hedgedoc/hedgedoc:1.10.8
+Image=quay.io/hedgedoc/hedgedoc:1.11.0
 Label=traefik.enable=true 
 Label=traefik.http.routers.hedgedoc.rule=Host(`hedgedoc.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.hedgedoc.entrypoints=websecure 
