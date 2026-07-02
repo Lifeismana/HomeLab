@@ -43,3 +43,7 @@ scrape_configs:
   - job_name: opengist
     static_configs:
       - targets: ["opengist:6157"]
+
+  - job_name: "postgres-exporter"
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
