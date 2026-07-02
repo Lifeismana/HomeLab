@@ -15,6 +15,3 @@ Label=wud.tag.include=^v\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/data/homepage:/app/config
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro
-
-[Service]
-Restart=always

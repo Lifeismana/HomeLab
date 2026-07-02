@@ -7,6 +7,3 @@ ContainerName=monodocker
 EnvironmentFile=/etc/secc/env/monodocker.env
 Image=docker.io/petersem/monocker
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
-
-[Service]
-Restart=always

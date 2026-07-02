@@ -19,6 +19,3 @@ Network=net-proxy.network
 Network=net-postgres.network
 Network=net-redis.network
 Volume=/data/grist:/persist
-
-[Service]
-Restart=always

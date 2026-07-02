@@ -49,6 +49,3 @@ PublishPort=22:22
 Volume=/data/gitea/data:/var/lib/gitea
 Volume=/data/gitea/config:/etc/gitea
 Volume=/etc/localtime:/etc/localtime:ro
-
-[Service]
-Restart=always

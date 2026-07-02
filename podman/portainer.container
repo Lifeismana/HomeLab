@@ -19,6 +19,3 @@ Label=homepage.widget.key=${PORTAINER_TOKEN}
 Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/data/portainer:/data
-
-[Service]
-Restart=always

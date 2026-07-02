@@ -23,6 +23,3 @@ Volume=/.beszel:/extra-filesystems/disk1:ro
 Volume=/data/.beszel:/extra-filesystems/disk3:ro
 Volume=/podman_data/.beszel:/extra-filesystems/disk4:ro
 Label=wud.tag.include=^\\d+.\\d+-alpine$$
-
-[Service]
-Restart=always

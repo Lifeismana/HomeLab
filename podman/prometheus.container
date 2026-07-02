@@ -27,6 +27,3 @@ Network=net-prometheus.network
 User=1000
 Volume=/data/prometheus:/prometheus
 Volume=/etc/secc/prometheus:/etc/prometheus
-
-[Service]
-Restart=always

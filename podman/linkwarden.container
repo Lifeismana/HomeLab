@@ -29,6 +29,3 @@ Label=wud.tag.include=^v\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Network=net-postgres.network
 Network=net-meilisearch.network
-
-[Service]
-Restart=always

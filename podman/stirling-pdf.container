@@ -32,6 +32,3 @@ Volume=/data/stirling-pdf/extra-configs:/configs
 Volume=/data/stirling-pdf/custom-files:/customFiles
 Volume=/data/stirling-pdf/logs:/logs
 Volume=/data/stirling-pdf/pipeline:/pipeline
-
-[Service]
-Restart=always

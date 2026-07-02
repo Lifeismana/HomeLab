@@ -10,6 +10,3 @@ Label=traefik.http.routers.asf.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.asf.middlewares=tailscaleAL
 Network=net-proxy.network
 Volume=/data/asf/config:/app/config
-
-[Service]
-Restart=always

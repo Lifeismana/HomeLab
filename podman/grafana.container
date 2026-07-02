@@ -28,6 +28,3 @@ Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 User=1000
 Volume=/data/grafana:/var/lib/grafana
-
-[Service]
-Restart=always

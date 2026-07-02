@@ -20,6 +20,3 @@ Network=net-proxy.network
 Volume=/data/garage/garage.toml:/etc/garage.toml
 Volume=/data/garage/meta:/var/lib/garage/meta
 Volume=/data/garage/data:/var/lib/garage/data
-
-[Service]
-Restart=always

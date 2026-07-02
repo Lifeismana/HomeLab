@@ -18,6 +18,3 @@ Network=net-proxy.network
 Network=net-postgres.network
 Network=net-redis.network
 Volume=geoip.volume:/geoip
-
-[Service]
-Restart=always

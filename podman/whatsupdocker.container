@@ -29,6 +29,3 @@ Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=whatsupdocker.volume:/store
 Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro
-
-[Service]
-Restart=always

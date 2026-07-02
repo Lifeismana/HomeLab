@@ -23,6 +23,3 @@ ReadOnly=true
 Tmpfs=/tmp:mode=1777,rw,noexec,nosuid,nodev
 Volume=/data/netalertx/:/data:U
 Volume=/etc/localtime:/etc/localtime:ro
-
-[Service]
-Restart=always

@@ -30,6 +30,3 @@ Label=traefik.http.routers.hedgedoc.entrypoints=websecure
 Label=traefik.http.routers.hedgedoc.tls.certresolver=cloudflare_main
 Network=net-proxy.network
 Network=net-postgres.network
-
-[Service]
-Restart=always

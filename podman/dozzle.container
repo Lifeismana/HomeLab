@@ -21,6 +21,3 @@ Label=traefik.http.routers.dozzle.middlewares=tailscaleAL,forwardAuth-authentik
 Label=wud.tag.include=^v\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
-
-[Service]
-Restart=always

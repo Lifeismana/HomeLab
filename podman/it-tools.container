@@ -7,6 +7,3 @@ Label=traefik.http.routers.it-tools.rule=Host(`it-tools.internal.${MAIN_DOMAIN}`
 Label=traefik.http.routers.it-tools.entrypoints=websecure 
 Label=traefik.http.routers.it-tools.tls.certresolver=cloudflare_main
 Network=net-proxy.network
-
-[Service]
-Restart=always

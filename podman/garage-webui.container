@@ -15,6 +15,3 @@ Label=traefik.http.routers.garage-webui.service=garage-webui
 Label=traefik.http.services.garage-webui.loadbalancer.server.port=3909
 Network=net-proxy.network
 Volume=/data/garage/garage.toml:/etc/garage.toml:ro
-
-[Service]
-Restart=always

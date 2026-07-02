@@ -21,6 +21,3 @@ Network=net-proxy.network
 UserNS=keep-id:uid=1000,gid=1000
 Volume=/data/obsidian-livesync/data:/opt/couchdb/data
 Volume=/data/obsidian-livesync/local.ini:/opt/couchdb/etc/local.ini
-
-[Service]
-Restart=always

@@ -6,6 +6,3 @@ Image=docker.io/timothyjmiller/cloudflare-ddns:latest
 Network=host
 NoNewPrivileges=true
 Volume=/data/cloudflareddns/config.json:/config.json
-
-[Service]
-Restart=always

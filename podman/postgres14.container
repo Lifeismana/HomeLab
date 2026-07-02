@@ -8,6 +8,3 @@ Label=wud.watch=false
 Network=none
 Volume=/data/postgres-14:/var/lib/postgresql/data
 Volume=postgres14.volume:/var/run/postgresql
-
-[Service]
-Restart=always

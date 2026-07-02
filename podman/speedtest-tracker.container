@@ -27,6 +27,3 @@ Label=homepage.widget.url=https://speedtest-tracker.internal.${MAIN_DOMAIN}
 Network=net-proxy.network
 Network=net-postgres.network
 Volume=/data/speedtest-tracker:/config
-
-[Service]
-Restart=always

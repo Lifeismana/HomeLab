@@ -18,6 +18,3 @@ Network=net-proxy.network
 Network=net-postgres.network
 Network=net-prometheus.network
 Volume=/data/opengist:/opengist
-
-[Service]
-Restart=always

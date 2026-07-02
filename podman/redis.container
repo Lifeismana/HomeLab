@@ -7,6 +7,3 @@ Image=docker.io/library/redis:8-alpine
 Label=wud.tag.include=^\\d+-alpine$$
 Network=net-redis.network
 Volume=/data/redis:/data
-
-[Service]
-Restart=always

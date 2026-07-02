@@ -29,6 +29,3 @@ Network=host
 PodmanArgs=--pid host --privileged
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro
 Volume=/etc/os-release:/etc/os-release:ro
-
-[Service]
-Restart=always

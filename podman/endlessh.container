@@ -10,6 +10,3 @@ Network=net-proxy.network
 Network=net-prometheus.network
 PublishPort=222:222
 Volume=geoip.volume:/geo-data/:ro
-
-[Service]
-Restart=always

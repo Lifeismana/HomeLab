@@ -13,6 +13,3 @@ Label=traefik.http.routers.beszel.middlewares=tailscaleAL
 Label=wud.tag.include=^\\d+.\\d+$$
 Network=net-proxy.network
 Volume=/data/beszel:/beszel_data
-
-[Service]
-Restart=always

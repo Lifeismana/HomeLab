@@ -5,6 +5,3 @@ Image=ghcr.io/lifeismana/steam-watcher:latest
 Network=net-proxy.network
 Volume=/data/steam-watcher:/usr/src/app/config/
 #is that network needed?
-
-[Service]
-Restart=always

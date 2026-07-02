@@ -15,6 +15,3 @@ Label=traefik.http.services.zipline.loadbalancer.server.port=3000
 Label=wud.tag.include=^v\\d+$$
 Network=net-postgres.network
 Network=net-proxy.network
-
-[Service]
-Restart=always

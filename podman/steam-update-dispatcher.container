@@ -8,4 +8,3 @@ Volume=/data/steam-update-dispatcher:/var/cache/steam-update-dispatcher
 
 [Service]
 Environment=REGISTRY_AUTH_FILE=/etc/secc/podman/auth.json
-Restart=always

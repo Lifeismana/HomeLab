@@ -14,6 +14,3 @@ Label=traefik.http.services.reddash.loadbalancer.server.port=42356
 Label=traefik.http.routers.reddash.middlewares=crowdsec
 Network=redbot.container
 Volume=/data/red-dashboard:/data
-
-[Service]
-Restart=always
