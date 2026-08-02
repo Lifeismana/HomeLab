@@ -3,6 +3,6 @@ ContainerName=postgres-exporter
 Environment=DATA_SOURCE_URI=postgres:5432/postgres?sslmode=disable
 Environment=DATA_SOURCE_USER=postgres
 EnvironmentFile=/etc/secc/env/postgres-exporter.env
-Image=quay.io/prometheuscommunity/postgres-exporter:v0.20.0
+Image=quay.io/prometheuscommunity/postgres-exporter:v0.20.1
 Network=net-postgres.network
 Network=net-prometheus.network
