@@ -84,6 +84,7 @@ Label=wud.tag.include=^v\\d+\\.\\d+$$
 Network=net-proxy.network:ip=172.25.0.254
 Network=net-prometheus.network
 Network=net-redis.network
+Notify=healthy
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=/data/traefik:/data
 Volume=/etc/secc/traefik/traefik_dynamic.yaml:/etc/traefik/traefik_dynamic.yaml

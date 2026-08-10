@@ -6,4 +6,5 @@ HealthStartPeriod=20s
 Image=docker.io/library/redis:8-alpine
 Label=wud.tag.include=^\\d+-alpine$$
 Network=net-redis.network
+Notify=healthy
 Volume=/data/redis:/data
