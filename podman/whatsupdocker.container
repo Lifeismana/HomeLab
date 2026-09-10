@@ -16,7 +16,7 @@ Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_CMD=/wud/webhook-update.sh
 Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_AUTO=true 
 Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_MODE=batch
 EnvironmentFile=/etc/secc/env/whats-up-docker.env
-HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
+#HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
 HealthStartPeriod=10s
 Image=docker.io/getwud/wud:8.4.0
 Label=traefik.enable=true 
