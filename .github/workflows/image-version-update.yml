@@ -1,43 +1,29 @@
 name: Image Version Update
-
 on:
-    workflow_dispatch:
-        inputs:
-            json:
-                description: 'Containers JSON'
-                required: true
-
+    repository_dispatch:
+        types: [wud-update]
 permissions:
     contents: write
     pull-requests: write
-
 jobs:
     update-image-version:
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                json: ${{ fromJSON(github.event.inputs.json) }}
         steps:
             -   name: Checkout repository
                 uses: actions/checkout@v7
-            
             -   name: Setup ENVs
-                env:
-                    CONTAINER_JSON: ${{ toJson(matrix.json) }}
                 run: |
-                    echo "$CONTAINER_JSON" | jq -r 'to_entries | .[] | .key + "=" + (.value|tostring)' >> $GITHUB_ENV
-            -   name: Setup ENVs v2
-                run: |
-                    echo "OLD_IMAGE=$IMAGE_NAME:$LOCAL_TAG" >> $GITHUB_ENV
-                    echo "NEW_IMAGE=$IMAGE_NAME:$REMOTE_TAG" >> $GITHUB_ENV
-                    echo "BRANCH_NAME=update/$IMAGE_NAME" >> $GITHUB_ENV
+                    echo "IMAGE_NAME=${{ github.event.client_payload.image }}" >> $GITHUB_ENV
+                    echo "LOCAL_TAG=${{ github.event.client_payload.localTag }}" >> $GITHUB_ENV
+                    echo "REMOTE_TAG=${{ github.event.client_payload.remoteTag }}" >> $GITHUB_ENV
+                    echo "OLD_IMAGE=${{ github.event.client_payload.image }}:${{ github.event.client_payload.localTag }}" >> $GITHUB_ENV
+                    echo "NEW_IMAGE=${{ github.event.client_payload.image }}:${{ github.event.client_payload.remoteTag }}" >> $GITHUB_ENV
+                    echo "BRANCH_NAME=update/${{ github.event.client_payload.image }}" >> $GITHUB_ENV
             -   name: Setup Branch
                 run: |
                     git config user.name github-actions
                     git config user.email github-actions@github.com
                     git checkout -b "$BRANCH_NAME"
-
             -   name: Check Image Version
                 id: update_image_version
                 run: |
@@ -46,7 +32,6 @@ jobs:
                     else
                         echo "changed=false" >> $GITHUB_OUTPUT
                     fi
-                    
             -   name: Update Image Version & Commit changes
                 if: steps.update_image_version.outputs.changed == 'true'
                 env:

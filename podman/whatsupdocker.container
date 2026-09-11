@@ -11,10 +11,9 @@ ContainerName=whatsupdocker
 Environment=TZ=Europe/Paris 
 Environment=WUD_WATCHER_LOCAL_CRON="0 6 * * *" 
 Environment=WUD_WATCHER_LOCAL_WATCHALL=true 
-Environment=WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true 
-Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_CMD=/wud/webhook-update.sh 
-Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_AUTO=true 
-Environment=WUD_TRIGGER_COMMAND_TAGUPDATE_MODE=batch
+Environment=WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true
+Environment=WUD_TRIGGER_GITHUBACTIONS_SECCUPDATE_OWNER=lifeismana
+Environment=WUD_TRIGGER_GITHUBACTIONS_SECCUPDATE_REPO=homeLab
 EnvironmentFile=/etc/secc/env/whats-up-docker.env
 #HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
 HealthStartPeriod=10s
@@ -28,4 +27,3 @@ Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=whatsupdocker.volume:/store
-Volume=/etc/secc/wud/webhook-update.sh:/wud/webhook-update.sh:ro
