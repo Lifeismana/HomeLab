@@ -17,7 +17,7 @@ Environment=WUD_TRIGGER_GITHUBACTIONS_SECCUPDATE_REPO=homeLab
 EnvironmentFile=/etc/secc/env/whats-up-docker.env
 #HealthCmd=curl --fail http://localhost:3000/health || exit 1 && curl http://localhost:3000/auth/strategies | jq -e '. | length > 0' || exit 1
 HealthStartPeriod=10s
-Image=docker.io/getwud/wud:8.4.0
+Image=docker.io/getwud/wud:9.0.2
 Label=traefik.enable=true 
 Label=traefik.http.routers.whatsupdocker.rule=Host(`whatsupdocker.internal.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.whatsupdocker.entrypoints=websecure 
