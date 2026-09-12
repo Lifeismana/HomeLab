@@ -12,7 +12,7 @@ Environment=AUTHENTIK_POSTGRESQL__USER=authentik
 Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
 EnvironmentFile=/etc/secc/env/authentik.env
 Exec=worker
-Image=ghcr.io/goauthentik/server:2026.5.6
+Image=ghcr.io/goauthentik/server:2026.8.2
 Label=wud.watch=false
 Network=net-proxy.network
 Network=net-postgres.network
