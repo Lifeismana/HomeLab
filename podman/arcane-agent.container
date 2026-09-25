@@ -1,0 +1,17 @@
+[Unit]
+After=podman.socket
+BindsTo=podman.socket
+
+[Container]
+ContainerName=arcane-agent
+Environment=TZ=Europe/Paris
+Environment=AGENT_MODE=true
+Environment=EDGE_TRANSPORT=poll
+Environment=MANAGER_API_URL=http://arcane:3552
+EnvironmentFile=/etc/secc/env/arcane-agent.env
+Image=ghcr.io/getarcaneapp/agent:v2.14
+HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
+HealthStartPeriod=15s
+Network=net-proxy.network
+Volume=/var/run/podman/podman.sock:/var/run/docker.sock
+Volume=/data/arcane-agent:/app/data
