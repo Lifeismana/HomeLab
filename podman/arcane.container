@@ -1,0 +1,21 @@
+[Container]
+ContainerName=arcane
+Environment=TZ=Europe/Paris
+Environment=OIDC_ENABLED=true
+Environment=OIDC_AUTO_REDIRECT_TO_PROVIDER=true
+Environment=OIDC_PROVIDER_NAME=Authentik
+Environment=OIDC_ISSUER_URL=https://authentik.${MAIN_DOMAIN}/application/o/arcane/
+Environment=OIDC_SCOPES="openid profile email arcane_roles"
+Environment=OIDC_GROUPS_CLAIM=arcane_roles
+Environment=OIDC_ROLE_MAPPING=[{"claimValue":"arcane-admins","roleId":"role_admin"}]
+HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
+HealthStartPeriod=15s
+Image=ghcr.io/getarcaneapp/manager:v2.14
+Label=traefik.enable=true
+Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.arcane.entrypoints=websecure
+Label=traefik.http.routers.arcane.tls.certresolver=cloudflare_main
+Label=traefik.http.routers.arcane.middlewares=tailscaleAL
+Label=wud.tag.include=^v\\d+\\.\\d+$$
+Network=net-proxy.network
+Volume=/data/arcane:/app/data
