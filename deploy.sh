@@ -21,4 +21,10 @@ echo "Reloading systemd"
 
 systemctl daemon-reload
 
-systemctl enable --now /etc/secc/systemd/*
+for f in /etc/secc/systemd/* ; do
+    if [ "$(systemctl show -p RefuseManualStart --value "$SERVICE")" = "yes" ]; then
+        echo "Skipping $f because it is marked as RefuseManualStart"
+        continue
+    fi
+    systemctl enable --now $f
+done
