@@ -12,6 +12,10 @@ Environment=TZ=Europe/Paris
 Environment=WUD_WATCHER_LOCAL_CRON="0 6 * * *" 
 Environment=WUD_WATCHER_LOCAL_WATCHALL=true 
 Environment=WUD_AUTH_OIDC_AUTHENTIK_REDIRECT=true
+Environment=WUD_AUTH_OIDC_AUTHENTIK_DEFAULTROLE=none
+Environment=WUD_AUTH_OIDC_AUTHENTIK_ADMINGROUP=admins
+Environment=WUD_AUTH_OIDC_AUTHENTIK_GROUPSCLAIM=wud_roles
+Environment=WUD_AUTH_OIDC_AUTHENTIK_SCOPE="openid profile email wud_roles"
 Environment=WUD_TRIGGER_GITHUBACTIONS_SECCUPDATE_OWNER=lifeismana
 Environment=WUD_TRIGGER_GITHUBACTIONS_SECCUPDATE_REPO=homeLab
 EnvironmentFile=/etc/secc/env/whats-up-docker.env
