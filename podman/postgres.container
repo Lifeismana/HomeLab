@@ -7,4 +7,4 @@ Image=docker.io/library/postgres:18
 Label=wud.tag.include=^\\d+$$
 Network=net-postgres.network
 Notify=healthy
-Volume=/data/postgres:/var/lib/postgresql/data
+Volume=/data/postgres:/var/lib/postgresql
