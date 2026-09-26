@@ -12,6 +12,8 @@ AddDevice=/dev/nvme0
 AddDevice=/dev/nvme1
 ContainerName=beszel-agent
 Environment=LISTEN=45876
+Environment=DOCKER_HOST=unix:///var/run/podman.sock
+Environment=HUB_URL=https://beszel.internal.${MAIN_DOMAIN}
 EnvironmentFile=/etc/secc/env/beszel-agent.env
 HealthCmd=["/agent","health"]
 HealthStartPeriod=5s
@@ -19,6 +21,7 @@ Image=ghcr.io/henrygd/beszel/beszel-agent:0.20-alpine
 Network=host
 Volume=/data/beszel_agent:/var/lib/beszel-agent
 Volume=/var/run/podman/podman.sock:/var/run/podman.sock:ro
+Volume=/var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
 Volume=/.beszel:/extra-filesystems/disk1:ro
 Volume=/data/.beszel:/extra-filesystems/disk3:ro
 Volume=/podman_data/.beszel:/extra-filesystems/disk4:ro
