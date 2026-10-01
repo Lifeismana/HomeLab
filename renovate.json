@@ -4,7 +4,13 @@
     "config:recommended"
   ],
   "ignorePaths": [
-    "docker-compose.yml",
-    "podman/*.container"
+    "docker-compose.yml"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "quadlet"
+      ]
+    }
   ]
 }
