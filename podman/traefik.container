@@ -79,8 +79,7 @@ Label=homepage.icon=traefik.png
 Label=homepage.href=https://traefik.internal.${MAIN_DOMAIN} 
 Label=homepage.description=Traefik 
 Label=homepage.widget.type=traefik 
-Label=homepage.widget.url=https://traefik.internal.${MAIN_DOMAIN} 
-Label=wud.tag.include=^v\\d+\\.\\d+$$
+Label=homepage.widget.url=https://traefik.internal.${MAIN_DOMAIN}
 Network=net-proxy.network:ip=172.25.0.254
 Network=net-prometheus.network
 Network=net-redis.network

@@ -4,7 +4,6 @@ EnvironmentFile=/etc/secc/env/postgres-14.env
 HealthCmd=pg_isready -U postgres
 HealthStartPeriod=20s
 Image=docker.io/library/postgres:14
-Label=wud.watch=false
 Network=none
 Volume=/data/postgres-14:/var/lib/postgresql/data
 Volume=postgres14.volume:/var/run/postgresql

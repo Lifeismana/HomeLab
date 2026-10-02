@@ -4,7 +4,6 @@ Exec=--save 60 1 --loglevel warning
 HealthCmd=redis-cli ping | grep PONG
 HealthStartPeriod=20s
 Image=docker.io/library/redis:8-alpine
-Label=wud.tag.include=^\\d+-alpine$$
 Network=net-redis.network
 Notify=healthy
 Volume=/data/redis:/data

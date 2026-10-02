@@ -23,8 +23,7 @@ Label=homepage.description=Grafana
 Label=homepage.widget.type=grafana 
 Label=homepage.widget.url=https://grafana.internal.${MAIN_DOMAIN} 
 Label=homepage.widget.username=${GRAFANA_USER} 
-Label=homepage.widget.password=${GRAFANA_PASSWORD} 
-Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
+Label=homepage.widget.password=${GRAFANA_PASSWORD}
 Network=net-proxy.network
 User=1000
 Volume=/data/grafana:/var/lib/grafana

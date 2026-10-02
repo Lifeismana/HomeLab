@@ -32,8 +32,7 @@ Label=homepage.description=Authentik
 Label=homepage.href=https://authentik.${MAIN_DOMAIN} 
 Label=homepage.widget.type=authentik 
 Label=homepage.widget.url=https://authentik.${MAIN_DOMAIN} 
-Label=homepage.widget.key=${AUTHENTIK_TOKEN} 
-Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
+Label=homepage.widget.key=${AUTHENTIK_TOKEN}
 Network=net-proxy.network
 Network=net-postgres.network
 Network=net-redis.network

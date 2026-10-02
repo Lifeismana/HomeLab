@@ -21,6 +21,5 @@ Label=traefik.http.routers.dozzle.rule=Host(`dozzle.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.dozzle.entrypoints=websecure 
 Label=traefik.http.routers.dozzle.tls.certresolver=cloudflare_main 
 Label=traefik.http.routers.dozzle.middlewares=tailscaleAL
-Label=wud.tag.include=^v\\d+$$
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock

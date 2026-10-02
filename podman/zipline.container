@@ -11,7 +11,6 @@ Label=traefik.enable=true
 Label=traefik.http.routers.zipline.rule=Host(`${SECONDARY_DOMAIN}`) 
 Label=traefik.http.routers.zipline.entrypoints=websecure 
 Label=traefik.http.routers.zipline.tls.certresolver=cloudflare_main 
-Label=traefik.http.services.zipline.loadbalancer.server.port=3000 
-Label=wud.tag.include=^v\\d+$$
+Label=traefik.http.services.zipline.loadbalancer.server.port=3000
 Network=net-postgres.network
 Network=net-proxy.network

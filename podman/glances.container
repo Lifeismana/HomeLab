@@ -23,8 +23,7 @@ Label=homepage.href=https://glances.internal.${MAIN_DOMAIN}
 Label=homepage.widget.type=glances 
 Label=homepage.widget.url=https://glances.internal.${MAIN_DOMAIN} 
 Label=homepage.widget.version=4 
-Label=homepage.widget.metric=info 
-Label=wud.tag.include=^\\d+\\.\\d+\\.\\d+$$
+Label=homepage.widget.metric=info
 Network=host
 PodmanArgs=--pid host --privileged
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock:ro

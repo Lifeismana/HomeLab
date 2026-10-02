@@ -17,6 +17,5 @@ Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.arcane.entrypoints=websecure
 Label=traefik.http.routers.arcane.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.arcane.middlewares=tailscaleAL
-Label=wud.tag.include=^v\\d+\\.\\d+$$
 Network=net-proxy.network
 Volume=/data/arcane:/app/data

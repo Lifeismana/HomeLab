@@ -12,8 +12,7 @@ Label=traefik.enable=true
 Label=traefik.http.routers.opengist.rule="Host(`gist.${SECONDARY_DOMAIN}`) && !PathPrefix(`/metrics`)" 
 Label=traefik.http.routers.opengist.entrypoints=websecure 
 Label=traefik.http.routers.opengist.tls.certresolver=cloudflare_main 
-Label=traefik.http.services.opengist.loadbalancer.server.port=6157 
-Label=wud.tag.include=^\\d+\\.\\d+$$
+Label=traefik.http.services.opengist.loadbalancer.server.port=6157
 Network=net-proxy.network
 Network=net-postgres.network
 Network=net-prometheus.network

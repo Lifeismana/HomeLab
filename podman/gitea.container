@@ -40,8 +40,7 @@ Label=traefik.http.routers.gitea.tls.certresolver=cloudflare_main
 Label=traefik.http.services.gitea.loadbalancer.server.port=3000 
 Label=traefik.http.routers.gitea.middlewares=crowdsec 
 Label=crowdsec.enable=true 
-Label=crowdsec.labels.type=gitea 
-Label=wud.tag.include=^\\d+\\.\\d+-rootless$$
+Label=crowdsec.labels.type=gitea
 Network=net-proxy.network
 Network=net-postgres.network
 Network=net-redis.network

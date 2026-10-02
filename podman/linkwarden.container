@@ -24,8 +24,7 @@ Label=traefik.enable=true
 Label=traefik.http.routers.linkwarden.rule=Host(`linkwarden.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.linkwarden.entrypoints=websecure 
 Label=traefik.http.routers.linkwarden.tls.certresolver=cloudflare_main 
-Label=traefik.http.services.linkwarden.loadbalancer.server.port=3000 
-Label=wud.tag.include=^v\\d+\\.\\d+\\.\\d+$$
+Label=traefik.http.services.linkwarden.loadbalancer.server.port=3000
 Network=net-proxy.network
 Network=net-postgres.network
 Network=net-meilisearch.network

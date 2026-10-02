@@ -20,8 +20,7 @@ Label=homepage.icon=prometheus.png
 Label=homepage.description=Prometheus 
 Label=homepage.href=https://prometheus.internal.${MAIN_DOMAIN} 
 Label=homepage.widget.type=prometheus 
-Label=homepage.widget.url=https://prometheus.internal.${MAIN_DOMAIN} 
-Label=wud.tag.include=^v\\d+\\.\\d+\\.\\d+$$
+Label=homepage.widget.url=https://prometheus.internal.${MAIN_DOMAIN}
 Network=net-proxy.network
 Network=net-prometheus.network
 User=1000

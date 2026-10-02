@@ -7,8 +7,7 @@ Label=traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`
 Label=traefik.http.routers.influxdb.entrypoints=websecure 
 Label=traefik.http.routers.influxdb.tls.certresolver=cloudflare_main 
 Label=traefik.http.services.influxdb.loadbalancer.server.port=8086 
-Label=traefik.http.routers.influxdb.middlewares=tailscaleAL 
-Label=wud.tag.include=^\\d+\\.\\d+$$
+Label=traefik.http.routers.influxdb.middlewares=tailscaleAL
 Network=net-proxy.network
 Network=net-influxdb.network
 Volume=/data/influxdb:/var/lib/influxdb2
