@@ -5,7 +5,7 @@
     "config:recommended"
   ],
   "ignorePaths": [
-    "docker-compose.yml"
+    "podman/postgres14.container"
   ],
   "packageRules": [
     {
