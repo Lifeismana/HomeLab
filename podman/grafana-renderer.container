@@ -8,5 +8,5 @@ Environment=ENABLE_METRICS=true
 EnvironmentFile=/etc/secc/env/grafana-renderer.env
 HealthCmd=wget -O - http://localhost:8081 &>/dev/null
 HealthStartPeriod=30s
-Image=docker.io/grafana/grafana-image-renderer:3.12.9
+Image=docker.io/grafana/grafana-image-renderer:v5.12.5
 Network=grafana.container
