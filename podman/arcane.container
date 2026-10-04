@@ -11,7 +11,7 @@ Environment=OIDC_ROLE_MAPPING=[{"claimValue":"arcane-admins","roleId":"role_admi
 EnvironmentFile=/etc/secc/env/arcane.env
 HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
 HealthStartPeriod=15s
-Image=ghcr.io/getarcaneapp/manager:v2.14
+Image=ghcr.io/getarcaneapp/manager:v2.15
 Label=traefik.enable=true
 Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.arcane.entrypoints=websecure
