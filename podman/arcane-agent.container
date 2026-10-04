@@ -9,7 +9,7 @@ Environment=AGENT_MODE=true
 Environment=EDGE_TRANSPORT=poll
 Environment=MANAGER_API_URL=http://arcane:3552
 EnvironmentFile=/etc/secc/env/arcane-agent.env
-Image=ghcr.io/getarcaneapp/agent:v2.14
+Image=ghcr.io/getarcaneapp/agent:v2.15
 HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
 HealthStartPeriod=15s
 Network=net-proxy.network
