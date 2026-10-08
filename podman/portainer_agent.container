@@ -4,7 +4,7 @@ BindsTo=podman.socket
 
 [Container]
 ContainerName=portainer_agent
-Image=docker.io/portainer/agent:2.45.1
+Image=docker.io/portainer/agent:2.45.2
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=/podman_data/volumes:/var/lib/docker/volumes
