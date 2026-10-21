@@ -11,7 +11,7 @@ Environment=MANAGER_API_URL=http://arcane:3552
 Environment=PUID=0
 Environment=PGID=0
 EnvironmentFile=/etc/secc/env/arcane-agent.env
-Image=ghcr.io/getarcaneapp/agent:v2.16
+Image=ghcr.io/getarcaneapp/agent:v2.17
 HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
 HealthStartPeriod=15s
 Network=net-proxy.network
