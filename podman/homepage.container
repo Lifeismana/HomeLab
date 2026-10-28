@@ -11,7 +11,7 @@ Environment=HOMEPAGE_OIDC_ISSUER=https://authentik.${MAIN_DOMAIN}/application/o/
 Environment=HOMEPAGE_OIDC_NAME=Authentik
 Environment=HOMEPAGE_OIDC_AUTO_LOGIN=true
 EnvironmentFile=/etc/secc/env/homepage.env
-Image=ghcr.io/gethomepage/homepage:v2.6
+Image=ghcr.io/gethomepage/homepage:v2.7
 Label=traefik.enable=true 
 Label=traefik.http.routers.homepage.rule=Host(`home.${MAIN_DOMAIN}`) 
 Label=traefik.http.routers.homepage.entrypoints=websecure 
