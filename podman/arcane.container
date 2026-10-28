@@ -8,6 +8,9 @@ Environment=OIDC_ISSUER_URL=https://authentik.${MAIN_DOMAIN}/application/o/arcan
 Environment=OIDC_SCOPES="openid profile email arcane_roles"
 Environment=OIDC_GROUPS_CLAIM=arcane_roles
 Environment=OIDC_ROLE_MAPPING=[{"claimValue":"arcane-admins","roleId":"role_admin"}]
+Environment=PUID=0
+Environment=PGID=0
+Environment=TRUSTED_PROXIES=172.25.0.0/16
 EnvironmentFile=/etc/secc/env/arcane.env
 HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
 HealthStartPeriod=15s
@@ -18,4 +21,6 @@ Label=traefik.http.routers.arcane.entrypoints=websecure
 Label=traefik.http.routers.arcane.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.arcane.middlewares=tailscaleAL
 Network=net-proxy.network
+Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=/data/arcane:/app/data
+Volume=/run/dbus/system_bus_socket:/run/dbus/system_bus_socket
