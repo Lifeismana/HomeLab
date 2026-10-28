@@ -22,8 +22,14 @@ echo "Reloading systemd"
 systemctl daemon-reload
 
 for f in /etc/secc/systemd/* ; do
-    if [ "$(systemctl show -p RefuseManualStart --value "$f")" = "yes" ]; then
+    unit=$(basename "$f")
+
+    if [ "$(systemctl show -p RefuseManualStart --value "$unit")" = "yes" ]; then
         echo "Skipping $f because it is marked as RefuseManualStart"
+        continue
+    fi
+    if ! grep -q '^\[Install\]' "$f"; then
+        echo "Skipping $unit because it has no [Install] section"
         continue
     fi
     systemctl enable --now $f
