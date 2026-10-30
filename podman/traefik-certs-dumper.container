@@ -1,0 +1,15 @@
+[Unit]
+After=traefik.container
+BindsTo=traefik.container
+
+[Container]
+ContainerName=traefik-certs-dumper
+Image=ghcr.io/kereis/traefik-certs-dumper:latest
+Environment=OVERRIDE_UID=2000
+Environment=OVERRIDE_GID=2000
+Network=none
+HealthCmd=/usr/bin/healthcheck
+
+Volume=/etc/localtime:/etc/localtime:ro
+Volume=acme.volume:/traefik:ro
+Volume=certs.volume:/output

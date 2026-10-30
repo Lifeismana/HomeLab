@@ -1,0 +1,23 @@
+[Unit]
+After=traefik-certs-dumper.container
+BindsTo=traefik-certs-dumper.container
+
+[Container]
+ContainerName=stalwart
+Image=ghcr.io/stalwartlabs/stalwart:v1
+Network=net-proxy.network
+Network=net-redis.network
+Label=traefik.enable=true
+Label="traefik.http.routers.mailserver.rule=Host(`mail.${SECONDARY_DOMAIN}`) || Host(`autodiscover.${SECONDARY_DOMAIN}`) || Host(`autoconfig.${SECONDARY_DOMAIN}`)"
+Label=traefik.http.routers.mailserver.entrypoints=websecure
+#Label=traefik.http.routers.mailserver.tls.certresolver=cloudflare_main
+Label=traefik.http.services.mailserver.loadbalancer.server.port=8080
+PublishPort=25:25/tcp
+PublishPort=465:465/tcp
+PublishPort=587:587/tcp
+PublishPort=993:993/tcp
+PublishPort=4190:4190/tcp
+RunInit=true
+Volume=/data/stalwart/etc:/etc/stalwart
+Volume=/data/stalwart/data:/var/lib/stalwart
+Volume=certs.volume:/data/certs:ro
