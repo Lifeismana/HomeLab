@@ -5,13 +5,11 @@ Image=docker.io/dxflrs/garage:v2.5.0
 Label=traefik.enable=true
 Label=traefik.http.routers.garage.rule=Host(`garage.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.garage.entrypoints=websecure
-Label=traefik.http.routers.garage.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.garage.middlewares=tailscaleAL
 Label=traefik.http.routers.garage.service=garage
 Label=traefik.http.services.garage.loadbalancer.server.port=3902
 Label=traefik.http.routers.s3.rule=Host(`s3.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.s3.entrypoints=websecure
-Label=traefik.http.routers.s3.tls.certresolver=cloudflare_main
 Label=traefik.http.middlewares.compress.compress=true
 Label=traefik.http.routers.s3.service=s3
 Label=traefik.http.services.s3.loadbalancer.server.port=3900

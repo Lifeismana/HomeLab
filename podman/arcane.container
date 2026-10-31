@@ -18,7 +18,6 @@ Image=ghcr.io/getarcaneapp/manager:v2.17
 Label=traefik.enable=true
 Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.arcane.entrypoints=websecure
-Label=traefik.http.routers.arcane.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.arcane.middlewares=tailscaleAL
 Network=net-proxy.network
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock

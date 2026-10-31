@@ -1,29 +1,28 @@
 [Unit]
-Requires=traefik.service 
+Requires=traefik.service
 Requires=authentik-server.service
-After=traefik.service 
+After=traefik.service
 After=authentik-server.service
 
 [Container]
 ContainerName=stirling-pdf
-Environment=DOCKER_ENABLE_SECURITY=true 
-Environment=SECURITY_ENABLELOGIN=true 
-Environment=SECURITY_OAUTH2_ENABLED=true 
-Environment=SECURITY_OAUTH2_AUTOCREATEUSER=true 
-Environment=SECURITY_OAUTH2_BLOCKREGISTRATION=false 
-Environment=SECURITY_OAUTH2_SCOPES="openid, profile, email" 
-Environment=SECURITY_OAUTH2_USEASUSERNAME=email 
-Environment=SECURITY_OAUTH2_PROVIDER=authentik 
+Environment=DOCKER_ENABLE_SECURITY=true
+Environment=SECURITY_ENABLELOGIN=true
+Environment=SECURITY_OAUTH2_ENABLED=true
+Environment=SECURITY_OAUTH2_AUTOCREATEUSER=true
+Environment=SECURITY_OAUTH2_BLOCKREGISTRATION=false
+Environment=SECURITY_OAUTH2_SCOPES="openid, profile, email"
+Environment=SECURITY_OAUTH2_USEASUSERNAME=email
+Environment=SECURITY_OAUTH2_PROVIDER=authentik
 Environment=SECURITY_LOGINMETHOD=oauth2
 EnvironmentFile=/etc/secc/env/stirling-pdf.env
 HealthCmd=curl -f http://localhost:8080/api/v1/info/status | grep -q 'UP'
 HealthStartPeriod=30s
 Image=ghcr.io/stirling-tools/stirling-pdf:3.2.2-fat
-Label=traefik.enable=true 
-Label=traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${MAIN_DOMAIN}`) 
-Label=traefik.http.routers.stirling-pdf.entrypoints=websecure 
-Label=traefik.http.routers.stirling-pdf.tls.certresolver=cloudflare_main 
-Label=traefik.http.services.stirling-pdf.loadbalancer.server.port=8080 
+Label=traefik.enable=true
+Label=traefik.http.routers.stirling-pdf.rule=Host(`stirling-pdf.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.stirling-pdf.entrypoints=websecure
+Label=traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 Label=traefik.http.routers.stirling-pdf.middlewares=crowdsec
 Network=net-proxy.network
 Volume=/data/stirling-pdf/training-data:/usr/share/tessdata

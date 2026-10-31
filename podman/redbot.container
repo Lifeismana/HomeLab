@@ -4,8 +4,8 @@ After=postgres14.service
 
 [Container]
 ContainerName=redbot
-Environment=CUSTOM_REDBOT_PACKAGE=git+https://github.com/Cog-Creators/Red-DiscordBot.git@V3/develop#egg=Red-DiscordBot 
-Environment=TZ=Europe/Paris 
+Environment=CUSTOM_REDBOT_PACKAGE=git+https://github.com/Cog-Creators/Red-DiscordBot.git@V3/develop#egg=Red-DiscordBot
+Environment=TZ=Europe/Paris
 Environment=EXTRA_ARGS="--dev --rpc"
 Image=ghcr.io/lifeismana/docker-red-discordbot:full
 Network=net-proxy.network

@@ -4,7 +4,7 @@ BindsTo=podman.socket
 
 [Container]
 ContainerName=traefik-logrotate
-Environment=TZ=Europe/Paris 
+Environment=TZ=Europe/Paris
 Environment=CRON_SCHEDULE="0 * * * *"
 Image=ghcr.io/vegardit/traefik-logrotate:latest
 Network=none

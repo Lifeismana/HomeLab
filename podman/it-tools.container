@@ -2,8 +2,7 @@
 ContainerName=it-tools
 HealthCmd=curl -f http://localhost:80
 Image=ghcr.io/corentinth/it-tools:latest
-Label=traefik.enable=true 
-Label=traefik.http.routers.it-tools.rule=Host(`it-tools.internal.${MAIN_DOMAIN}`) 
-Label=traefik.http.routers.it-tools.entrypoints=websecure 
-Label=traefik.http.routers.it-tools.tls.certresolver=cloudflare_main
+Label=traefik.enable=true
+Label=traefik.http.routers.it-tools.rule=Host(`it-tools.internal.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.it-tools.entrypoints=websecure
 Network=net-proxy.network

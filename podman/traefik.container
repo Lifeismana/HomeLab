@@ -28,7 +28,8 @@ Exec=--api.dashboard=true \
      --entrypoints.websecure.http.tls.certresolver=cloudflare_main \
      --entrypoints.websecure.http.tls.domains[0].main=${MAIN_DOMAIN} \
      --entrypoints.websecure.http.tls.domains[0].sans=*.${MAIN_DOMAIN} \
-     --entrypoints.websecure.http.tls.domains[1].main=*.internal.${MAIN_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[1].main=internal.${MAIN_DOMAIN} \
+     --entrypoints.websecure.http.tls.domains[1].sans=*.internal.${MAIN_DOMAIN} \
      --entrypoints.websecure.http.tls.domains[2].main=${SECONDARY_DOMAIN} \
      --entrypoints.websecure.http.tls.domains[2].sans=*.${SECONDARY_DOMAIN} \
      --certificatesResolvers.cloudflare_main.acme.email=${CLOUDFLARE_EMAIL} \
@@ -44,20 +45,15 @@ Label=traefik.enable=true
 Label=traefik.http.services.justAdummyService.loadbalancer.server.port=1337
 Label="traefik.http.routers.traefik.rule=Host(`traefik.internal.${MAIN_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
 Label=traefik.http.routers.traefik.entrypoints=websecure
-Label=traefik.http.routers.traefik.tls.certresolver=cloudflare_main
-Label="traefik.http.routers.traefik.tls.domains[0].main=internal.${MAIN_DOMAIN}"
-Label="traefik.http.routers.traefik.tls.domains[0].sans=*.internal.${MAIN_DOMAIN}"
 Label=traefik.http.routers.traefik.service=api@internal
 Label=traefik.http.routers.traefik.middlewares=tailscaleAL
 Label=traefik.http.services.cockpitHost.loadbalancer.server.url=http://host.containers.internal:9090
 Label=traefik.http.routers.cockpit.rule=Host(`cockpit.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.cockpit.entrypoints=websecure
-Label=traefik.http.routers.cockpit.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.cockpit.service=cockpitHost
 Label=traefik.http.routers.cockpit.middlewares=tailscaleAL
 Label="traefik.http.routers.github-redirect.rule=Host(`${SECONDARY_DOMAIN}`) && PathRegexp(`^/?$`)"
 Label=traefik.http.routers.github-redirect.entrypoints=websecure
-Label=traefik.http.routers.github-redirect.tls.certresolver=cloudflare_main
 Label=traefik.http.routers.github-redirect.priority=50000
 Label=traefik.http.routers.github-redirect.middlewares=github-redirect
 Label=traefik.http.routers.github-redirect.service=noop@internal

@@ -10,7 +10,6 @@ Network=net-redis.network
 Label=traefik.enable=true
 Label="traefik.http.routers.mailserver.rule=Host(`mail.${SECONDARY_DOMAIN}`) || Host(`autodiscover.${SECONDARY_DOMAIN}`) || Host(`autoconfig.${SECONDARY_DOMAIN}`)"
 Label=traefik.http.routers.mailserver.entrypoints=websecure
-#Label=traefik.http.routers.mailserver.tls.certresolver=cloudflare_main
 Label=traefik.http.services.mailserver.loadbalancer.server.port=8080
 PublishPort=25:25/tcp
 PublishPort=465:465/tcp

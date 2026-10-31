@@ -1,8 +1,7 @@
 [Container]
 ContainerName=mazanoke
 Image=ghcr.io/civilblur/mazanoke:v1.1.7
-Label=traefik.enable=true 
-Label=traefik.http.routers.mazanoke.rule=Host(`mazanoke.internal.${MAIN_DOMAIN}`) 
-Label=traefik.http.routers.mazanoke.entrypoints=websecure 
-Label=traefik.http.routers.mazanoke.tls.certresolver=cloudflare_main
+Label=traefik.enable=true
+Label=traefik.http.routers.mazanoke.rule=Host(`mazanoke.internal.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.mazanoke.entrypoints=websecure
 Network=net-proxy.network

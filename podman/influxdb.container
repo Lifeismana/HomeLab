@@ -2,11 +2,10 @@
 ContainerName=influxdb
 HealthCmd=["curl","-f","http://localhost:8086/health"]
 Image=docker.io/library/influxdb:2.2
-Label=traefik.enable=true 
-Label=traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`) 
-Label=traefik.http.routers.influxdb.entrypoints=websecure 
-Label=traefik.http.routers.influxdb.tls.certresolver=cloudflare_main 
-Label=traefik.http.services.influxdb.loadbalancer.server.port=8086 
+Label=traefik.enable=true
+Label=traefik.http.routers.influxdb.rule=Host(`influxdb.internal.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.influxdb.entrypoints=websecure
+Label=traefik.http.services.influxdb.loadbalancer.server.port=8086
 Label=traefik.http.routers.influxdb.middlewares=tailscaleAL
 Network=net-proxy.network
 Network=net-influxdb.network

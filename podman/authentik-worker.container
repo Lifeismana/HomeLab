@@ -1,14 +1,14 @@
 [Unit]
-Requires=postgres.service 
+Requires=postgres.service
 Requires=redis.service
-After=postgres.service 
+After=postgres.service
 After=redis.service
 
 [Container]
 ContainerName=authentik-worker
-Environment=AUTHENTIK_REDIS__HOST=redis 
-Environment=AUTHENTIK_POSTGRESQL__HOST=postgres 
-Environment=AUTHENTIK_POSTGRESQL__USER=authentik 
+Environment=AUTHENTIK_REDIS__HOST=redis
+Environment=AUTHENTIK_POSTGRESQL__HOST=postgres
+Environment=AUTHENTIK_POSTGRESQL__USER=authentik
 Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
 EnvironmentFile=/etc/secc/env/authentik.env
 Exec=worker

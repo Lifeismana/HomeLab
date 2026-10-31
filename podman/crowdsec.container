@@ -4,10 +4,10 @@ BindsTo=podman.socket
 
 [Container]
 ContainerName=crowdsec
-Environment=COLLECTIONS="LePresidente/gitea crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/sshd" 
-Environment=POSTOVERFLOWS=crowdsecurity/rdns 
-Environment=CUSTOM_HOSTNAME=DockerMonster 
-Environment=BOUNCER_KEY_TraefikBouncer=${CROWDSEC_LAPI_KEY} 
+Environment=COLLECTIONS="LePresidente/gitea crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/sshd"
+Environment=POSTOVERFLOWS=crowdsecurity/rdns
+Environment=CUSTOM_HOSTNAME=DockerMonster
+Environment=BOUNCER_KEY_TraefikBouncer=${CROWDSEC_LAPI_KEY}
 Environment=GID=1000
 HealthCmd=cscli lapi status
 HealthStartPeriod=15s
