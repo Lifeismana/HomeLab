@@ -1,6 +1,6 @@
 [Unit]
-Requires=postgres14.service
-After=postgres14.service
+Requires=postgres14.container
+After=postgres14.container
 
 [Container]
 ContainerName=redbot

@@ -1,6 +1,6 @@
 [Unit]
-Requires=influxdb.service
-After=influxdb.service
+Requires=influxdb.container
+After=influxdb.container
 
 [Container]
 ContainerName=scrutiny-web

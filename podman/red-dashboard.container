@@ -1,6 +1,6 @@
 [Unit]
-Requires=redbot.service
-After=redbot.service
+Requires=redbot.container
+After=redbot.container
 
 [Container]
 ContainerName=red-dashboard

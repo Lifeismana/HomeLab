@@ -1,8 +1,8 @@
 [Unit]
-Requires=traefik.service
-Requires=authentik-server.service
-After=traefik.service
-After=authentik-server.service
+Requires=traefik.container
+Requires=authentik-server.container
+After=traefik.container
+After=authentik-server.container
 
 [Container]
 ContainerName=stirling-pdf

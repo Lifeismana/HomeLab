@@ -1,5 +1,6 @@
 [Unit]
 After=traefik-certs-dumper.container
+After=authentik-server.container
 BindsTo=traefik-certs-dumper.container
 
 [Container]
