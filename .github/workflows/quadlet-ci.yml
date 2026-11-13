@@ -18,8 +18,13 @@ jobs:
           python3 .zed/scripts/format-quadlet.py --check podman/*.{container,volume,network,pod,kube,image,build}
 
       - name: Lint with quadlet-lsp CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -sSL https://api.github.com/repos/onlyati/quadlet-lsp/releases/latest \
+          curl -sSL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/onlyati/quadlet-lsp/releases/latest \
             | grep "browser_download_url.*linux-amd64.tar.gz" \
             | cut -d : -f 2,3 \
             | tr -d \" \
