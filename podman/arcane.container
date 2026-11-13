@@ -20,6 +20,6 @@ Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.arcane.entrypoints=websecure
 Label=traefik.http.routers.arcane.middlewares=tailscaleAL
 Network=net-proxy.network
-Volume=/var/run/podman/podman.sock:/var/run/docker.sock
 Volume=/data/arcane:/app/data
 Volume=/run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+Volume=/var/run/podman/podman.sock:/var/run/docker.sock

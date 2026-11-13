@@ -14,7 +14,7 @@ Image=docker.io/gristlabs/grist:latest
 Label=traefik.enable=true
 Label=traefik.http.routers.grist.rule=Host(`grist.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.grist.entrypoints=websecure
-Network=net-proxy.network
 Network=net-postgres.network
+Network=net-proxy.network
 Network=net-redis.network
 Volume=/data/grist:/persist

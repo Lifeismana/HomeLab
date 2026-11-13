@@ -1,8 +1,8 @@
 [Unit]
-Requires=traefik.container
-Requires=authentik-server.container
-After=traefik.container
 After=authentik-server.container
+After=traefik.container
+Requires=authentik-server.container
+Requires=traefik.container
 
 [Container]
 ContainerName=stirling-pdf
@@ -25,8 +25,8 @@ Label=traefik.http.routers.stirling-pdf.entrypoints=websecure
 Label=traefik.http.services.stirling-pdf.loadbalancer.server.port=8080
 Label=traefik.http.routers.stirling-pdf.middlewares=crowdsec
 Network=net-proxy.network
-Volume=/data/stirling-pdf/training-data:/usr/share/tessdata
-Volume=/data/stirling-pdf/extra-configs:/configs
 Volume=/data/stirling-pdf/custom-files:/customFiles
+Volume=/data/stirling-pdf/extra-configs:/configs
 Volume=/data/stirling-pdf/logs:/logs
 Volume=/data/stirling-pdf/pipeline:/pipeline
+Volume=/data/stirling-pdf/training-data:/usr/share/tessdata

@@ -1,0 +1,29 @@
+name: Quadlet Format & Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  format-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Formatting (format-quadlet.py)
+        run: |
+          shopt -s globstar nullglob
+          python3 .zed/scripts/format-quadlet.py --check podman/*.{container,volume,network,pod,kube,image,build}
+
+      - name: Lint with quadlet-lsp CLI
+        run: |
+          curl -sSL https://api.github.com/repos/onlyati/quadlet-lsp/releases/latest \
+            | grep "browser_download_url.*linux-amd64.tar.gz" \
+            | cut -d : -f 2,3 \
+            | tr -d \" \
+            | wget -qi - -O quadlet-lsp.tar.gz
+          tar -xzf quadlet-lsp.tar.gz quadlet-lsp
+          chmod +x quadlet-lsp
+          ./quadlet-lsp check .

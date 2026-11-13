@@ -1,13 +1,12 @@
 [Unit]
-Requires=postgres.service
-Requires=redis.service
 After=postgres.service
 After=redis.service
+Requires=postgres.service
+Requires=redis.service
 
 [Container]
 AddCapability=CAP_NET_BIND_SERVICE
 ContainerName=forgejo
-User=103:113
 Environment=USER_UID=103
 Environment=USER_GID=113
 Environment=FORGEJO__SERVICE__DISABLE_REGISTRATION=false
@@ -39,12 +38,13 @@ Label=traefik.http.routers.forgejo.rule=Host(`git.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.forgejo.entrypoints=websecure
 Label=traefik.http.services.forgejo.loadbalancer.server.port=3000
 Label=traefik.http.routers.forgejo.middlewares=crowdsec
+Network=net-postgres.network
 #Label=crowdsec.enable=true
 #Label=crowdsec.labels.type=gitea
 Network=net-proxy.network
-Network=net-postgres.network
 Network=net-redis.network
 PublishPort=22:22
-Volume=/data/forgejo/data:/var/lib/gitea
+User=103:113
 Volume=/data/forgejo/config:/etc/gitea
+Volume=/data/forgejo/data:/var/lib/gitea
 Volume=/etc/localtime:/etc/localtime:ro

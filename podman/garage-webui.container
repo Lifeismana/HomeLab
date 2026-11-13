@@ -1,11 +1,11 @@
 [Unit]
-Requires=garage.service
 After=garage.service
+Requires=garage.service
 
 [Container]
 ContainerName=garage-webui
-Image=docker.io/khairul169/garage-webui:1.1.0
 Environment=API_BASE_URL=http://garage:3903
+Image=docker.io/khairul169/garage-webui:1.1.0
 Label=traefik.enable=true
 Label=traefik.http.routers.garage-webui.rule=Host(`garage-webui.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.garage-webui.entrypoints=websecure

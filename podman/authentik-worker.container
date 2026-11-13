@@ -1,8 +1,8 @@
 [Unit]
-Requires=postgres.service
-Requires=redis.service
 After=postgres.service
 After=redis.service
+Requires=postgres.service
+Requires=redis.service
 
 [Container]
 ContainerName=authentik-worker
@@ -13,7 +13,7 @@ Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
 EnvironmentFile=/etc/secc/env/authentik.env
 Exec=worker
 Image=ghcr.io/goauthentik/server:2026.8.5
-Network=net-proxy.network
 Network=net-postgres.network
+Network=net-proxy.network
 Network=net-redis.network
 Volume=geoip.volume:/geoip
