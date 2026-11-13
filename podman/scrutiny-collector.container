@@ -8,7 +8,8 @@ AddDevice=/dev/sdb:/dev/sdb
 AddDevice=/dev/sdc:/dev/sdc
 AddDevice=/dev/sdd:/dev/sdd
 ContainerName=scrutiny-collector
-Environment=COLLECTOR_API_ENDPOINT=http://localhost:8080 #https://scrutiny.internal.${MAIN_DOMAIN}
+#https://scrutiny.internal.${MAIN_DOMAIN}
+Environment=COLLECTOR_API_ENDPOINT=http://localhost:8080
 Environment=COLLECTOR_HOST_ID=DockerMonster
 Image=ghcr.io/analogj/scrutiny:master-collector
 Network=scrutiny-web.container

@@ -6,12 +6,5 @@
   ],
   "ignorePaths": [
     "podman/postgres14.container"
-  ],
-  "packageRules": [
-    {
-      "matchManagers": [
-        "quadlet"
-      ]
-    }
   ]
 }
