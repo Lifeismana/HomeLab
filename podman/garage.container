@@ -14,6 +14,6 @@ Label=traefik.http.middlewares.compress.compress=true
 Label=traefik.http.routers.s3.service=s3
 Label=traefik.http.services.s3.loadbalancer.server.port=3900
 Network=net-proxy.network
+Volume=/data/garage/data:/var/lib/garage/data
 Volume=/data/garage/garage.toml:/etc/garage.toml
 Volume=/data/garage/meta:/var/lib/garage/meta
-Volume=/data/garage/data:/var/lib/garage/data

@@ -12,11 +12,11 @@ Environment=GID=1000
 HealthCmd=cscli lapi status
 HealthStartPeriod=15s
 Image=ghcr.io/crowdsecurity/crowdsec:latest
-Network=net-proxy.network
 Network=net-prometheus.network
+Network=net-proxy.network
 PublishPort=127.0.0.1:8080:8080
 Volume=/data/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
-Volume=/data/crowdsec/db:/var/lib/crowdsec/data
 Volume=/data/crowdsec/config:/etc/crowdsec
-Volume=logs-traefik:/var/log/traefik:ro
+Volume=/data/crowdsec/db:/var/lib/crowdsec/data
 Volume=/var/run/podman/podman.sock:/var/run/docker.sock
+Volume=logs-traefik:/var/log/traefik:ro

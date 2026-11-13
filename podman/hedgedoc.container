@@ -27,5 +27,5 @@ Image=quay.io/hedgedoc/hedgedoc:1.12.0
 Label=traefik.enable=true
 Label=traefik.http.routers.hedgedoc.rule=Host(`hedgedoc.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.hedgedoc.entrypoints=websecure
-Network=net-proxy.network
 Network=net-postgres.network
+Network=net-proxy.network

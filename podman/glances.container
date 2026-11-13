@@ -25,5 +25,5 @@ Label=homepage.widget.version=4
 Label=homepage.widget.metric=info
 Network=host
 PodmanArgs=--pid host --privileged
-Volume=/var/run/podman/podman.sock:/run/user/1000/podman/podman.sock:ro
 Volume=/etc/os-release:/etc/os-release:ro
+Volume=/var/run/podman/podman.sock:/run/user/1000/podman/podman.sock:ro

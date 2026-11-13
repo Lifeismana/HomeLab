@@ -1,6 +1,6 @@
 [Unit]
-Requires=redbot.container
 After=redbot.container
+Requires=redbot.container
 
 [Container]
 ContainerName=red-dashboard

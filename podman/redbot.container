@@ -1,6 +1,6 @@
 [Unit]
-Requires=postgres14.container
 After=postgres14.container
+Requires=postgres14.container
 
 [Container]
 ContainerName=redbot
@@ -9,8 +9,8 @@ Environment=TZ=Europe/Paris
 Environment=EXTRA_ARGS="--dev --rpc"
 Image=ghcr.io/lifeismana/docker-red-discordbot:full
 Network=net-proxy.network
-Volume=/data/redbot:/data
-Volume=/data/.ssh/red_github/:/config/.ssh/
 Volume=/data/.pylav-red/pylav.yaml:/config/pylav.yaml
-Volume=postgres14.volume:/var/run/postgresql
 Volume=/data/.pylav-red/PyLav:/config/.config/PyLav
+Volume=/data/.ssh/red_github/:/config/.ssh/
+Volume=/data/redbot:/data
+Volume=postgres14.volume:/var/run/postgresql

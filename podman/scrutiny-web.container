@@ -1,6 +1,6 @@
 [Unit]
-Requires=influxdb.container
 After=influxdb.container
+Requires=influxdb.container
 
 [Container]
 ContainerName=scrutiny-web
@@ -21,6 +21,6 @@ Label=homepage.href=https://scrutiny.internal.${MAIN_DOMAIN}
 Label=homepage.description=Scrutiny
 Label=homepage.widget.type=scrutiny
 Label=homepage.widget.url=https://scrutiny.internal.${MAIN_DOMAIN}
-Network=net-proxy.network
 Network=net-influxdb.network
+Network=net-proxy.network
 Volume=/data/scrutiny:/opt/scrutiny/config
