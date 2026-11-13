@@ -3,7 +3,7 @@ ContainerName=prometheus
 Exec=--config.file=/etc/prometheus/prometheus.yml \
   --storage.tsdb.path=/prometheus \
   --web.console.libraries=/etc/prometheus/console_libraries \
-  --web.console.templates=/etc/prometheus/consoles'
+  --web.console.templates=/etc/prometheus/consoles
 Group=1000
 HealthCmd=wget -O - http://localhost:9090 &>/dev/null
 HealthStartPeriod=30s

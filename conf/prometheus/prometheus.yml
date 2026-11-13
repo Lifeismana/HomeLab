@@ -3,38 +3,17 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  # https://docs.docker.com/config/daemon/prometheus/
-  - job_name: "docker"
-    static_configs:
-      - targets: ["host.docker.internal:9323"]
-
   - job_name: "traefik"
     static_configs:
       - targets: ["traefik:8080"]
-  - job_name: "endlessh"
-    static_configs:
-      - targets: ["endlessh:2112"]
 
   - job_name: "authentik"
     static_configs:
       - targets: ["authentik-server:9300"]
-  
+
   - job_name: "crowdsec"
     static_configs:
       - targets: ["crowdsec:6060"]
-
-  # - job_name: minio-job
-  #   bearer_token_file: ./minio_token.env
-  #   metrics_path: /minio/v2/metrics/cluster
-  #   scheme: http
-  #   static_configs:
-  #   - targets: ['minio:9000']
-  # - job_name: minio-job-bucket
-  #   bearer_token_file: ./minio_token.env
-  #   metrics_path: /minio/v2/metrics/bucket
-  #   scheme: http
-  #   static_configs:
-  #   - targets: ['minio:9000']
 
   - job_name: "redis-exporter"
     static_configs:
