@@ -1,3 +1,10 @@
+[Unit]
+After=authentik-server.service
+After=garage.service
+After=postgres.service
+Requires=garage.service
+Requires=postgres.service
+
 [Container]
 ContainerName=hedgedoc
 Environment=CMD_DOMAIN=hedgedoc.${MAIN_DOMAIN}

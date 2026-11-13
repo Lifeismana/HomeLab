@@ -1,3 +1,7 @@
+[Unit]
+After=postgres.service
+Requires=postgres.service
+
 [Container]
 ContainerName=speedtest-tracker
 Environment=TZ=Europe/Paris

@@ -1,4 +1,5 @@
 [Unit]
+After=authentik-server.service
 After=podman.socket
 BindsTo=podman.socket
 

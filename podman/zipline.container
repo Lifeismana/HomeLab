@@ -1,3 +1,9 @@
+[Unit]
+After=garage.service
+After=postgres.service
+Requires=garage.service
+Requires=postgres.service
+
 [Container]
 ContainerName=zipline
 Environment=DATASOURCE_TYPE=s3

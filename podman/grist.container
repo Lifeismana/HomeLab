@@ -1,3 +1,10 @@
+[Unit]
+After=authentik-server.service
+After=postgres.service
+After=redis.service
+Requires=postgres.service
+Requires=redis.service
+
 [Container]
 ContainerName=grist
 Environment=TZ=Europe/Paris
