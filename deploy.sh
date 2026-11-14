@@ -9,6 +9,10 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+echo "Validating quadlets"
+
+QUADLET_UNIT_DIRS="$(pwd)/podman" /usr/lib/systemd/system-generators/podman-system-generator -no-kmsg-log -dryrun >/dev/null
+
 echo "Deploying quadlets"
 
 rsync -rt --delete --mkpath --force ./conf/ /etc/secc/
