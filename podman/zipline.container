@@ -1,8 +1,8 @@
 [Unit]
-After=garage.service
-After=postgres.service
-Requires=garage.service
-Requires=postgres.service
+After=garage.container
+After=postgres.container
+Requires=garage.container
+Requires=postgres.container
 
 [Container]
 ContainerName=zipline

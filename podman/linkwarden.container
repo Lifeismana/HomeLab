@@ -1,10 +1,10 @@
 [Unit]
-After=garage.service
-After=meilisearch.service
-After=postgres.service
-Requires=garage.service
-Requires=meilisearch.service
-Requires=postgres.service
+After=garage.container
+After=meilisearch.container
+After=postgres.container
+Requires=garage.container
+Requires=meilisearch.container
+Requires=postgres.container
 
 [Container]
 ContainerName=linkwarden

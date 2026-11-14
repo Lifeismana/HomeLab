@@ -1,6 +1,6 @@
 [Unit]
-After=postgres.service
-Requires=postgres.service
+After=postgres.container
+Requires=postgres.container
 
 [Container]
 ContainerName=postgres-exporter

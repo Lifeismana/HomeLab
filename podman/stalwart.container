@@ -1,9 +1,9 @@
 [Unit]
 After=authentik-server.container
-After=redis.service
+After=redis.container
 After=traefik-certs-dumper.container
 BindsTo=traefik-certs-dumper.container
-Requires=redis.service
+Requires=redis.container
 
 [Container]
 ContainerName=stalwart

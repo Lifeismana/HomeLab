@@ -1,9 +1,9 @@
 [Unit]
-After=authentik-server.service
-After=garage.service
-After=postgres.service
-Requires=garage.service
-Requires=postgres.service
+After=authentik-server.container
+After=garage.container
+After=postgres.container
+Requires=garage.container
+Requires=postgres.container
 
 [Container]
 ContainerName=hedgedoc

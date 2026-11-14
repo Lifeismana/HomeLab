@@ -1,7 +1,7 @@
 [Unit]
-After=authentik-server.service
-After=postgres.service
-Requires=postgres.service
+After=authentik-server.container
+After=postgres.container
+Requires=postgres.container
 
 [Container]
 ContainerName=opengist

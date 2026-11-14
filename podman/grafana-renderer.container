@@ -1,6 +1,6 @@
 [Unit]
-After=grafana.service
-Requires=grafana.service
+After=grafana.container
+Requires=grafana.container
 
 [Container]
 ContainerName=grafana-renderer

@@ -1,6 +1,6 @@
 [Unit]
-After=garage.service
-Requires=garage.service
+After=garage.container
+Requires=garage.container
 
 [Container]
 ContainerName=garage-webui

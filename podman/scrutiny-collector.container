@@ -1,6 +1,6 @@
 [Unit]
-After=scrutiny-web.service
-BindsTo=scrutiny-web.service
+After=scrutiny-web.container
+BindsTo=scrutiny-web.container
 
 [Container]
 AddCapability=SYS_ADMIN

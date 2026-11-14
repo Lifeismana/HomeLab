@@ -1,9 +1,9 @@
 [Unit]
-After=authentik-server.service
-After=postgres.service
-After=redis.service
-Requires=postgres.service
-Requires=redis.service
+After=authentik-server.container
+After=postgres.container
+After=redis.container
+Requires=postgres.container
+Requires=redis.container
 
 [Container]
 ContainerName=grist

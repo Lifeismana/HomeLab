@@ -1,6 +1,6 @@
 [Unit]
-After=redis.service
-Requires=redis.service
+After=redis.container
+Requires=redis.container
 
 [Container]
 ContainerName=redis-exporter

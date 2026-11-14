@@ -1,8 +1,8 @@
 [Unit]
-After=postgres.service
-After=redis.service
-Requires=postgres.service
-Requires=redis.service
+After=postgres.container
+After=redis.container
+Requires=postgres.container
+Requires=redis.container
 
 [Container]
 ContainerName=authentik-server
