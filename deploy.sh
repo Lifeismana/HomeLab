@@ -25,7 +25,10 @@ fi
 
 echo "Validating quadlets"
 
-QUADLET_UNIT_DIRS="$(pwd)/podman" /usr/lib/systemd/system-generators/podman-system-generator -no-kmsg-log -dryrun >/dev/null
+if ! err=$(QUADLET_UNIT_DIRS="$(pwd)/podman" /usr/lib/systemd/system-generators/podman-system-generator -no-kmsg-log -dryrun 2>&1 >/dev/null); then
+    echo "$err" | grep -v 'Loading source ' >&2 || echo "$err" >&2
+    exit 1
+fi
 
 rsync_flags=(-rt --delete --mkpath --force -i)
 if [ "$DRY_RUN" = true ]; then
@@ -34,12 +37,13 @@ fi
 
 echo "Deploying configuration"
 
-rsync "${rsync_flags[@]}" ./conf/ /etc/secc/
+conf_output=$(rsync "${rsync_flags[@]}" ./conf/ /etc/secc/)
+[ "$DRY_RUN" = true ] && [ -n "$conf_output" ] && echo "$conf_output"
 
 echo "Deploying quadlets"
 
 sync_output=$(rsync "${rsync_flags[@]}" ./podman/ /etc/containers/systemd/secc/)
-[ -n "$sync_output" ] && echo "$sync_output"
+[ "$DRY_RUN" = true ] && [ -n "$sync_output" ] && echo "$sync_output"
 
 deleted=()
 modified=()
