@@ -1,3 +1,7 @@
+[Unit]
+After=scrutiny-web.service
+BindsTo=scrutiny-web.service
+
 [Container]
 AddCapability=SYS_ADMIN
 AddCapability=SYS_RAWIO
