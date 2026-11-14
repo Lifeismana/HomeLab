@@ -32,3 +32,9 @@ jobs:
           tar -xzf quadlet-lsp.tar.gz quadlet-lsp
           chmod +x quadlet-lsp
           ./quadlet-lsp check .
+
+      - name: Validate Quadlets (deploy.sh dry-run)
+        run: ./deploy.sh --dry-run
+
+      - name: Lint Scripts with ShellCheck
+        run: shellcheck deploy.sh
