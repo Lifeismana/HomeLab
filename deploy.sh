@@ -4,7 +4,21 @@ set -euo pipefail
 
 cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
-if [ "$EUID" -ne 0 ]; then
+DRY_RUN=false
+case "${1:-}" in
+    -n|--dry-run) DRY_RUN=true ;;
+    -h|--help)
+        echo "Usage: $(basename "$0") [-n|--dry-run]"
+        exit 0
+        ;;
+    "") ;;
+    *)
+        echo "Unknown option: $1" >&2
+        exit 1
+        ;;
+esac
+
+if [ "$DRY_RUN" = false ] && [ "$EUID" -ne 0 ]; then
     echo "This script must be run as root" >&2
     exit 1
 fi
@@ -13,11 +27,23 @@ echo "Validating quadlets"
 
 QUADLET_UNIT_DIRS="$(pwd)/podman" /usr/lib/systemd/system-generators/podman-system-generator -no-kmsg-log -dryrun >/dev/null
 
+rsync_flags=(-rt --delete --mkpath --force)
+if [ "$DRY_RUN" = true ]; then
+    rsync_flags+=(-n -i)
+fi
+
+echo "Deploying configuration"
+
+rsync "${rsync_flags[@]}" ./conf/ /etc/secc/
+
 echo "Deploying quadlets"
 
-rsync -rt --delete --mkpath --force ./conf/ /etc/secc/
+rsync "${rsync_flags[@]}" ./podman/ /etc/containers/systemd/secc/
 
-rsync -rt --delete --mkpath --force ./podman/ /etc/containers/systemd/secc/
+if [ "$DRY_RUN" = true ]; then
+    echo "Dry-run complete. No changes were made."
+    exit 0
+fi
 
 echo "Deploying systemd units"
 
