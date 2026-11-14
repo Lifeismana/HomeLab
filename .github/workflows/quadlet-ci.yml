@@ -12,29 +12,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Check Formatting (format-quadlet.py)
-        run: |
-          shopt -s globstar nullglob
-          python3 .zed/scripts/format-quadlet.py --check podman/*.{container,volume,network,pod,kube,image,build}
+      - parallel:
+          - name: Check Formatting (format-quadlet.py)
+            run: |
+              shopt -s globstar nullglob
+              python3 .zed/scripts/format-quadlet.py --check podman/*.{container,volume,network,pod,kube,image,build}
 
-      - name: Lint with quadlet-lsp CLI
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -sSL \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/onlyati/quadlet-lsp/releases/latest \
-            | grep "browser_download_url.*linux-amd64.tar.gz" \
-            | cut -d : -f 2,3 \
-            | tr -d \" \
-            | wget -qi - -O quadlet-lsp.tar.gz
-          tar -xzf quadlet-lsp.tar.gz quadlet-lsp
-          chmod +x quadlet-lsp
-          ./quadlet-lsp check .
+          - name: Lint Scripts with ShellCheck
+            run: shellcheck deploy.sh
 
-      - name: Validate Quadlets (deploy.sh dry-run)
-        run: ./deploy.sh --dry-run
+          - name: Lint with quadlet-lsp CLI
+            env:
+              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            run: |
+              curl -sSL \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                https://api.github.com/repos/onlyati/quadlet-lsp/releases/latest \
+                | grep "browser_download_url.*linux-amd64.tar.gz" \
+                | cut -d : -f 2,3 \
+                | tr -d \" \
+                | wget -qi - -O quadlet-lsp.tar.gz
+              tar -xzf quadlet-lsp.tar.gz quadlet-lsp
+              chmod +x quadlet-lsp
+              ./quadlet-lsp check .
 
-      - name: Lint Scripts with ShellCheck
-        run: shellcheck deploy.sh
+          - name: Validate Quadlets (deploy.sh dry-run)
+            run: ./deploy.sh --dry-run
