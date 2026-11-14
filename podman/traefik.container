@@ -1,5 +1,7 @@
 [Unit]
+After=crowdsec.container
 After=podman.socket
+After=redis.container
 BindsTo=podman.socket
 
 [Container]
