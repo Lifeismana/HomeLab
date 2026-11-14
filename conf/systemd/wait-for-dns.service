@@ -1,0 +1,13 @@
+[Unit]
+Description=Wait for DNS Resolution
+After=network-online.target systemd-resolved.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sh -c 'until getent hosts docker.io >/dev/null 2>&1 || getent hosts ghcr.io >/dev/null 2>&1; do sleep 0.5; done'
+RemainAfterExit=yes
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target
