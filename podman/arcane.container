@@ -19,7 +19,7 @@ Environment=TRUSTED_PROXIES=172.25.0.0/16
 EnvironmentFile=/etc/secc/env/arcane.env
 HealthCmd=["CMD", "./arcane", "health", "--timeout", "2s"]
 HealthStartPeriod=15s
-Image=ghcr.io/getarcaneapp/manager:v2.17
+Image=ghcr.io/getarcaneapp/manager:v3.1
 Label=traefik.enable=true
 Label=traefik.http.routers.arcane.rule=Host(`arcane.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.arcane.entrypoints=websecure
