@@ -56,54 +56,69 @@ if ! err=$(QUADLET_UNIT_DIRS="$PWD/podman" /usr/lib/systemd/system-generators/po
     exit 1
 fi
 
+# Stop and disable removed systemd units before rsync deletes their target files
+deleted_systemd=()
+for f in /etc/secc/systemd/*; do
+    unit=${f##*/}
+    if [[ -f "$f" && ! -e "./conf/systemd/$unit" ]] && systemctl cat -- "$unit" &>/dev/null; then
+        deleted_systemd+=("$unit")
+    fi
+done
+ctl_if_any "Stopping and disabling removed systemd units" deleted_systemd disable --now --no-reload
+
+deleted_quadlets=() link_systemd=() enable_systemd=() to_start=() to_restart=()
+declare -A warnings=()
 
 echo "Deploying configuration"
 sync_dir ./conf/ /etc/secc/
-
-echo "Deploying quadlets"
-sync_dir ./podman/ /etc/containers/systemd/secc/
-
-deleted=()
-modified=()
-
 while read -r action file; do
-    [[ -z "$file" || "$file" != *.container ]] && continue
-    unit="${file##*/}"
-    unit="${unit%.container}.service"
-    case "$action" in
-        "*deleting") deleted+=("$unit") ;;
-        ">f[^+]"*)   modified+=("$unit") ;;
+    unit=${file##*/}
+    case "$action:$file" in
+        *:systemd/*/*)
+            ;;
+        ">f+"*:systemd/*)
+            if grep -q '^\[Install\]' "./conf/$file"; then
+                enable_systemd+=("/etc/secc/$file")
+                can_start "$unit" && to_start+=("$unit")
+            else
+                link_systemd+=("/etc/secc/$file")
+            fi
+            ;;
+        ">f"*:systemd/*)
+            can_start "$unit" && to_restart+=("$unit")
+            ;;
+        ">f"*:env/*.env|"*deleting":env/*.env)
+            warnings[env]="Changes detected in env/ (environment files). Affected containers may need a manual restart."
+            ;;
     esac
 done <<< "$rsync_out"
 
+echo "Deploying quadlets"
+sync_dir ./podman/ /etc/containers/systemd/secc/
+while read -r action file; do
+    unit="${file##*/}"
+    unit="${unit%.container}.service"
+    case "$action:$file" in
+        ">f"*:*container.d/*|"*deleting":*container.d/*)
+            warnings[override]="Changes detected in container.d/ (override configurations). Running containers may need a manual restart."
+            ;;
+        "*deleting":*.container) deleted_quadlets+=("$unit") ;;
+        ">f+"*:*.container)      to_start+=("$unit") ;;
+        ">f"*:*.container)       to_restart+=("$unit") ;;
+    esac
+done <<< "$rsync_out"
+
+(( ${#warnings[@]} )) && printf 'Warning: %s\n' "${warnings[@]}" >&2
+
+ctl_if_any "Stopping deleted quadlets" deleted_quadlets stop
+ctl_if_any "Linking new systemd units" link_systemd link --no-reload
+ctl_if_any "Enabling new systemd units" enable_systemd enable --no-reload
+
+run_ctl "Reloading systemd" daemon-reload
+
+ctl_if_any "Starting new units" to_start start
+ctl_if_any "Restarting modified units" to_restart try-restart
+
 if $DRY_RUN; then
     echo "Dry-run complete. No changes were made."
-    exit 0
 fi
-
-ctl_if_any "Stopping deleted quadlets" deleted stop
-
-echo "Deploying systemd units"
-
-systemd_units=(/etc/secc/systemd/*)
-(( ${#systemd_units[@]} > 0 )) && systemctl link "${systemd_units[@]}"
-
-echo "Reloading systemd"
-
-systemctl daemon-reload
-
-enable_systemd=()
-for f in "${systemd_units[@]}"; do
-    [[ -f "$f" ]] || continue
-    unit=${f##*/}
-
-    if ! grep -q '^\[Install\]' "$f"; then
-        echo "Skipping $unit because it has no [Install] section"
-        continue
-    fi
-    can_start "$unit" && enable_systemd+=("$unit")
-done
-
-ctl_if_any "Enabling and starting" enable_systemd enable --now
-
-ctl_if_any "Restarting modified quadlets" modified try-restart
