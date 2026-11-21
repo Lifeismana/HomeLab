@@ -6,6 +6,6 @@ Requires=redis.container
 ContainerName=redis-exporter
 Environment=REDIS_ADDR=redis:6379
 Environment=REDIS_USER=null
-Image=ghcr.io/oliver006/redis_exporter:v1.97.0
+Image=ghcr.io/oliver006/redis_exporter:v1.98.0
 Network=net-prometheus.network
 Network=net-redis.network
