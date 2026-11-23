@@ -2,6 +2,6 @@
 ContainerName=meilisearch
 Environment=MEILI_UPGRADE_DB=true
 EnvironmentFile=/etc/secc/env/meilisearch.env
-Image=docker.io/getmeili/meilisearch:v1.57.0
+Image=docker.io/getmeili/meilisearch:v1.58.0
 Network=net-meilisearch.network
 Volume=/data/meilisearch:/meili_data
