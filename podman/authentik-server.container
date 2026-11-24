@@ -1,12 +1,9 @@
 [Unit]
 After=postgres.container
-After=redis.container
 Requires=postgres.container
-Requires=redis.container
 
 [Container]
 ContainerName=authentik-server
-Environment=AUTHENTIK_REDIS__HOST=redis
 Environment=AUTHENTIK_POSTGRESQL__HOST=postgres
 Environment=AUTHENTIK_POSTGRESQL__USER=authentik
 Environment=AUTHENTIK_POSTGRESQL__NAME=authentikdb
@@ -31,5 +28,4 @@ Label=homepage.widget.key=${AUTHENTIK_TOKEN}
 Network=net-postgres.network
 Network=net-prometheus.network
 Network=net-proxy.network
-Network=net-redis.network
 Volume=geoip.volume:/geoip
