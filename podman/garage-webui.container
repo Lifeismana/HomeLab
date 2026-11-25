@@ -4,13 +4,15 @@ Requires=garage.container
 
 [Container]
 ContainerName=garage-webui
-Environment=API_BASE_URL=http://garage:3903
-Image=docker.io/khairul169/garage-webui:1.1.0
+Environment=GARAGE_UI_GARAGE_TOML=/etc/garage.toml
+Environment=GARAGE_UI_GARAGE_ENDPOINT=http://garage:3900
+Environment=GARAGE_UI_GARAGE_ADMIN_ENDPOINT=http://garage:3903
+Image=docker.io/noooste/garage-ui:latest
 Label=traefik.enable=true
 Label=traefik.http.routers.garage-webui.rule=Host(`garage-webui.internal.${MAIN_DOMAIN}`)
 Label=traefik.http.routers.garage-webui.entrypoints=websecure
 Label=traefik.http.routers.garage-webui.middlewares=tailscaleAL
 Label=traefik.http.routers.garage-webui.service=garage-webui
-Label=traefik.http.services.garage-webui.loadbalancer.server.port=3909
+Label=traefik.http.services.garage-webui.loadbalancer.server.port=8080
 Network=net-proxy.network
 Volume=/data/garage/garage.toml:/etc/garage.toml:ro
