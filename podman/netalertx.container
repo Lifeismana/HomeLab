@@ -20,7 +20,9 @@ Label=homepage.icon=netalertx.png
 Label=homepage.description=NetAlertX
 Label=homepage.href=https://netalertx.internal.${MAIN_DOMAIN}
 Label=homepage.widget.type=netalertx
-Label=homepage.widget.url=https://netalertx.internal.${MAIN_DOMAIN}
+Label=homepage.widget.url=http://172.25.0.1:20212
+Label=homepage.widget.key=${NETALERTX_KEY}
+Label=homepage.widget.version=2
 Network=host
 ReadOnly=true
 Tmpfs=/tmp:mode=1777,rw,noexec,nosuid,nodev
