@@ -25,6 +25,7 @@ Label=homepage.href=https://authentik.${MAIN_DOMAIN}
 Label=homepage.widget.type=authentik
 Label=homepage.widget.url=https://authentik.${MAIN_DOMAIN}
 Label=homepage.widget.key=${AUTHENTIK_TOKEN}
+Label=homepage.widget.version=2
 Network=net-postgres.network
 Network=net-prometheus.network
 Network=net-proxy.network
