@@ -1,7 +1,22 @@
+[Unit]
+After=authentik-server.container
+
 [Container]
 ContainerName=grafana
-Environment=GF_AUTH_ANONYMOUS_ENABLED=true
+Environment=GF_AUTH_ANONYMOUS_ENABLED=false
+Environment=GF_AUTH_DISABLE_LOGIN_FORM=true
+Environment=GF_AUTH_OAUTH_AUTO_LOGIN=true
 Environment=GF_AUTH_ORG_NAME=Lifesismana
+Environment=GF_SERVER_ROOT_URL=https://grafana.internal.${MAIN_DOMAIN}
+Environment=GF_AUTH_GENERIC_OAUTH_ENABLED=true
+Environment=GF_AUTH_GENERIC_OAUTH_NAME=Authentik
+Environment=GF_AUTH_GENERIC_OAUTH_SCOPES="openid profile email entitlements"
+Environment=GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://authentik.${MAIN_DOMAIN}/application/o/authorize/
+Environment=GF_AUTH_GENERIC_OAUTH_TOKEN_URL=https://authentik.${MAIN_DOMAIN}/application/o/token/
+Environment=GF_AUTH_GENERIC_OAUTH_API_URL=https://authentik.${MAIN_DOMAIN}/application/o/userinfo/
+Environment=GF_AUTH_SIGNOUT_REDIRECT_URL=https://authentik.${MAIN_DOMAIN}/application/o/grafana/end-session/
+Environment=GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN=true
+Environment=GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH="contains(entitlements[*], 'Grafana Admins') && 'GrafanaAdmin' || contains(entitlements[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
 Environment=GF_RENDERING_SERVER_URL=http://localhost:8081/render
 Environment=GF_RENDERING_CALLBACK_URL=http://localhost:3000/
 Environment=GF_PLUGINS_PREINSTALL=marcusolsson-calendar-panel
