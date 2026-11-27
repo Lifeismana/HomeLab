@@ -1,0 +1,15 @@
+[Unit]
+After=garage.container
+Requires=garage.container
+
+[Container]
+ContainerName=loki
+EnvironmentFile=/etc/secc/env/loki.env
+Exec=-config.file=/etc/loki/loki.yaml -config.expand-env=true
+Group=1000
+Image=docker.io/grafana/loki:3.7.10
+Network=net-prometheus.network
+Network=net-proxy.network
+User=1000
+Volume=/data/loki:/loki
+Volume=/etc/secc/loki/loki.yaml:/etc/loki/loki.yaml:ro
