@@ -1,0 +1,17 @@
+[Container]
+ContainerName=victorialogs
+Exec=-storageDataPath=/victoria-logs-data \
+  -retentionPeriod=360d
+Group=1000
+HealthCmd=["/victoria-logs-prod","-healthcheck"]
+HealthStartPeriod=10s
+Image=docker.io/victoriametrics/victoria-logs:v1.55.0
+Label=traefik.enable=true
+Label=traefik.http.routers.victorialogs.rule=Host(`victorialogs.internal.${MAIN_DOMAIN}`)
+Label=traefik.http.routers.victorialogs.entrypoints=websecure
+Label=traefik.http.services.victorialogs.loadbalancer.server.port=9428
+Label=traefik.http.routers.victorialogs.middlewares=tailscaleAL
+Network=net-prometheus.network
+Network=net-proxy.network
+User=1000
+Volume=/data/victorialogs:/victoria-logs-data
